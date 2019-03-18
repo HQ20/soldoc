@@ -1,0 +1,27 @@
+{
+    "name": "soldoc",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "./cli.js unicorns --rainbow --cenas",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/obernardovieira/soldoc.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/obernardovieira/soldoc/issues"
+    },
+    "homepage": "https://github.com/obernardovieira/soldoc#readme",
+    "dependencies": {
+        "chalk": "2.4.2",
+        "esm": "3.2.18",
+        "meow": "5.0.0",
+        "solidity-parser-antlr": "0.4.2"
+    }
+}
