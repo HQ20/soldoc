@@ -1,7 +1,7 @@
 export default (input) => {
     const returnComments = new Map();
     // get original comments
-    const comments = input.match(/\/\*\*(\s[ ]+\* [\S ]+)*\s+\*\/\s+function [a-zA-Z]+\(/gm);
+    const comments = input.match(/\/\*\*(\s[ ]+\* [\S ]+)*\s+\*\/\s+function [a-zA-Z0-9_]+\(/gm);
     comments.forEach(comment => {
         // extract only the comment
         const cleanComment = comment.match(/\/\*\*[\W\w]+\*\//);
@@ -10,7 +10,7 @@ export default (input) => {
         // clean up the comment
         const readableComment = devComment[1].replace(/\s+\*\/?/gm, '');
         // put it in a map
-        const functioName = comment.match(/function ([a-zA-Z]+)\(/)[1];
+        const functioName = comment.match(/function ([a-zA-Z0-9_]+)\(/)[1];
         returnComments.set(functioName, readableComment);
     });
     return returnComments;

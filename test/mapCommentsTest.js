@@ -46,4 +46,8 @@ describe('MapComments', () => {
             + 'allowance to 0 and set the desired value afterwards: https://github.com'
             + '/ethereum/EIPs/issues/20#issuecomment-263524729');
     });
+    it('extract single line w/ _ in function name valid comments', () => {
+        // verify
+        expect(comments.get('_transfer').trim()).to.be('Transfer token for a specified addresses');
+    });
 });
