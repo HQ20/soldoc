@@ -5,38 +5,30 @@ import MapComments from '../src/mapComments';
 
 describe('MapComments', () => {
     const filePath = 'test/contracts/OZERC20.sol';
+    let comments = '';
 
-    it('extract single line no param/return valid comments', () => {
+    before(() => {
         // read file
         const input = fs.readFileSync(filePath).toString();
         // get filtered comments
-        const comments = MapComments(input);
+        comments = MapComments(input);
+    });
+
+    it('extract single line no param/return valid comments', () => {
         // verify
         expect(comments.get('totalSupply').trim()).to.be('Total number of tokens in existence');
     });
     it('extract single line w/ param/return valid comments', () => {
-        // read file
-        const input = fs.readFileSync(filePath).toString();
-        // get filtered comments
-        const comments = MapComments(input);
         // verify
         expect(comments.get('balanceOf').trim()).to.be('Gets the balance of the specified address.');
     });
     it('extract multiline line w/ param/return valid comments', () => {
-        // read file
-        const input = fs.readFileSync(filePath).toString();
-        // get filtered comments
-        const comments = MapComments(input);
         // verify
         expect(comments.get('transferFrom').trim()).to.be('Transfer tokens from one address to another. '
             + 'Note that while this function emits an Approval event, this is not required as per the '
             + 'specification, and other compliant implementations may not emit the event.');
     });
     it('extract multiline line w/ code in valid comments', () => {
-        // read file
-        const input = fs.readFileSync(filePath).toString();
-        // get filtered comments
-        const comments = MapComments(input);
         // verify
         expect(comments.get('decreaseAllowance').trim()).to.be('Decrease the amount of tokens that an '
             + 'owner allowed to a spender. approve should be called when '
@@ -45,10 +37,6 @@ describe('MapComments', () => {
             + 'mined) From MonolithDAO Token.sol Emits an Approval event.');
     });
     it('extract multiline line w/ link in valid comments', () => {
-        // read file
-        const input = fs.readFileSync(filePath).toString();
-        // get filtered comments
-        const comments = MapComments(input);
         // verify
         expect(comments.get('approve').trim()).to.be('Approve the passed address to spend the '
             + 'specified amount of tokens on behalf of msg.sender. Beware that changing an '
