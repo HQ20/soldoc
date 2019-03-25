@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "./cli.js unicorns --rainbow --cenas",
+        "start": "./bin/cli.js",
         "test": "mocha -r esm"
     },
     "repository": {
@@ -26,9 +26,12 @@
         "solidity-parser-antlr": "0.4.2"
     },
     "devDependencies": {
-        "eslint": "^5.15.3",
-        "eslint-config-airbnb-base": "^13.1.0",
-        "eslint-plugin-import": "^2.16.0",
+        "eslint": "5.15.3",
+        "eslint-plugin-import": "2.16.0",
+        "eslint-plugin-jsx-a11y": "6.2.1",
+        "eslint-config-airbnb": "17.1.0",
+        "eslint-config-airbnb-base": "13.1.0",
+        "eslint-plugin-react": "7.12.4",
         "mocha": "6.0.2"
     }
 }
