@@ -3,6 +3,10 @@ import MapComments from './mapComments';
 import fs from 'fs';
 
 
+/**
+ * Map the comments and returns the contract ast and the mapped comments.
+ * @param {string} solidityFile the file's path to be parsed
+ */
 function prepareFromFile(solidityFile) {
     // read file
     const input = fs.readFileSync(solidityFile).toString();
@@ -15,7 +19,10 @@ function prepareFromFile(solidityFile) {
     return { ast: astContract, comments };
 }
 
-
+/**
+ * Merges the contract ast and comments into an array.
+ * @param {string} solidityFile the file's path to be parsed
+ */
 function mergeInfoFile(solidityFile) {
     // get basic information
     const rawContractData = prepareFromFile(solidityFile);
@@ -31,10 +38,18 @@ function mergeInfoFile(solidityFile) {
     return contractDataWithComments;
 }
 
+/**
+ * Generate HTML for the given file.
+ * @param {string} solidityFile the file's path to be parsed
+ */
 function generateHTMLForFile(solidityFile) {
     return mergeInfoFile(solidityFile);
 }
 
+/**
+ * Main method to be called. Will create the HTML using the other methods.
+ * @param {array} files array of files path
+ */
 function generateHTML(files) {
     files.forEach(file => {
         generateHTMLForFile(file);

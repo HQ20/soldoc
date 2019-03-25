@@ -1,3 +1,8 @@
+/**
+ * Get the complete .sol file and extract comments into a map where
+ * the key is the function name and the value is the comment to
+ * that respective function.
+ */
 export default (input) => {
     const returnComments = new Map();
     // get original comments
