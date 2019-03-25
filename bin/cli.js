@@ -1,13 +1,9 @@
 #!/usr/bin/env node
-'use strict';
+
+
 const meow = require('meow');
+const { generateHTML } = require('../src/index');
 
-
-function cenas(input, flags) {
-    if (flags.cenas === true) {
-        console.log('Hello ' + input[0]);
-    }
-}
 
 const cli = meow(`
 	Usage
@@ -20,15 +16,15 @@ const cli = meow(`
 	  $ foo unicorns --rainbow
 	  🌈 unicorns 🌈
 `, {
-	flags: {
-		rainbow: {
-			type: 'boolean',
-			alias: 'r'
+    flags: {
+        rainbow: {
+            type: 'boolean',
+            alias: 'r',
         },
         cenas: {
             type: 'boolean',
         },
-	}
+    },
 });
 
-cenas(cli.input, cli.flags);
+generateHTML(String(cli.input));
