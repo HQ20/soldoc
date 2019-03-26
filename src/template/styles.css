@@ -34,6 +34,9 @@ Navbar
     border-right: solid 1px #3D3D3E;
 }
 
+.Navbar__Item--Border-Left {
+    border-left: solid 1px #3D3D3E; 
+}
 
 .Navbar__Item--No-Border-Right {
     border-right: 0px;
@@ -51,6 +54,7 @@ Navbar
     text-align: center;
     margin: 10px 0px;
     font-size: 14px;
+    border-right: solid 1px #3D3D3E;
 }
 
 .Navbar__Item--center {
@@ -71,7 +75,7 @@ Footer
 ****************************************************************************/
 .Footer {
     display: grid;
-    grid-template-columns: 100px auto 50px;
+    grid-template-columns: 160px auto 520px;
     width: 1066px;
     margin: auto;
     background: #F3F4F5;
@@ -84,4 +88,17 @@ Footer
     border-bottom: 0px;
     height: 46px;
     line-height: 46px;
+    padding: 0px 10px;
+}
+
+.Footer__Credits {
+    line-height: 46px;
+    font-size: 14px;
+    color: #616262;
+}
+
+.Footer__Build-Date {
+    line-height: 46px;
+    font-size: 14px;
+    color: #616262;
 }
