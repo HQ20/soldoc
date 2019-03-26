@@ -149,114 +149,60 @@ Content
 }
 
 /****************************************************************************
-Constructor Card
+Card
 ****************************************************************************/
 
-.Constructor-Card {
+.Card {
     border: 1px solid #DEDEDF;
     display: grid;
-    grid-template-columns: 100px auto 100px;
+    grid-template-columns: 180px auto 100px;
     padding: 14px;
     box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
     border-radius: 2px;
+    margin-bottom: 14px;
+}
+
+.Card--Transfer {
+    border-top: 2px solid #2085D0; 
+}
+
+.Card--Constructor {
     border-top: 2px solid #DA2728;
-    margin-bottom: 14px;
 }
 
-.Constructor-Card__Title {
+.Card__Title {
     background: #FCFCFC;
     text-align: center;
     border: 1px solid #EFEFEF;
-    width: 100px;
     padding: 2px;
     font-weight: 700;
     font-size: 18px;
     font-family: 'Roboto Mono', monospace;
 }
 
-.Constructor-Card__SubTitle {
+.Card__SubTitle {
     color: white;
     padding: 2px;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 2px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.Card__SubTitle--Constructor {
     background: #DA2728;
-    line-height: 20px;
-    text-align: center;
-    border-radius: 2px;
-    font-size: 13px;
-    font-weight: 700;
 }
 
-/****************************************************************************
-Transfer Card
-****************************************************************************/
-
-.Transfer-Card {
-    border: 1px solid #DEDEDF;
-    display: grid;
-    grid-template-columns: 100px auto 100px;
-    padding: 14px;
-    box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
-    border-radius: 2px;
-    border-top: 2px solid #2085D0;
-    margin-bottom: 14px;
-}
-
-.Transfer-Card__Title {
-    background: #FCFCFC;
-    text-align: center;
-    border: 1px solid #EFEFEF;
-    width: 100px;
-    padding: 2px;
-    font-weight: 700;
-    font-size: 18px;
-    font-family: 'Roboto Mono', monospace;
-}
-
-.Transfer-Card__SubTitle {
-    color: white;
-    padding: 2px;
+.Card__SubTitle--Transfer {
     background: #2085D0;
-    line-height: 20px;
-    text-align: center;
-    border-radius: 2px;
-    font-size: 13px;
-    font-weight: 700;
 }
 
-/****************************************************************************
-Function Card
-****************************************************************************/
-
-.Function-Card {
-    border: 1px solid #DEDEDF;
-    display: grid;
-    grid-template-columns: 100px auto 100px;
-    padding: 14px;
-    box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
-    border-radius: 2px;
-    margin-bottom: 14px;
-}
-
-.Function-Card__Title {
-    background: #FCFCFC;
-    text-align: center;
-    border: 1px solid #EFEFEF;
-    width: 120px;
-    padding: 2px;
-    font-weight: 700;
-    font-size: 18px;
-    font-family: 'Roboto Mono', monospace;
-}
-
-.Function-Card__SubTitle {
+.Card__SubTitle--Function {
     color: #5D5D5D;
-    padding: 2px;
     background: #E8E8E8;
-    line-height: 20px;
-    text-align: center;
-    border-radius: 2px;
-    font-size: 13px;
-    font-weight: 700;
 }
+
 
 /****************************************************************************
 Footer
