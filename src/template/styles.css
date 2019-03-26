@@ -9,6 +9,9 @@ body {
     font-weight: 700;
 }
 
+/****************************************************************************
+Navbar
+****************************************************************************/
 .Navbar {
     width: 100%;
     height: 46px;
@@ -17,7 +20,7 @@ body {
 
 .Navbar__Container {
     display: grid;
-    grid-template-columns: 100px 260px auto 70px 50px;
+    grid-template-columns: 100px 100px 260px auto 50px;
     width: 1066px;
     margin: auto;
 }
@@ -32,6 +35,40 @@ body {
 }
 
 
+.Navbar__Item--No-Border-Right {
+    border-right: 0px;
+}
+
+.Navbar__Version {
+    padding: 5px 10px;
+    color: #fff;
+    font-weight: 500;
+    background: #767676;
+    line-height: 16px;
+    height: 16px;
+    width: 40px;
+    border-radius: 4px;
+    text-align: center;
+    margin: 10px 0px;
+    font-size: 14px;
+}
+
+.Navbar__Item--center {
+    text-align: center;
+}
+
+.fas, .fa-home {
+    line-height: 46px;
+    display: block;
+    margin: auto;
+    text-decoration: none;
+    color: white;
+    width: 20px;
+}
+
+/****************************************************************************
+Footer
+****************************************************************************/
 .Footer {
     display: grid;
     grid-template-columns: 100px auto 50px;
