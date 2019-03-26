@@ -1,7 +1,7 @@
 import expect from 'expect.js';
 import fs from 'fs';
 
-import MapComments from '../src/mapComments';
+import { mapComments } from '../src/mapComments';
 
 describe('MapComments', () => {
     const filePath = 'test/contracts/OZERC20.sol';
@@ -11,7 +11,7 @@ describe('MapComments', () => {
         // read file
         const input = fs.readFileSync(filePath).toString();
         // get filtered comments
-        comments = MapComments(input);
+        comments = mapComments(input);
     });
 
     it('extract single line no param/return valid comments', () => {
