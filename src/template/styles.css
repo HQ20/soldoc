@@ -1,0 +1,50 @@
+@import './reset.css';
+
+body {
+    font-family: 'Roboto', sans-serif;
+    overflow: hidden;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.Navbar {
+    width: 100%;
+    height: 46px;
+    background: #1A1B1C;
+}
+
+.Navbar__Container {
+    display: grid;
+    grid-template-columns: 100px 260px auto 70px 50px;
+    width: 1066px;
+    margin: auto;
+}
+
+.Navbar__Item {
+    line-height: 46px;
+    font-size: 14px;
+    color: #fff;
+    font-weight: 400;
+    height: 100%;
+    border-right: solid 1px #3D3D3E;
+}
+
+
+.Footer {
+    display: grid;
+    grid-template-columns: 100px auto 50px;
+    width: 1066px;
+    margin: auto;
+    background: #F3F4F5;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    border: 1px solid #D4D4D5;
+    border-radius: 2px;
+    border-bottom: 0px;
+    height: 46px;
+    line-height: 46px;
+}
