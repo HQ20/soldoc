@@ -2,7 +2,6 @@
 
 body {
     font-family: 'Roboto', sans-serif;
-    overflow: hidden;
 }
 
 .bold {
@@ -77,6 +76,9 @@ Main
 .Main {
     display: grid;
     grid-template-columns: 28% auto;
+    width: 1066px;
+    margin: auto;
+    min-height: calc(93vh - 46px);
 }
 
 /****************************************************************************
@@ -88,14 +90,14 @@ Sidebar
     grid-template-columns: auto;
     height: 120px;
     margin-top: 20px;
-    justify-content: end;
+    margin-right: 20px;
 }
 
 .Sidebar__Item {
     border-right: solid 1px #D4D4D5;
-    width: 200px;
     line-height: 40px;
-    padding-left: 30px;
+    padding-left: 10px;
+    font-size: 14px;
 }
 
 .Sidebar__Item:active {
@@ -107,6 +109,156 @@ Sidebar
 }
 
 /****************************************************************************
+Content
+****************************************************************************/
+
+.Content {
+    padding: 14px;
+    padding-top: 44px;
+}
+
+.Content__Title {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.Content__Subtitle {
+    font-size: 16px;
+    font-weight: 400;
+    color: #666666;
+    margin-bottom: 80px;
+}
+
+.Content__Menu {
+    display: grid;
+    grid-template-columns: 100px auto;
+    margin-bottom: 14px;
+}
+
+.Content__Menu-Item {
+    padding-bottom: 14px;
+    width: 100px;
+    text-align: center;
+    font-weight: 700;
+    border-bottom: 1.6px solid;
+}
+
+.Content__Menu-Item--Grey {
+    border-bottom: 1.6px solid #DEDEDF;  
+}
+
+/****************************************************************************
+Constructor Card
+****************************************************************************/
+
+.Constructor-Card {
+    border: 1px solid #DEDEDF;
+    display: grid;
+    grid-template-columns: 100px auto 100px;
+    padding: 14px;
+    box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
+    border-radius: 2px;
+    border-top: 2px solid #DA2728;
+    margin-bottom: 14px;
+}
+
+.Constructor-Card__Title {
+    background: #FCFCFC;
+    text-align: center;
+    border: 1px solid #EFEFEF;
+    width: 100px;
+    padding: 2px;
+    font-weight: 700;
+    font-size: 18px;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.Constructor-Card__SubTitle {
+    color: white;
+    padding: 2px;
+    background: #DA2728;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 2px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/****************************************************************************
+Transfer Card
+****************************************************************************/
+
+.Transfer-Card {
+    border: 1px solid #DEDEDF;
+    display: grid;
+    grid-template-columns: 100px auto 100px;
+    padding: 14px;
+    box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
+    border-radius: 2px;
+    border-top: 2px solid #2085D0;
+    margin-bottom: 14px;
+}
+
+.Transfer-Card__Title {
+    background: #FCFCFC;
+    text-align: center;
+    border: 1px solid #EFEFEF;
+    width: 100px;
+    padding: 2px;
+    font-weight: 700;
+    font-size: 18px;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.Transfer-Card__SubTitle {
+    color: white;
+    padding: 2px;
+    background: #2085D0;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 2px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/****************************************************************************
+Function Card
+****************************************************************************/
+
+.Function-Card {
+    border: 1px solid #DEDEDF;
+    display: grid;
+    grid-template-columns: 100px auto 100px;
+    padding: 14px;
+    box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
+    border-radius: 2px;
+    margin-bottom: 14px;
+}
+
+.Function-Card__Title {
+    background: #FCFCFC;
+    text-align: center;
+    border: 1px solid #EFEFEF;
+    width: 120px;
+    padding: 2px;
+    font-weight: 700;
+    font-size: 18px;
+    font-family: 'Roboto Mono', monospace;
+}
+
+.Function-Card__SubTitle {
+    color: #5D5D5D;
+    padding: 2px;
+    background: #E8E8E8;
+    line-height: 20px;
+    text-align: center;
+    border-radius: 2px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+/****************************************************************************
 Footer
 ****************************************************************************/
 .Footer {
@@ -115,12 +267,10 @@ Footer
     width: 1066px;
     margin: auto;
     background: #F3F4F5;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    left: 0;
+    margin: auto;
     border: 1px solid #D4D4D5;
-    border-radius: 2px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
     border-bottom: 0px;
     height: 46px;
     line-height: 46px;
