@@ -71,6 +71,42 @@ Navbar
 }
 
 /****************************************************************************
+Main
+****************************************************************************/
+
+.Main {
+    display: grid;
+    grid-template-columns: 28% auto;
+}
+
+/****************************************************************************
+Sidebar
+****************************************************************************/
+
+.Sidebar {
+    display: grid;
+    grid-template-columns: auto;
+    height: 120px;
+    margin-top: 20px;
+    justify-content: end;
+}
+
+.Sidebar__Item {
+    border-right: solid 1px #D4D4D5;
+    width: 200px;
+    line-height: 40px;
+    padding-left: 30px;
+}
+
+.Sidebar__Item:active {
+    font-weight: 700;
+    border: solid 1px #D4D4D5;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    border-right: none;
+}
+
+/****************************************************************************
 Footer
 ****************************************************************************/
 .Footer {
