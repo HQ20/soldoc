@@ -5,16 +5,15 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
         <link rel="stylesheet" href="styles.css">
-        <title>SolDoc</title>
+        <title>Soldoc</title>
     </head>
     <body>
 
         <!-- Navbar -->
         <div class="Navbar">
             <div class="Navbar__Container">
-
                 <div class="Navbar__Item Navbar__Item--No-Border-Right">
-                    <p class="bold">soldoc</p>
+                    <p class="bold center">soldoc</p>
                 </div>
                 <div class="Navbar__Version">0.1.0</div>
                 <div class="Navbar__Item">
@@ -22,11 +21,10 @@
                 </div>
                 <div class="Navbar__Item"></div>
                 <div class="Navbar__Item Navbar__Item--No-Border-Right">
-                        <a href="https://github.com/obernardovieira/soldoc">
-                            <i class="fas fa-home"></i>
-                        </a>
+                    <a href="https://github.com/obernardovieira/soldoc">
+                        <i class="fas fa-home"></i>
+                    </a>
                 </div>
-
             </div>
         </div>
 
@@ -55,27 +53,22 @@
 
                 <!-- Constructor Cards -->
                 <div class="Card Card--Constructor">
-
                     <div class="Card-Flex">
                         <p class="Card__Title">MetaCoin</p>
                         <div></div>
                         <p class="Card__SubTitle Card__SubTitle--Constructor">constructor</p>
                     </div>
-
                 </div>
 
                 <!-- Transfer Cards -->
                 <div class="Card Card--Transfer">
-
                     <div class="Card-Flex">
                         <p class="Card__Title">Transfer</p>
                         <div></div>
                         <p class="Card__SubTitle Card__SubTitle--Transfer">event</p>
                     </div>
-
                     <div class="Card-Table">
                         <div class="Card-Table__Single-Column">Inputs</div>
-
                         <div class="Card-Table__Column">
                             <p class="Card-Table__Row">0</p>
                             <p class="Card-Table__Row">address</p>
@@ -83,7 +76,6 @@
                                 <code class="Card-Table__Code">_from</code>
                             </p>
                         </div>
-
                         <div class="Card-Table__Column">
                             <p class="Card-Table__Row">1</p>
                             <p class="Card-Table__Row">address</p>
@@ -91,7 +83,6 @@
                                 <code class="Card-Table__Code">_to</code>
                             </p>
                         </div>
-
                         <div class="Card-Table__Column">
                             <p class="Card-Table__Row">2</p>
                             <p class="Card-Table__Row">uint256</p>
@@ -99,42 +90,102 @@
                                 <code class="Card-Table__Code">_value</code>
                             </p>
                         </div>
-
                     </div>
-
                 </div>
 
-                <!-- Get Card -->
+                <!-- GetBalance Card -->
                 <div class="Card">
-
                     <div class="Card-Flex">
                         <p class="Card__Title">getBalance</p>
                         <div></div>
                         <p class="Card__SubTitle Card__SubTitle--Function">function</p>
                     </div>
-
+                    <p class="Card__Content">Returns MetaCoin balance for a given address</p>
+                    <div class="Card-Table--border">
+                        <div class="Card-Table__Column">
+                            <p class="Card-Table__Row bold border-right Card-Table__Row--black">Inputs</p>
+                            <p class="Card-Table__Row">address</p>
+                            <p class="Card-Table__Row">
+                                <code class="Card-Table__Code">addr</code>
+                            </p>
+                            <p class="Card-Table__Row">Queried address</p>
+                        </div>
+                        <div class="Card-Table__Column Card-Table__Row--Red">
+                            <p class="Card-Table__Row bold border-right Card-Table__Row--black">Outputs</p>
+                            <p class="Card-Table__Row">uint256</p>
+                            <p class="Card-Table__Row">
+                                <code class="Card-Table__Code">value</code>
+                            </p>
+                            <p class="Card-Table__Row">Token balance of account</p>
+                        </div>
+                    </div>
                 </div>
 
+                <!-- getBalanceInEth CARD -->
                 <div class="Card">
-
                     <div class="Card-Flex">
                         <p class="Card__Title">getBalanceInEth</p>
                         <div></div>
                         <p class="Card__SubTitle Card__SubTitle--Function">function</p>
                     </div>
-
+                    <p class="Card__Content">Returns equivalent Ether balance for a given address</p>
+                    <p class="Card__Sub-Content">Uses the <code class="Card-Table__Code--grey">ConvertLib.sol</code> library for conversions</p>
+                    <div class="Card-Table--border">
+                        <div class="Card-Table__Column">
+                            <p class="Card-Table__Row bold border-right Card-Table__Row--black">Inputs</p>
+                            <p class="Card-Table__Row">address</p>
+                            <p class="Card-Table__Row">
+                                <code class="Card-Table__Code">addr</code>
+                            </p>
+                            <p class="Card-Table__Row">Queried address</p>
+                        </div>
+                        <div class="Card-Table__Column Card-Table__Row--Red">
+                            <p class="Card-Table__Row bold border-right Card-Table__Row--black">Outputs</p>
+                            <p class="Card-Table__Row">uint256</p>
+                            <p class="Card-Table__Row">
+                                <code class="Card-Table__Code">value</code>
+                            </p>
+                            <p class="Card-Table__Row">Ether equivalent balance of account</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="Card">
 
+                <!-- SEND COIN CARD -->
+                <div class="Card">
                     <div class="Card-Flex">
                         <p class="Card__Title">sendCoin</p>
                         <div></div>
                         <p class="Card__SubTitle Card__SubTitle--Function">function</p>
                     </div>
-
+                    <p class="Card__Content">Transfer coins from sender to receiver</p>
+                    <p class="Card__Sub-Content">This is just a simple example of a coin-like contract. It is not standards compatible and cannot be expected to talk to other coin/token contracts. If you want to create a standards-compliant token, see: ConsenSys/Tokens. Cheers!</p>
+                    <div class="Card-Table">
+                        <div class="Card-Table__Single-Column Card-Table__Single-Column--medium">Inputs</div>
+                        <div class="Card-Table__Column">
+                            <p class="Card-Table__Row">address</p>
+                            <p class="Card-Table__Row">
+                                <code class="Card-Table__Code">receiver</code>
+                            </p>
+                            <p class="Card-Table__Row">Address of the receipient</p>
+                        </div>
+                        <div class="Card-Table__Column">
+                            <p class="Card-Table__Row">uint256</p>
+                            <p class="Card-Table__Row">
+                                <code class="Card-Table__Code">amount</code>
+                            </p>
+                            <p class="Card-Table__Row">Amount of tokens to send</p>
+                        </div>
+                        <div class="Card-Table__Single-Column Card-Table__Single-Column--small red">Outputs</div>
+                        <div class="Card-Table__Column Card-Table__Row--Red">
+                            <p class="Card-Table__Row">bool</p>
+                            <p class="Card-Table__Row">
+                                <code class="Card-Table__Code">sufficient</code>
+                            </p>
+                            <p class="Card-Table__Row">Transfer is successful</p>
+                        </div>
+                    </div>
                 </div>
-
 
             </div>
         </div>
@@ -148,9 +199,9 @@
             </div>
             <div></div>
             <div class="Footer__Build-Date">
-                    Built using
-                    <span class="bold">Solidity 0.4.2+commit.af6afb04.Darwin.appleclang</span>
-                    <span class="bold">on 07/11/2019</span>
+                Built using
+                <span class="bold">Solidity 0.4.2+commit.af6afb04.Darwin.appleclang</span>
+                <span class="bold">on 07/11/2019</span>
             </div>
         </div>
 
