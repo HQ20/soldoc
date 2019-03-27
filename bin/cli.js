@@ -4,27 +4,17 @@
 const meow = require('meow');
 const { generateHTML } = require('../src/index');
 
+const helpMessage = `
+Usage
+    $ soldoc <file(s)>
 
-const cli = meow(`
-	Usage
-	  $ foo <input>
+Options
+    --help, -h  To get help
 
-	Options
-	  --rainbow, -r  Include a rainbow
-
-	Examples
-	  $ foo unicorns --rainbow
-	  🌈 unicorns 🌈
-`, {
-    flags: {
-        rainbow: {
-            type: 'boolean',
-            alias: 'r',
-        },
-        cenas: {
-            type: 'boolean',
-        },
-    },
-});
+Examples
+    $ foo contracts/Sample.sol
+    $ foo contracts/
+`;
+const cli = meow(helpMessage);
 
 generateHTML(String(cli.input));
