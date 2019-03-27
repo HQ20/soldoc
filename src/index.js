@@ -50,8 +50,8 @@ function transformTemplate(templateFile, contractName, contractData, contractPat
         contract: {
             name: contractName,
         },
+        contractData,
     };
-
     const output = Mustache.render(templateContent, view);
     return output;
 }
@@ -72,18 +72,15 @@ function generateHTMLForFile(solidityFile) {
     if (!fs.existsSync(destinationDocsFolderPath)) {
         fs.mkdirSync(destinationDocsFolderPath);
     }
-    // fulfill the template using contract data
-    contractData.forEach(() => {
-        // transform the template
-        const HTMLContent = transformTemplate(
-            `${currentFolder}src/template/index.html`, contractName, contractData, solidityFile,
-        );
-        // write it to a file
-        fs.writeFileSync(`${process.cwd()}/docs/${filename[1]}.html`, HTMLContent);
-        // copy styles
-        fs.copyFileSync(`${currentFolder}src/template/reset.css`, `${process.cwd()}/docs/reset.css`);
-        fs.copyFileSync(`${currentFolder}src/template/styles.css`, `${process.cwd()}/docs/styles.css`);
-    });
+    // transform the template
+    const HTMLContent = transformTemplate(
+        `${currentFolder}src/template/index.html`, contractName, contractData, solidityFile,
+    );
+    // write it to a file
+    fs.writeFileSync(`${process.cwd()}/docs/${filename[1]}.html`, HTMLContent);
+    // copy styles
+    fs.copyFileSync(`${currentFolder}src/template/reset.css`, `${process.cwd()}/docs/reset.css`);
+    fs.copyFileSync(`${currentFolder}src/template/styles.css`, `${process.cwd()}/docs/styles.css`);
 }
 
 /**

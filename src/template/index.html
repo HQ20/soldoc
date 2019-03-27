@@ -93,6 +93,39 @@
                     </div>
                 </div>
 
+                {{#contractData}}
+                <div class="Card">
+                    <div class="Card-Flex">
+                        <p class="Card__Title">{{ast.name}}</p>
+                        <div></div>
+                        <p class="Card__SubTitle Card__SubTitle--Function">function</p>
+                    </div>
+                    <p class="Card__Content">{{comments}}</p>
+                    <div class="Card-Table--border">
+                        {{#ast.parameters.parameters}}
+                        <div class="Card-Table__Column">
+                            <p class="Card-Table__Row bold border-right Card-Table__Row--black">Inputs</p>
+                            <p class="Card-Table__Row">{{typeName.name}}</p>
+                            <p class="Card-Table__Row">
+                                <code class="Card-Table__Code">{{name}}</code>
+                            </p>
+                            <p class="Card-Table__Row">Queried address</p>
+                        </div>
+                        {{/ast.parameters.parameters}}
+                        {{#ast.returnParameters.parameters}}
+                        <div class="Card-Table__Column Card-Table__Row--Red">
+                            <p class="Card-Table__Row bold border-right Card-Table__Row--black">Outputs</p>
+                            <p class="Card-Table__Row">{{typeName.name}}</p>
+                            <p class="Card-Table__Row">
+                                <code class="Card-Table__Code">{{name}}</code>
+                            </p>
+                            <p class="Card-Table__Row">Token balance of account</p>
+                        </div>
+                        {{/ast.returnParameters.parameters}}
+                    </div>
+                </div>
+                {{/contractData}}
+
                 <!-- GetBalance Card -->
                 <div class="Card">
                     <div class="Card-Flex">
