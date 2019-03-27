@@ -154,8 +154,8 @@ Card
 
 .Card {
     border: 1px solid #DEDEDF;
-    display: grid;
-    grid-template-columns: 180px auto 100px;
+    display: flex;
+    justify-content: space-between;
     padding: 14px;
     box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
     border-radius: 2px;
@@ -174,7 +174,8 @@ Card
     background: #FCFCFC;
     text-align: center;
     border: 1px solid #EFEFEF;
-    padding: 2px;
+    width: auto;
+    padding: 4px;
     font-weight: 700;
     font-size: 18px;
     font-family: 'Roboto Mono', monospace;
@@ -182,7 +183,7 @@ Card
 
 .Card__SubTitle {
     color: white;
-    padding: 2px;
+    padding: 4px 6px;
     line-height: 20px;
     text-align: center;
     border-radius: 2px;
