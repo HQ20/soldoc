@@ -1,10 +1,11 @@
 {
     "name": "soldoc",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "description": "",
     "main": "index.js",
     "scripts": {
-        "start": "./bin/cli.js",
+        "demo": "./bin/cli.js test/contracts/OZERC20.sol",
+        "lint:js": "eslint src/*.js .",
         "test": "mocha -r esm",
         "coverage": "nyc mocha -r esm"
     },
@@ -22,6 +23,7 @@
     "dependencies": {
         "chalk": "2.4.2",
         "meow": "5.0.0",
+        "mustache": "^3.0.1",
         "solidity-parser-antlr": "0.4.2"
     },
     "devDependencies": {
@@ -33,7 +35,7 @@
         "eslint-plugin-react": "7.12.4",
         "esm": "3.2.18",
         "expect.js": "^0.3.1",
-        "nyc": "^13.3.0",
-        "mocha": "6.0.2"
+        "mocha": "6.0.2",
+        "nyc": "^13.3.0"
     }
 }
