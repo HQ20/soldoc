@@ -34,7 +34,7 @@ Navbar
 }
 
 .Navbar__Item--Border-Left {
-    border-left: solid 1px #3D3D3E; 
+    border-left: solid 1px #3D3D3E;
 }
 
 .Navbar__Item--No-Border-Right {
@@ -78,7 +78,7 @@ Main
     grid-template-columns: 28% auto;
     width: 1066px;
     margin: auto;
-    min-height: calc(93vh - 46px);
+    min-height: calc(95vh - 46px);
 }
 
 /****************************************************************************
@@ -145,7 +145,7 @@ Content
 }
 
 .Content__Menu-Item--Grey {
-    border-bottom: 1.6px solid #DEDEDF;  
+    border-bottom: 1.6px solid #DEDEDF;
 }
 
 /****************************************************************************
@@ -154,16 +154,19 @@ Card
 
 .Card {
     border: 1px solid #DEDEDF;
-    display: flex;
-    justify-content: space-between;
     padding: 14px;
     box-shadow: 0 1px 2px 0 rgba(34,36,38,.15);
     border-radius: 2px;
     margin-bottom: 14px;
 }
 
+.Card-Flex {
+    display: flex;
+    justify-content: space-between;
+}
+
 .Card--Transfer {
-    border-top: 2px solid #2085D0; 
+    border-top: 2px solid #2085D0;
 }
 
 .Card--Constructor {
@@ -202,6 +205,50 @@ Card
 .Card__SubTitle--Function {
     color: #5D5D5D;
     background: #E8E8E8;
+}
+
+/****************************************************************************
+Card Table
+****************************************************************************/
+
+.Card-Table {
+    display: grid;
+    grid-template-columns: 20% auto;
+    border: 1px solid #DEDEDF;
+    border-bottom: none;
+    margin-top: 14px;
+    border-radius: 4px;
+}
+
+.Card-Table__Column {
+    display: grid;
+    grid-template-columns: 100px 180px auto auto;
+    padding: 18px;
+    border-bottom: 1px solid #DEDEDF;
+    background: #FCFFF5;
+    color: #2C662C;
+}
+
+.Card-Table__Single-Column {
+    grid-row: 1 / 4;
+    font-weight: 700;
+    background: #F4F7ED;
+    border-right: 1px solid #DEDEDF;
+    padding: 14px;
+    line-height: 132px;
+    border-bottom: 1px solid #DEDEDF;
+}
+
+.Card-Table__Code {
+    font-family: 'Roboto Mono', monospace;
+    background: #F9FCF2;
+    padding: 0px 4px;
+    border: 1px solid #ECEFE6;
+}
+
+.Card-Table__Row {
+    height: 20px;
+    line-height: 20px;
 }
 
 
