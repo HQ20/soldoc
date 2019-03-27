@@ -1,5 +1,7 @@
 const parser = require('solidity-parser-antlr');
+const path = require('path');
 const fs = require('fs');
+const Mustache = require('mustache');
 
 const { mapComments } = require('./mapComments');
 const { walkSync } = require('./utils/index');
@@ -37,7 +39,21 @@ function mergeInfoFile(solidityFile) {
         },
     });
     // return new info
-    return contractDataWithComments;
+    return [rawContractData.ast[0].name, contractDataWithComments];
+}
+
+function transformTemplate(templateFile, contractName, contractData, contractPath) {
+    const templateContent = String(fs.readFileSync(templateFile));
+    // TODO: in progress
+    const view = {
+        filePath: contractPath,
+        contract: {
+            name: contractName,
+        },
+    };
+
+    const output = Mustache.render(templateContent, view);
+    return output;
 }
 
 /**
@@ -45,22 +61,28 @@ function mergeInfoFile(solidityFile) {
  * @param {string} solidityFile the file's path to be parsed
  */
 function generateHTMLForFile(solidityFile) {
+    // get current path folder
+    const currentFolder = path.join(__dirname, '../');
     // get ast and comments
-    const contractData = mergeInfoFile(solidityFile);
+    const [contractName, contractData] = mergeInfoFile(solidityFile);
     // get the filename
     const filename = solidityFile.match(/\/([a-zA-Z0-9_]+)\.sol/);
+    // verify if the docs/ folder exist and creates it if not
+    const destinationDocsFolderPath = `${process.cwd()}/docs/`;
+    if (!fs.existsSync(destinationDocsFolderPath)) {
+        fs.mkdirSync(destinationDocsFolderPath);
+    }
     // fulfill the template using contract data
     contractData.forEach(() => {
         // transform the template
-        // TODO: in progress
-        const HTMLContent = '<p>Hello!</p>';
+        const HTMLContent = transformTemplate(
+            `${currentFolder}src/template/index.html`, contractName, contractData, solidityFile,
+        );
         // write it to a file
-        fs.writeFile(`${process.cwd()}/docs/${filename[1]}.html`, HTMLContent, (err) => {
-            if (err) {
-                return 1;
-            }
-            return 0;
-        });
+        fs.writeFileSync(`${process.cwd()}/docs/${filename[1]}.html`, HTMLContent);
+        // copy styles
+        fs.copyFileSync(`${currentFolder}src/template/reset.css`, `${process.cwd()}/docs/reset.css`);
+        fs.copyFileSync(`${currentFolder}src/template/styles.css`, `${process.cwd()}/docs/styles.css`);
     });
 }
 
