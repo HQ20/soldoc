@@ -93,7 +93,29 @@
                     </div>
                 </div>
 
-                {{#contractData}}
+                {{#contractData.events}}
+                <div class="Card Card--Transfer">
+                    <div class="Card-Flex">
+                        <p class="Card__Title">{{ast.name}}</p>
+                        <div></div>
+                        <p class="Card__SubTitle Card__SubTitle--Transfer">event</p>
+                    </div>
+                    <div class="Card-Table">
+                        <div class="Card-Table__Single-Column">Inputs</div>
+                        {{#ast.parameters.parameters}}
+                        <div class="Card-Table__Column">
+                            <p class="Card-Table__Row">0</p>
+                            <p class="Card-Table__Row">{{typeName.name}}</p>
+                            <p class="Card-Table__Row">
+                                <code class="Card-Table__Code">{{name}}</code>
+                            </p>
+                        </div>
+                        {{/ast.parameters.parameters}}
+                    </div>
+                </div>
+                {{/contractData.events}}
+
+                {{#contractData.functions}}
                 <div class="Card">
                     <div class="Card-Flex">
                         <p class="Card__Title">{{ast.name}}</p>
@@ -124,7 +146,7 @@
                         {{/ast.returnParameters.parameters}}
                     </div>
                 </div>
-                {{/contractData}}
+                {{/contractData.functions}}
 
                 <!-- GetBalance Card -->
                 <div class="Card">

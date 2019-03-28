@@ -31,11 +31,16 @@ function mergeInfoFile(solidityFile) {
     // get basic information
     const rawContractData = prepareFromFile(solidityFile);
     // create an array to save the ast and comments
-    const contractDataWithComments = [];
+    const contractDataWithComments = { events: [], functions: [] };
     // visit all the methods and add the commands to it
     parser.visit(rawContractData.ast, {
+        EventDefinition: (node) => {
+            contractDataWithComments.events.push({ ast: node });
+        },
+    });
+    parser.visit(rawContractData.ast, {
         FunctionDefinition: (node) => {
-            contractDataWithComments.push({ ast: node, comments: rawContractData.comments.get(node.name) });
+            contractDataWithComments.functions.push({ ast: node, comments: rawContractData.comments.get(node.name) });
         },
     });
     // return new info
@@ -44,7 +49,6 @@ function mergeInfoFile(solidityFile) {
 
 function transformTemplate(templateFile, contractName, contractData, contractPath) {
     const templateContent = String(fs.readFileSync(templateFile));
-    // TODO: in progress
     const view = {
         filePath: contractPath,
         contract: {
