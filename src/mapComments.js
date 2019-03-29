@@ -40,6 +40,8 @@ exports.mapComments = (input) => {
         returnComments.set(
             functioName,
             {
+                // only for test purposes
+                paramComments,
                 dev: devComment,
                 return: returnComment,
                 params: () => (val, render) => paramComments.get(render(val)),
