@@ -60,39 +60,6 @@
                     </div>
                 </div>
 
-                <!-- Transfer Cards -->
-                <div class="Card Card--Transfer">
-                    <div class="Card-Flex">
-                        <p class="Card__Title">Transfer</p>
-                        <div></div>
-                        <p class="Card__SubTitle Card__SubTitle--Transfer">event</p>
-                    </div>
-                    <div class="Card-Table">
-                        <div class="Card-Table__Single-Column">Inputs</div>
-                        <div class="Card-Table__Column">
-                            <p class="Card-Table__Row">0</p>
-                            <p class="Card-Table__Row">address</p>
-                            <p class="Card-Table__Row">
-                                <code class="Card-Table__Code">_from</code>
-                            </p>
-                        </div>
-                        <div class="Card-Table__Column">
-                            <p class="Card-Table__Row">1</p>
-                            <p class="Card-Table__Row">address</p>
-                            <p class="Card-Table__Row">
-                                <code class="Card-Table__Code">_to</code>
-                            </p>
-                        </div>
-                        <div class="Card-Table__Column">
-                            <p class="Card-Table__Row">2</p>
-                            <p class="Card-Table__Row">uint256</p>
-                            <p class="Card-Table__Row">
-                                <code class="Card-Table__Code">_value</code>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
                 {{#contractData.events}}
                 <div class="Card Card--Transfer">
                     <div class="Card-Flex">
@@ -123,6 +90,9 @@
                         <p class="Card__SubTitle Card__SubTitle--Function">function</p>
                     </div>
                     <p class="Card__Content">{{comments.dev}}</p>
+                    <!-- TODO: This will be used to support sub comments, maybe a difference between @dev and @notice
+                                and also, maybe supporting markdown. -->
+                    <!--<p class="Card__Sub-Content">Uses the <code class="Card-Table__Code--grey">ConvertLib.sol</code> library for conversions</p>-->
                     <div class="Card-Table--border">
                         {{#ast.parameters.parameters}}
                         <div class="Card-Table__Column">
@@ -147,100 +117,6 @@
                     </div>
                 </div>
                 {{/contractData.functions}}
-
-                <!-- GetBalance Card -->
-                <div class="Card">
-                    <div class="Card-Flex">
-                        <p class="Card__Title">getBalance</p>
-                        <div></div>
-                        <p class="Card__SubTitle Card__SubTitle--Function">function</p>
-                    </div>
-                    <p class="Card__Content">Returns MetaCoin balance for a given address</p>
-                    <div class="Card-Table--border">
-                        <div class="Card-Table__Column">
-                            <p class="Card-Table__Row bold border-right Card-Table__Row--black">Inputs</p>
-                            <p class="Card-Table__Row">address</p>
-                            <p class="Card-Table__Row">
-                                <code class="Card-Table__Code">addr</code>
-                            </p>
-                            <p class="Card-Table__Row">Queried address</p>
-                        </div>
-                        <div class="Card-Table__Column Card-Table__Row--Red">
-                            <p class="Card-Table__Row bold border-right Card-Table__Row--black">Outputs</p>
-                            <p class="Card-Table__Row">uint256</p>
-                            <p class="Card-Table__Row">
-                                <code class="Card-Table__Code">value</code>
-                            </p>
-                            <p class="Card-Table__Row">Token balance of account</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- getBalanceInEth CARD -->
-                <div class="Card">
-                    <div class="Card-Flex">
-                        <p class="Card__Title">getBalanceInEth</p>
-                        <div></div>
-                        <p class="Card__SubTitle Card__SubTitle--Function">function</p>
-                    </div>
-                    <p class="Card__Content">Returns equivalent Ether balance for a given address</p>
-                    <p class="Card__Sub-Content">Uses the <code class="Card-Table__Code--grey">ConvertLib.sol</code> library for conversions</p>
-                    <div class="Card-Table--border">
-                        <div class="Card-Table__Column">
-                            <p class="Card-Table__Row bold border-right Card-Table__Row--black">Inputs</p>
-                            <p class="Card-Table__Row">address</p>
-                            <p class="Card-Table__Row">
-                                <code class="Card-Table__Code">addr</code>
-                            </p>
-                            <p class="Card-Table__Row">Queried address</p>
-                        </div>
-                        <div class="Card-Table__Column Card-Table__Row--Red">
-                            <p class="Card-Table__Row bold border-right Card-Table__Row--black">Outputs</p>
-                            <p class="Card-Table__Row">uint256</p>
-                            <p class="Card-Table__Row">
-                                <code class="Card-Table__Code">value</code>
-                            </p>
-                            <p class="Card-Table__Row">Ether equivalent balance of account</p>
-                        </div>
-                    </div>
-                </div>
-
-
-                <!-- SEND COIN CARD -->
-                <div class="Card">
-                    <div class="Card-Flex">
-                        <p class="Card__Title">sendCoin</p>
-                        <div></div>
-                        <p class="Card__SubTitle Card__SubTitle--Function">function</p>
-                    </div>
-                    <p class="Card__Content">Transfer coins from sender to receiver</p>
-                    <p class="Card__Sub-Content">This is just a simple example of a coin-like contract. It is not standards compatible and cannot be expected to talk to other coin/token contracts. If you want to create a standards-compliant token, see: ConsenSys/Tokens. Cheers!</p>
-                    <div class="Card-Table">
-                        <div class="Card-Table__Single-Column Card-Table__Single-Column--medium">Inputs</div>
-                        <div class="Card-Table__Column">
-                            <p class="Card-Table__Row">address</p>
-                            <p class="Card-Table__Row">
-                                <code class="Card-Table__Code">receiver</code>
-                            </p>
-                            <p class="Card-Table__Row">Address of the receipient</p>
-                        </div>
-                        <div class="Card-Table__Column">
-                            <p class="Card-Table__Row">uint256</p>
-                            <p class="Card-Table__Row">
-                                <code class="Card-Table__Code">amount</code>
-                            </p>
-                            <p class="Card-Table__Row">Amount of tokens to send</p>
-                        </div>
-                        <div class="Card-Table__Single-Column Card-Table__Single-Column--small red">Outputs</div>
-                        <div class="Card-Table__Column Card-Table__Row--Red">
-                            <p class="Card-Table__Row">bool</p>
-                            <p class="Card-Table__Row">
-                                <code class="Card-Table__Code">sufficient</code>
-                            </p>
-                            <p class="Card-Table__Row">Transfer is successful</p>
-                        </div>
-                    </div>
-                </div>
 
             </div>
         </div>
