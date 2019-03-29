@@ -122,7 +122,7 @@
                         <div></div>
                         <p class="Card__SubTitle Card__SubTitle--Function">function</p>
                     </div>
-                    <p class="Card__Content">{{comments}}</p>
+                    <p class="Card__Content">{{comments.dev}}</p>
                     <div class="Card-Table--border">
                         {{#ast.parameters.parameters}}
                         <div class="Card-Table__Column">
@@ -131,7 +131,7 @@
                             <p class="Card-Table__Row">
                                 <code class="Card-Table__Code">{{name}}</code>
                             </p>
-                            <p class="Card-Table__Row">Queried address</p>
+                            <p class="Card-Table__Row">{{#comments.params}}{{name}}{{/comments.params}}</p>
                         </div>
                         {{/ast.parameters.parameters}}
                         {{#ast.returnParameters.parameters}}
@@ -141,7 +141,7 @@
                             <p class="Card-Table__Row">
                                 <code class="Card-Table__Code">{{name}}</code>
                             </p>
-                            <p class="Card-Table__Row">Token balance of account</p>
+                            <p class="Card-Table__Row">{{comments.return}}</p>
                         </div>
                         {{/ast.returnParameters.parameters}}
                     </div>
