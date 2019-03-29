@@ -44,8 +44,8 @@ contract ERC20 is IERC20 {
 
     /**
      * @dev Function to check the amount of tokens that an owner allowed to a spender.
-     * @param owner address The address which owns the funds.
-     * @param spender address The address which will spend the funds.
+     * @param owner The address which owns the funds.
+     * @param spender The address which will spend the funds.
      * @return A uint256 specifying the amount of tokens still available for the spender.
      */
     function allowance(address owner, address spender) public view returns (uint256) {
@@ -80,9 +80,9 @@ contract ERC20 is IERC20 {
      * @dev Transfer tokens from one address to another.
      * Note that while this function emits an Approval event, this is not required as per the specification,
      * and other compliant implementations may not emit the event.
-     * @param from address The address which you want to send tokens from
-     * @param to address The address which you want to transfer to
-     * @param value uint256 the amount of tokens to be transferred
+     * @param from The address which you want to send tokens from
+     * @param to The address which you want to transfer to
+     * @param value The amount of tokens to be transferred
      */
     function transferFrom(address from, address to, uint256 value) public returns (bool) {
         _transfer(from, to, value);
