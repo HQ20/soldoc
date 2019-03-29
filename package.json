@@ -7,7 +7,7 @@
         "demo": "./bin/cli.js test/contracts/OZERC20.sol",
         "lint:js": "eslint src/*.js .",
         "test": "mocha -r esm",
-        "coverage": "nyc mocha -r esm"
+        "coverage": "nyc --reporter=lcov npm test"
     },
     "repository": {
         "type": "git",
