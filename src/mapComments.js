@@ -7,6 +7,10 @@ exports.mapComments = (input) => {
     const returnComments = new Map();
     // get original comments
     const rawComments = input.match(/\/\*\*(\s[ ]+\* [\S ]+)*\s+\*\/\s+function [a-zA-Z0-9_]+\(/gm);
+    // If there's no comments!
+    if (rawComments === null) {
+        return returnComments;
+    }
     rawComments.forEach((comment) => {
         // extract only the comment
         const cleanComment = comment.match(/\/\*\*[\W\w]+\*\//);
