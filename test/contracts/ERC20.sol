@@ -24,8 +24,6 @@ contract ERC20 is IERC20 {
 
     uint256 private _totalSupply;
 
-    event potatos(uint256 some);
-
     /**
      * @dev Total number of tokens in existence
      */
