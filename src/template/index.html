@@ -51,14 +51,16 @@
                     <div class="Content__Menu-Item--Grey"></div>
                 </div>
 
+                {{#contractData.constructor}}
                 <!-- Constructor Cards -->
                 <div class="Card Card--Constructor">
                     <div class="Card-Flex">
-                        <p class="Card__Title">MetaCoin</p>
+                        <p class="Card__Title">{{contract.name}}</p>
                         <div></div>
                         <p class="Card__SubTitle Card__SubTitle--Constructor">constructor</p>
                     </div>
                 </div>
+                {{/contractData.constructor}}
 
                 {{#contractData.events}}
                 <div class="Card Card--Transfer">
@@ -131,8 +133,9 @@
             <div></div>
             <div class="Footer__Build-Date">
                 Built using
-                <span class="bold">Solidity 0.4.2+commit.af6afb04.Darwin.appleclang</span>
-                <span class="bold">on 07/11/2019</span>
+                <span class="bold">solidity-parser-antlr</span> and
+                <span class="bold">mustache</span> on
+                <span class="bold">{{currentDate}}</span>
             </div>
         </div>
 
