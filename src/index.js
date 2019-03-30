@@ -4,7 +4,7 @@ const fs = require('fs');
 const Mustache = require('mustache');
 
 const { mapComments } = require('./mapComments');
-const { walkSync } = require('./utils/index');
+const { walkSync } = require('./utils/utils');
 
 
 /**
@@ -31,7 +31,7 @@ function mergeInfoFile(solidityFile) {
     // get basic information
     const rawContractData = prepareFromFile(solidityFile);
     // create an array to save the ast and comments
-    const contractDataWithComments = { events: [], functions: [] };
+    const contractDataWithComments = { constructor: null, events: [], functions: [] };
     // visit all the methods and add the commands to it
     parser.visit(rawContractData.ast, {
         EventDefinition: (node) => {
@@ -40,7 +40,11 @@ function mergeInfoFile(solidityFile) {
     });
     parser.visit(rawContractData.ast, {
         FunctionDefinition: (node) => {
-            contractDataWithComments.functions.push({ ast: node, comments: rawContractData.comments.get(node.name) });
+            if (node.isConstructor) {
+                contractDataWithComments.constructor = { ast: node };
+            } else {
+                contractDataWithComments.functions.push({ ast: node, comments: rawContractData.comments.get(node.name) });
+            }
         },
     });
     // return new info
@@ -65,6 +69,7 @@ function transformTemplate(templateFile, contractName, contractData, contractPat
             name: contractName,
         },
         contractData,
+        currentDate: new Date(),
     };
     // calls the render engine
     const output = Mustache.render(templateContent, view);

@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "demo": "./bin/cli.js test/contracts/OZERC20.sol",
+        "demo": "./bin/cli.js test/contracts/",
         "lint:js": "eslint src/*.js .",
         "test": "mocha -r esm",
         "coverage": "nyc --reporter=lcov npm test",

@@ -4,7 +4,7 @@ import fs from 'fs';
 import { mapComments } from '../src/mapComments';
 
 describe('MapComments', () => {
-    const filePath = 'test/contracts/OZERC20.sol';
+    const filePath = 'test/contracts/ERC20.sol';
     let comments = '';
 
     before(() => {
