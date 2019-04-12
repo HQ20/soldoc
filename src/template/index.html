@@ -66,18 +66,17 @@
                         <div></div>
                         <p class="Card__SubTitle Card__SubTitle--Transfer">event</p>
                     </div>
-                    <div class="Card-Table">
-                        <div class="Card-Table__Single-Column">Inputs</div>
+                    <table class="Card-Table--border">
+                    <tbody>
                         {{#ast.parameters.parameters}}
-                        <div class="Card-Table__Column">
-                            <p class="Card-Table__Row">0</p>
-                            <p class="Card-Table__Row">{{typeName.name}}</p>
-                            <p class="Card-Table__Row">
-                                <code class="Card-Table__Code">{{name}}</code>
-                            </p>
-                        </div>
+                        <tr class="Card-Table__Column">
+                            <td class="bold">Inputs</td>
+                            <td>{{typeName.name}}</td>
+                            <td><code class="Card-Table__Code">{{name}}</code></td>
+                        </tr>
                         {{/ast.parameters.parameters}}
-                    </div>
+                    </tbody>
+                    </table>
                 </div>
                 {{/contractData.events}}
 

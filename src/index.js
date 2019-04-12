@@ -63,7 +63,7 @@ function prepareForHTMLFile(solidityFile) {
     // get the filename
     const filename = solidityFile.match(/\/([a-zA-Z0-9_]+)\.sol/)[1];
     return {
-        filename, currentFolder, contractName, contractData,
+        filename, currentFolder, contractName, contractData, solidityFile,
     };
 }
 

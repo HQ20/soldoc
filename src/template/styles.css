@@ -123,6 +123,7 @@ Content
 .Content {
     float: left;
     width: 60%;
+    margin-top: 20px;
 }
 
 .Content__Title {
