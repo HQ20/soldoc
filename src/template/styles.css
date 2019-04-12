@@ -1,7 +1,6 @@
-@import './reset.css';
-
 body {
     font-family: 'Roboto', sans-serif;
+    margin: 0px;
 }
 
 .bold {
@@ -23,15 +22,19 @@ Navbar
 ****************************************************************************/
 .Navbar {
     width: 100%;
-    height: 46px;
-    background: #1A1B1C;
+    height: 120px;
+    background: #606c76;
 }
 
 .Navbar__Container {
-    display: grid;
-    grid-template-columns: 100px 100px 260px auto 50px;
-    width: 1066px;
-    margin: auto;
+    width: 50%;
+    color: white;
+    margin-left: 100px;
+    font-family: monospace;
+}
+
+.Navbar__Container p {
+    margin: 0px;
 }
 
 .Navbar__Item {
@@ -84,11 +87,8 @@ Main
 ****************************************************************************/
 
 .Main {
-    display: grid;
-    grid-template-columns: 28% auto;
-    width: 1066px;
-    margin: auto;
-    min-height: calc(95vh - 46px);
+    width: 100%;
+    margin: 0% 100px;
 }
 
 /****************************************************************************
@@ -96,11 +96,9 @@ Sidebar
 ****************************************************************************/
 
 .Sidebar {
-    display: grid;
-    grid-template-columns: auto;
-    height: 120px;
     margin-top: 20px;
-    margin-right: 20px;
+    width: 20%;
+    float: left;
 }
 
 .Sidebar__Item {
@@ -123,8 +121,8 @@ Content
 ****************************************************************************/
 
 .Content {
-    padding: 14px;
-    padding-top: 44px;
+    float: left;
+    width: 60%;
 }
 
 .Content__Title {
@@ -147,8 +145,10 @@ Content
 }
 
 .Content__Menu-Item {
-    padding-bottom: 14px;
+    height: 100%;
+    margin-bottom: 10px;
     width: 100px;
+    height: 100%;
     text-align: center;
     font-weight: 700;
     border-bottom: 1.6px solid;
@@ -240,14 +240,11 @@ Card Table
 }
 
 .Card-Table__Column {
-    display: grid;
-    grid-template-columns: 100px 180px auto auto;
-    height: 53px;
-    border-bottom: 1px solid #DEDEDF;
-    background: #FCFFF5;
-    color: #2C662C;
-    line-height: 53px;
-    padding-left: 14px;
+    color: #7f8ba9;
+}
+
+.Card-Table__Column td {
+    padding-left: 10px;
 }
 
 .Card-Table__Row--big {
@@ -303,7 +300,7 @@ Card Table
 
 .Card-Table__Row--Red {
     background: #FFF6F6;
-    color: #9F3A38;
+    color: #bd7a79;
 }
 
 .red {
@@ -311,8 +308,7 @@ Card Table
 }
 
 .Card__Content {
-    font-weight: 700;
-    padding: 18px 0px;
+    font-family: monospace;
 }
 
 .Card__Sub-Content {
@@ -326,29 +322,34 @@ Card Table
 Footer
 ****************************************************************************/
 .Footer {
-    display: grid;
-    grid-template-columns: 160px auto 520px;
-    width: 1066px;
-    margin: auto;
-    background: #F3F4F5;
-    margin: auto;
-    border: 1px solid #D4D4D5;
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
-    border-bottom: 0px;
-    height: 46px;
-    line-height: 46px;
-    padding: 0px 10px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #cecece4d;
+    color: white;
+    text-align: center;
 }
 
 .Footer__Credits {
-    line-height: 46px;
-    font-size: 14px;
+    margin-left: 100px;
+    float: left;
+    font-size: 10px;
     color: #616262;
 }
 
 .Footer__Build-Date {
-    line-height: 46px;
-    font-size: 14px;
+    margin-right: 100px;
+    float: right;
+    font-size: 10px;
     color: #616262;
+}
+
+
+/**
+Override milligram
+**/
+
+table {
+    margin-bottom: 0rem;
 }
