@@ -52,6 +52,22 @@ function mergeInfoFile(solidityFile) {
 }
 
 /**
+ * Generate HTML for the given file.
+ * @param {string} solidityFile the file's path to be parsed
+ */
+function prepareForHTMLFile(solidityFile) {
+    // get current path folder
+    const currentFolder = path.join(__dirname, '../');
+    // get ast and comments
+    const [contractName, contractData] = mergeInfoFile(solidityFile);
+    // get the filename
+    const filename = solidityFile.match(/\/([a-zA-Z0-9_]+)\.sol/)[1];
+    return {
+        filename, currentFolder, contractName, contractData,
+    };
+}
+
+/**
  * Using the given parameters, calls the Mustache engine
  * and renders the HTML page.
  * @param {string} templateFile Path for template file
@@ -59,7 +75,7 @@ function mergeInfoFile(solidityFile) {
  * @param {object} contractData Contract data, containing ast and comments to be rendered
  * @param {string} contractPath Path to contract file
  */
-function transformTemplate(templateFile, contractName, contractData, contractPath) {
+function transformTemplate(templateFile, contractName, contractData, contractPath, contractsStructure) {
     // read template into a string
     const templateContent = String(fs.readFileSync(templateFile));
     // put all data together
@@ -69,6 +85,7 @@ function transformTemplate(templateFile, contractName, contractData, contractPat
             name: contractName,
         },
         contractData,
+        contractsStructure,
         currentDate: new Date(),
     };
     // calls the render engine
@@ -77,30 +94,45 @@ function transformTemplate(templateFile, contractName, contractData, contractPat
 }
 
 /**
- * Generate HTML for the given file.
- * @param {string} solidityFile the file's path to be parsed
+ * To write!
+ * @param {object} contractsData Obect containing all contracts info
  */
-function generateHTMLForFile(solidityFile) {
-    // get current path folder
-    const currentFolder = path.join(__dirname, '../');
-    // get ast and comments
-    const [contractName, contractData] = mergeInfoFile(solidityFile);
-    // get the filename
-    const filename = solidityFile.match(/\/([a-zA-Z0-9_]+)\.sol/);
-    // verify if the docs/ folder exist and creates it if not
-    const destinationDocsFolderPath = `${process.cwd()}/docs/`;
-    if (!fs.existsSync(destinationDocsFolderPath)) {
-        fs.mkdirSync(destinationDocsFolderPath);
-    }
-    // transform the template
-    const HTMLContent = transformTemplate(
-        `${currentFolder}src/template/index.html`, contractName, contractData, solidityFile,
-    );
-    // write it to a file
-    fs.writeFileSync(`${process.cwd()}/docs/${filename[1]}.html`, HTMLContent);
-    // copy styles
-    fs.copyFileSync(`${currentFolder}src/template/reset.css`, `${process.cwd()}/docs/reset.css`);
-    fs.copyFileSync(`${currentFolder}src/template/styles.css`, `${process.cwd()}/docs/styles.css`);
+function generateDocumentation(contractsData) {
+    // create a list of contracts and methods
+    const contractsStructure = [];
+    contractsData.forEach((contract) => {
+        console.log(contract);
+        const contractInfo = {};
+        // add name
+        contractInfo.name = contract.contractName;
+        contractInfo.functions = [];
+        // add functions name
+        contract.contractData.functions.forEach((func) => {
+            contractInfo.functions.push({ name: func.ast.name });
+        });
+        contractsStructure.push(contractInfo);
+    });
+    console.log(contractsStructure);
+    contractsData.forEach((contract) => {
+        // verify if the docs/ folder exist and creates it if not
+        const destinationDocsFolderPath = `${process.cwd()}/docs/`;
+        if (!fs.existsSync(destinationDocsFolderPath)) {
+            fs.mkdirSync(destinationDocsFolderPath);
+        }
+        // transform the template
+        const HTMLContent = transformTemplate(
+            `${contract.currentFolder}src/template/index.html`,
+            contract.contractName,
+            contract.contractData,
+            contract.solidityFile,
+            contractsStructure,
+        );
+        // write it to a file
+        fs.writeFileSync(`${process.cwd()}/docs/${contract.filename}.html`, HTMLContent);
+        // copy styles
+        fs.copyFileSync(`${contract.currentFolder}src/template/reset.css`, `${process.cwd()}/docs/reset.css`);
+        fs.copyFileSync(`${contract.currentFolder}src/template/styles.css`, `${process.cwd()}/docs/styles.css`);
+    });
 }
 
 /**
@@ -128,7 +160,9 @@ exports.generateHTML = (filePathInput) => {
             //
         }
         // iterate over files to generate HTML
-        files.forEach(file => generateHTMLForFile(file));
+        const prepared = [];
+        files.forEach(file => prepared.push(prepareForHTMLFile(file)));
+        generateDocumentation(prepared);
         return 0;
     });
 };

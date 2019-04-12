@@ -24,13 +24,14 @@
             <!-- Sidebar -->
             <div class="Sidebar">
                 <dl>
-                    <dt>ERC20</dt>
-                    <dd>transfer</dd>
-                    <dd>transfer</dd>
-                    <dd>transfer</dd>
-                    <dd>transfer</dd>
-                    <dd>transfer</dd>
-                    <dt>ERC20Detailed</dt>
+                    <!--<dt>ERC20</dt>
+                    <dd>transfer</dd>-->
+                    {{#contractsStructure}}
+                        <dt>{{name}}</dt>
+                        {{#functions}}
+                            <dd>{{name}}</dd>
+                        {{/functions}}
+                    {{/contractsStructure}}
                   </dl>
             </div>
 
