@@ -101,7 +101,6 @@ function generateDocumentation(contractsData) {
     // create a list of contracts and methods
     const contractsStructure = [];
     contractsData.forEach((contract) => {
-        console.log(contract);
         const contractInfo = {};
         // add name
         contractInfo.name = contract.contractName;
@@ -112,7 +111,6 @@ function generateDocumentation(contractsData) {
         });
         contractsStructure.push(contractInfo);
     });
-    console.log(contractsStructure);
     contractsData.forEach((contract) => {
         // verify if the docs/ folder exist and creates it if not
         const destinationDocsFolderPath = `${process.cwd()}/docs/`;
