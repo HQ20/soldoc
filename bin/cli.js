@@ -2,7 +2,8 @@
 
 
 const meow = require('meow');
-const { generateHTML } = require('../src/index');
+const { generateHTML } = require('../src/webpage');
+const { generatePDF } = require('../src/pdf');
 
 const helpMessage = `
 Usage
@@ -10,11 +11,24 @@ Usage
 
 Options
     --help, -h  To get help
+    --pdf to generate a PDF file
 
 Examples
-    $ foo contracts/Sample.sol
-    $ foo contracts/
+    $ soldoc contracts/Sample.sol
+    $ soldoc contracts/
+    $ soldoc --pdf Sample.sol
 `;
-const cli = meow(helpMessage);
+const cli = meow(helpMessage, {
+    flags: {
+        pdf: {
+            type: 'boolean',
+        },
+    },
+});
 
-generateHTML(String(cli.input));
+if (cli.flags.pdf === true) {
+    console.log('Not fully implamented yet!');
+    // generatePDF(String(cli.input));
+} else {
+    generateHTML(String(cli.input));
+}
