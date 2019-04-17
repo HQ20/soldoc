@@ -3,6 +3,7 @@ const fs = require('fs');
 const { walkSync } = require('./utils/utils');
 const { prepareForFile } = require('./organize');
 const webpage = require('./webpage');
+const pdf = require('./pdf');
 
 
 /**
@@ -31,10 +32,10 @@ exports.generate = (filePathInput, toPdf) => {
         }
         // iterate over files to generate HTML
         const prepared = [];
+        files.forEach(file => prepared.push(prepareForFile(file)));
         if (toPdf) {
-            //
+            pdf.generatePDF(prepared);
         } else {
-            files.forEach(file => prepared.push(prepareForFile(file)));
             webpage.generateDocumentation(prepared);
         }
         return 0;

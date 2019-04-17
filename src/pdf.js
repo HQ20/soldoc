@@ -1,4 +1,3 @@
-const fs = require('fs');
 const toPdf = require('pdf-from-html');
 const hljs = require('highlight.js');
 const emoji = require('markdown-it-emoji');
@@ -24,9 +23,23 @@ md.use(emoji);
 md.renderer.rules.emoji = (token, idx) => `<i class="em em-${token[idx].markup}"></i>`;
 
 
-exports.generatePDF = (filePathInput) => {
-    // read file
-    const content = fs.readFileSync(filePathInput);
+/**
+ * @param contractsPreparedData prepared data
+ */
+exports.generatePDF = (contractsPreparedData) => {
+    let content = '';
+    contractsPreparedData.forEach((contract) => {
+        //
+        content += `# ${contract.contractName}`;
+        // add functions name
+        contract.contractData.functions.forEach((func) => {
+            content += `\n\r### ${func.ast.name}`;
+            content += `\n\r**@dev** ${func.comments.dev}`;
+            func.ast.parameters.parameters.forEach((commentInput) => {
+                content += `\n\r**@param** ${commentInput.typeName.name} ${commentInput.name} ${func.comments.paramComments.get(commentInput.name)}`;
+            });
+        });
+    });
     // render it, from markdown to html
     const result = md.render(String(content));
     //
