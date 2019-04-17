@@ -2,8 +2,7 @@
 
 
 const meow = require('meow');
-const { generateHTML } = require('../src/webpage');
-const { generatePDF } = require('../src/pdf');
+const { generate } = require('../src/index');
 
 const helpMessage = `
 Usage
@@ -26,9 +25,5 @@ const cli = meow(helpMessage, {
     },
 });
 
-if (cli.flags.pdf === true) {
-    console.log('Not fully implamented yet!');
-    // generatePDF(String(cli.input));
-} else {
-    generateHTML(String(cli.input));
-}
+console.log('Wait...might take a moment!');
+generate(String(cli.input), cli.flags.pdf);
