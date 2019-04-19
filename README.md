@@ -1,6 +1,9 @@
-# soldoc
+<h1 align="center">soldoc</h1>
+<p align="center">
+    <img width="90%" src="preview.png">
+</p>
 
-soldoc is a solidity documentation generator. This generator was created due to a need of giving documentation to a client. Thinking about it, we first created this tool to generate an HTML self hosted page, but then we also decided to generate a PDF.
+soldoc is a solidity documentation generator. This generator was created due to a need of giving documentation to developers and clients. Thinking about it, we first created this tool to generate an HTML self hosted page, but then we also decided to generate a PDF.
 
 ## Features
 * Generates documentation with soft colors :eyes:
