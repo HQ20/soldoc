@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const Mustache = require('mustache');
 
 
@@ -32,7 +33,7 @@ function transformTemplate(templateFile, contractName, contractData, contractPat
  * To write!
  * @param {object} contractsData Obect containing all contracts info
  */
-exports.generateDocumentation = (contractsPreparedData) => {
+exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
     // create a list of contracts and methods
     const contractsStructure = [];
     contractsPreparedData.forEach((contract) => {
@@ -48,22 +49,28 @@ exports.generateDocumentation = (contractsPreparedData) => {
     });
     contractsPreparedData.forEach((contract) => {
         // verify if the docs/ folder exist and creates it if not
-        const destinationDocsFolderPath = `${process.cwd()}/docs/`;
+        const destinationDocsFolderPath = path.join(process.cwd(), outputFolder);
         if (!fs.existsSync(destinationDocsFolderPath)) {
             fs.mkdirSync(destinationDocsFolderPath);
         }
         // transform the template
         const HTMLContent = transformTemplate(
-            `${contract.currentFolder}src/template/index.html`,
+            path.join(contract.currentFolder, 'src/template/index.html'),
             contract.contractName,
             contract.contractData,
             contract.solidityFile,
             contractsStructure,
         );
         // write it to a file
-        fs.writeFileSync(`${process.cwd()}/docs/${contract.filename}.html`, HTMLContent);
+        fs.writeFileSync(path.join(process.cwd(), outputFolder, `${contract.filename}.html`), HTMLContent);
         // copy styles
-        fs.copyFileSync(`${contract.currentFolder}src/template/reset.css`, `${process.cwd()}/docs/reset.css`);
-        fs.copyFileSync(`${contract.currentFolder}src/template/styles.css`, `${process.cwd()}/docs/styles.css`);
+        fs.copyFileSync(
+            path.join(contract.currentFolder, 'src/template/reset.css'),
+            path.join(process.cwd(), outputFolder, 'reset.css'),
+        );
+        fs.copyFileSync(
+            path.join(contract.currentFolder, 'src/template/styles.css'),
+            path.join(process.cwd(), outputFolder, 'styles.css'),
+        );
     });
 };

@@ -10,7 +10,7 @@ const pdf = require('./pdf');
  * Main method to be called. Will create the HTML using the other methods.
  * @param {array} files array of files path
  */
-exports.generate = (filePathInput, toPdf) => {
+exports.generate = (toPdf, outputFolder, filePathInput) => {
     // verify the type of the given input
     fs.lstat(filePathInput, (err, stats) => {
         // Handle error
@@ -34,9 +34,9 @@ exports.generate = (filePathInput, toPdf) => {
         const prepared = [];
         files.forEach(file => prepared.push(prepareForFile(file)));
         if (toPdf) {
-            pdf.generatePDF(prepared);
+            pdf.generatePDF(prepared, outputFolder);
         } else {
-            webpage.generateDocumentation(prepared);
+            webpage.generateDocumentation(prepared, outputFolder);
         }
         return 0;
     });

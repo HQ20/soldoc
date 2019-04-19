@@ -6,16 +6,16 @@ const { generate } = require('../src/index');
 
 const helpMessage = `
 Usage
-    $ soldoc <file(s)>
+    $ soldoc [options] <output-folder> <file(s)>
 
 Options
     --help, -h  To get help
     --pdf to generate a PDF file
 
 Examples
-    $ soldoc contracts/Sample.sol
-    $ soldoc contracts/
-    $ soldoc --pdf Sample.sol
+    $ soldoc docs/ contracts/Sample.sol
+    $ soldoc docs/ contracts/
+    $ soldoc --pdf docs/ Sample.sol
 `;
 const cli = meow(helpMessage, {
     flags: {
@@ -26,4 +26,4 @@ const cli = meow(helpMessage, {
 });
 
 console.log('Wait...might take a moment!');
-generate(String(cli.input), cli.flags.pdf);
+generate(cli.flags.pdf, String(cli.input[0]), String(cli.input[1]));

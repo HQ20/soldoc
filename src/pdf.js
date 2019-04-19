@@ -26,7 +26,7 @@ md.renderer.rules.emoji = (token, idx) => `<i class="em em-${token[idx].markup}"
 /**
  * @param contractsPreparedData prepared data
  */
-exports.generatePDF = (contractsPreparedData) => {
+exports.generatePDF = (contractsPreparedData, outputFolder) => {
     let content = '';
     contractsPreparedData.forEach((contract) => {
         //
@@ -35,13 +35,22 @@ exports.generatePDF = (contractsPreparedData) => {
         contract.contractData.functions.forEach((func) => {
             content += `\n\r### ${func.ast.name}`;
             content += `\n\r**@dev** ${func.comments.dev}`;
-            func.ast.parameters.parameters.forEach((commentInput) => {
-                content += `\n\r**@param** ${commentInput.typeName.name} ${commentInput.name} ${func.comments.paramComments.get(commentInput.name)}`;
-            });
+            if (func.ast.parameters !== null) {
+                func.ast.parameters.parameters.forEach((commentInput) => {
+                    content += `\n\r**@param** ${commentInput.typeName.name} `
+                    + `${commentInput.name} ${func.comments.paramComments.get(commentInput.name)}`;
+                });
+            }
+            if (func.ast.returnParameters !== null) {
+                func.ast.returnParameters.parameters.forEach((commentInput) => {
+                    content += `\n\r**@return** ${commentInput.typeName.name} `
+                    + `${commentInput.name} ${func.comments.return}`;
+                });
+            }
         });
+        // render it, from markdown to html
+        const result = md.render(String(content));
+        // generate
+        toPdf.generatePDF(outputFolder, contract.filename, result);
     });
-    // render it, from markdown to html
-    const result = md.render(String(content));
-    //
-    toPdf.generatePDF(result);
 };

@@ -51,16 +51,16 @@ function mergeInfoFile(solidityFile) {
 
 /**
  * Prepare for the given file.
- * @param {string} solidityFile the file's path to be parsed
+ * @param {string} solidityFilePath the file's path to be parsed
  */
-exports.prepareForFile = (solidityFile) => {
+exports.prepareForFile = (solidityFilePath) => {
     // get current path folder
     const currentFolder = path.join(__dirname, '../');
     // get ast and comments
-    const [contractName, contractData] = mergeInfoFile(solidityFile);
+    const [contractName, contractData] = mergeInfoFile(solidityFilePath);
     // get the filename
-    const filename = solidityFile.match(/\/([a-zA-Z0-9_]+)\.sol/)[1];
+    const filename = path.parse(solidityFilePath).name;
     return {
-        filename, currentFolder, contractName, contractData, solidityFile,
+        filename, currentFolder, contractName, contractData, solidityFilePath,
     };
 };
