@@ -7,7 +7,7 @@
         "soldoc": "bin/cli.js"
     },
     "scripts": {
-        "demo-html": "./bin/cli.js docs/ test/contracts/ERC20.sol",
+        "demo-html": "./bin/cli.js docs/ test/contracts",
         "demo-pdf": "./bin/cli.js --pdf docs/ test/contracts/ERC20.sol",
         "lint:js": "eslint src/*.js .",
         "test": "mocha -r esm",

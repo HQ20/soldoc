@@ -58,7 +58,7 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
             path.join(contract.currentFolder, 'src/template/index.html'),
             contract.contractName,
             contract.contractData,
-            contract.solidityFile,
+            contract.solidityFilePath,
             contractsStructure,
         );
         // write it to a file

@@ -1,3 +1,4 @@
+const path = require('path');
 const fs = require('fs');
 
 const { walkSync } = require('./utils/utils');
@@ -22,7 +23,7 @@ exports.generate = (toPdf, outputFolder, filePathInput) => {
         if (stats.isDirectory()) {
             // if it's a folder, get all files recursively
             walkSync(filePathInput, []).forEach((filePath) => {
-                files.push(filePathInput + filePath);
+                files.push(path.join(filePathInput, filePath));
             });
         } else if (stats.isFile()) {
             // if it's a file, just get the file
