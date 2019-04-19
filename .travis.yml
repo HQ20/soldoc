@@ -1,9 +1,10 @@
 dist: xenial
 language: node_js
 node_js:
-  - "lts/dubnium"
+    - "lts/dubnium"
 install:
     - npm install
 script:
     - npm test
     - npm run coverage-ci
+    - npm run lint:js
