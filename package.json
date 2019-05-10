@@ -31,7 +31,16 @@
         "pdf",
         "pdf-generation"
     ],
-    "author": "obernardovieira",
+    "author": {
+        "name": "Bernardo Vieira",
+        "github": "obernardovieira"
+    },
+    "contributors": [
+        {
+            "name": "Connor Todd",
+            "github": "connorltodd"
+        }
+    ],
     "license": "GPL-3.0-only",
     "bugs": {
         "url": "https://github.com/hq20/soldoc/issues"
