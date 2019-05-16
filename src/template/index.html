@@ -95,6 +95,15 @@
                         <div></div>
                         <p class="Card__SubTitle Card__SubTitle--Transfer">event</p>
                     </div>
+                    {{#comments.dev}}
+                        <p><i>{{comments.dev}}</i></p>
+                    {{/comments.dev}}
+                    {{#comments.notice}}
+                        <p class="Card__Content">{{comments.notice}}</p>
+                    {{/comments.notice}}
+                    {{#comments.author}}
+                        <p>by {{comments.author}}</p>
+                    {{/comments.author}}
                     <table class="Card-Table--border">
                     <tbody>
                         {{#ast.parameters.parameters}}
@@ -139,8 +148,15 @@
                             >function</p>
                         {{/isExternal}}
                     </div>
-                    <p><i>{{comments.dev}}</i></p>
-                    <p class="Card__Content">{{comments.notice}}</p>
+                    {{#comments.dev}}
+                        <p><i>{{comments.dev}}</i></p>
+                    {{/comments.dev}}
+                    {{#comments.notice}}
+                        <p class="Card__Content">{{comments.notice}}</p>
+                    {{/comments.notice}}
+                    {{#comments.author}}
+                        <p>by {{comments.author}}</p>
+                    {{/comments.author}}
                     <!-- TODO: This will be used to support sub comments, maybe a difference between @dev and @notice
                                 and also, maybe supporting markdown. -->
                     <!--<p class="Card__Sub-Content">Uses the <code class="Card-Table__Code--grey">ConvertLib.sol</code> library for conversions</p>-->
