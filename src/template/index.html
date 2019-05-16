@@ -66,6 +66,23 @@
                     <div class="Card-Flex">
                         <p class="Card__Title">{{contract.name}}</p>
                         <div></div>
+                        {{#comments.author}}
+                            <p>{{comments.author}}</p>
+                        {{/comments.author}}
+                        {{#comments.dev}}
+                            <p>{{comments.dev}}</p>
+                        {{/comments.dev}}
+                        {{#comments.notice}}
+                            <p>{{comments.notice}}</p>
+                        {{/comments.notice}}
+                        {{#ast.parameters.parameters}}
+                        <tr class="Card-Table__Column">
+                            <td class="bold">Inputs</td>
+                            <td>{{typeName.name}}</td>
+                            <td><code class="Card-Table__Code">{{name}}</code></td>
+                            <td>{{#params}}{{name}}{{/params}}</td>
+                        </tr>
+                        {{/ast.parameters.parameters}}
                         <p class="Card__SubTitle Card__SubTitle--Constructor">constructor</p>
                     </div>
                 </div>
@@ -122,8 +139,8 @@
                             >function</p>
                         {{/isExternal}}
                     </div>
-                    <p class="Card__Content">{{comments.dev}}</p>
-                    <p><i>{{comments.notice}}</i></p>
+                    <p><i>{{comments.dev}}</i></p>
+                    <p class="Card__Content">{{comments.notice}}</p>
                     <!-- TODO: This will be used to support sub comments, maybe a difference between @dev and @notice
                                 and also, maybe supporting markdown. -->
                     <!--<p class="Card__Sub-Content">Uses the <code class="Card-Table__Code--grey">ConvertLib.sol</code> library for conversions</p>-->
