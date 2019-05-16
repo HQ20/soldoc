@@ -57,6 +57,10 @@ function mergeInfoFile(solidityFile) {
                 }
                 contractDataWithComments.functions.push({
                     ast: node,
+                    isPublic: node.visibility === 'public',
+                    isPrivate: node.visibility === 'private',
+                    isInternal: node.visibility === 'internal',
+                    isExternal: node.visibility === 'external',
                     comments: rawContractData.comments.function.get(node.name),
                     paramComments,
                     params: () => (val, render) => paramComments.get(render(val)),

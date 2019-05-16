@@ -97,6 +97,30 @@
                     <div class="Card-Flex">
                         <p class="Card__Title">{{ast.name}}</p>
                         <div></div>
+                        {{#isPublic}}
+                            <p
+                                style="color:red;"
+                                class="Card__SubTitle Card__SubTitle--Function"
+                            >function</p>
+                        {{/isPublic}}
+                        {{#isPrivate}}
+                            <p
+                                style="color:green;"
+                                class="Card__SubTitle Card__SubTitle--Function"
+                            >function</p>
+                        {{/isPrivate}}
+                        {{#isInternal}}
+                            <p
+                                style="color:orange;"
+                                class="Card__SubTitle Card__SubTitle--Function"
+                            >function</p>
+                        {{/isInternal}}
+                        {{#isExternal}}
+                            <p
+                                style="color:blue;"
+                                class="Card__SubTitle Card__SubTitle--Function"
+                            >function</p>
+                        {{/isExternal}}
                     </div>
                     <p class="Card__Content">{{comments.dev}}</p>
                     <p><i>{{comments.notice}}</i></p>
