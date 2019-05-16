@@ -2,7 +2,7 @@ const parser = require('solidity-parser-antlr');
 const path = require('path');
 const fs = require('fs');
 
-const { mapComments } = require('./mapComments');
+const { mapComments } = require('sol-comments-parser');
 
 
 /**
@@ -33,18 +33,40 @@ function mergeInfoFile(solidityFile) {
     // visit all the methods and add the commands to it
     parser.visit(rawContractData.ast, {
         EventDefinition: (node) => {
-            contractDataWithComments.events.push({ ast: node });
+            contractDataWithComments.events.push({
+                ast: node,
+                comments: rawContractData.comments.event.get(node.name),
+            });
         },
-    });
-    parser.visit(rawContractData.ast, {
         FunctionDefinition: (node) => {
             if (node.isConstructor) {
-                contractDataWithComments.constructor = { ast: node };
+                let paramComments = new Map();
+                if (rawContractData.comments.constructor !== undefined) {
+                    paramComments = rawContractData.comments.constructor.param;
+                }
+                contractDataWithComments.constructor = {
+                    ast: node,
+                    comments: rawContractData.comments.constructor,
+                    paramComments,
+                    params: () => (val, render) => paramComments.get(render(val)),
+                };
             } else {
-                contractDataWithComments.functions.push({ ast: node, comments: rawContractData.comments.get(node.name) });
+                let paramComments = new Map();
+                if (rawContractData.comments.function.get(node.name) !== undefined) {
+                    paramComments = rawContractData.comments.function.get(node.name).param;
+                }
+                contractDataWithComments.functions.push({
+                    ast: node,
+                    comments: rawContractData.comments.function.get(node.name),
+                    paramComments,
+                    params: () => (val, render) => paramComments.get(render(val)),
+                });
             }
         },
     });
+    // add contract comments
+    contractDataWithComments.contract = rawContractData
+        .comments.contract.get(path.parse(solidityFile).name);
     // return new info
     return [rawContractData.ast[0].name, contractDataWithComments];
 }

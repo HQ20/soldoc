@@ -6,7 +6,7 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.3.0/milligram.min.css" rel="stylesheet">
         <link rel="stylesheet" href="styles.css">
-        <title>Soldoc</title>
+        <title>soldoc</title>
     </head>
     <body>
 
@@ -41,6 +41,18 @@
                 <!-- Content Title -->
                 <p class="Content__Title">{{contract.name}}</p>
                 <p class="Content__Subtitle">{{filePath}}</p>
+                {{#contractData.contract.title}}
+                    <h3>{{contractData.contract.title}}</h3>
+                {{/contractData.contract.title}}
+                {{#contractData.contract.dev}}
+                    <p class="Content__Subtitle">{{contractData.contract.dev}}</p>
+                {{/contractData.contract.dev}}
+                {{#contractData.contract.notice}}
+                    <p class="Content__Subtitle">{{contractData.contract.notice}}</p>
+                {{/contractData.contract.notice}}
+                {{#contractData.contract.author}}
+                    <p class="Content__Subtitle">by <i>{{contractData.contract.author}}</i></p>
+                {{/contractData.contract.author}}
 
                 <!-- Content Menu -->
                 <div class="Content__Menu">
@@ -85,9 +97,9 @@
                     <div class="Card-Flex">
                         <p class="Card__Title">{{ast.name}}</p>
                         <div></div>
-                        <p class="Card__SubTitle Card__SubTitle--Function">function</p>
                     </div>
                     <p class="Card__Content">{{comments.dev}}</p>
+                    <p><i>{{comments.notice}}</i></p>
                     <!-- TODO: This will be used to support sub comments, maybe a difference between @dev and @notice
                                 and also, maybe supporting markdown. -->
                     <!--<p class="Card__Sub-Content">Uses the <code class="Card-Table__Code--grey">ConvertLib.sol</code> library for conversions</p>-->
@@ -98,7 +110,7 @@
                             <td class="bold">Inputs</td>
                             <td>{{typeName.name}}</td>
                             <td><code class="Card-Table__Code">{{name}}</code></td>
-                            <td>{{#comments.params}}{{name}}{{/comments.params}}</td>
+                            <td>{{#params}}{{name}}{{/params}}</td>
                         </tr>
                         {{/ast.parameters.parameters}}
                         {{#ast.returnParameters.parameters}}
@@ -129,7 +141,8 @@
             <div></div>
             <div class="Footer__Build-Date">
                 Built using
-                <span class="bold">solidity-parser-antlr</span> and
+                <span class="bold">solidity-parser-antlr</span>,
+                <span class="bold">sol-comments-parser</span> and
                 <span class="bold">mustache</span> on
                 <span class="bold">{{currentDate}}</span>
             </div>
