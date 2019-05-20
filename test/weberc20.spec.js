@@ -71,6 +71,9 @@ describe('Render Web Page - ERC20', () => {
         done();
     });
 
+    /**
+     * All dev comments show be shown correctly
+     */
     test('should have all dev comments', async (done) => {
         const cardsNames = [
             'Total number of tokens in existence',

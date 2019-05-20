@@ -72,4 +72,23 @@ describe('Render Web Page - Plane', () => {
         expect(text.trim()).toBe('The Plane contract');
         done();
     });
+
+    /**
+     * All the authors should be listed in the main body
+     */
+    test('should have all authors listed', async (done) => {
+        const cardsNames = [
+            'by Wilbur & Orville',
+            'by Bernardo Vieira',
+        ];
+        await page.waitFor('#author');
+        const cards = await page.$$('#author');
+        for (let c = 0; c < cards.length; c += 1) {
+            // eslint-disable-next-line no-await-in-loop
+            const text = await page.evaluate(e => e.textContent, cards[c]);
+            // TODO: remove trim
+            expect(cardsNames).toContain(text.trim());
+        }
+        done();
+    });
 });

@@ -51,7 +51,7 @@
                     <p class="Content__Subtitle">{{contractData.contract.notice}}</p>
                 {{/contractData.contract.notice}}
                 {{#contractData.contract.author}}
-                    <p class="Content__Subtitle">by <i>{{contractData.contract.author}}</i></p>
+                    <p class="Content__Subtitle" id="author">by <i>{{contractData.contract.author}}</i></p>
                 {{/contractData.contract.author}}
 
                 <!-- Content Menu -->
@@ -67,7 +67,7 @@
                         <p class="Card__Title">constructor</p>
                         <div></div>
                         {{#comments.author}}
-                            <p>{{comments.author}}</p>
+                            <p id="author">by {{comments.author}}</p>
                         {{/comments.author}}
                         {{#comments.dev}}
                             <p>{{comments.dev}}</p>
@@ -102,7 +102,7 @@
                         <p class="Card__Content">{{comments.notice}}</p>
                     {{/comments.notice}}
                     {{#comments.author}}
-                        <p>by {{comments.author}}</p>
+                        <p id="author">by {{comments.author}}</p>
                     {{/comments.author}}
                     <table class="Card-Table--border">
                     <tbody>
@@ -155,7 +155,7 @@
                         <p class="Card__Content">{{comments.notice}}</p>
                     {{/comments.notice}}
                     {{#comments.author}}
-                        <p>by {{comments.author}}</p>
+                        <p id="author">by {{comments.author}}</p>
                     {{/comments.author}}
                     <!-- TODO: This will be used to support sub comments, maybe a difference between @dev and @notice
                                 and also, maybe supporting markdown. -->
