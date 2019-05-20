@@ -69,7 +69,7 @@ describe('Render Web Page - Plane', () => {
         const element = await page.$('.Content h3');
         const text = await page.evaluate(e => e.textContent, element);
         // TODO: remove trim
-        expect(text.trim()).toBe('The Plane contract');
+        expect(text.trim()).toBe('The Plane contract :airplane:');
         done();
     });
 
