@@ -1,7 +1,7 @@
 pragma solidity ^0.5.8;
 
 /**
- * @title The Plane contract
+ * @title The Plane contract :airplane:
  * @author Wilbur & Orville
  */
 contract Plane {

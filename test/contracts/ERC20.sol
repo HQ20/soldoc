@@ -4,7 +4,7 @@ import "./IERC20.sol";
 import "../../math/SafeMath.sol";
 
 /**
- * @title Standard ERC20 token
+ * @title Standard ERC20 token :)
  *
  * @dev Implementation of the basic standard token.
  * https://eips.ethereum.org/EIPS/eip-20
