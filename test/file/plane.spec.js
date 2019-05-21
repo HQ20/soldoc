@@ -5,21 +5,21 @@ const pdfUtil = require('pdf-to-text');
 const { generate } = require('../../src/index');
 
 describe('Render File - Plane', () => {
-    beforeAll(async () => {
+    beforeAll(() => {
         jest.setTimeout(20000);
         // first render
         generate(true, './docs', './test/contracts/Plane.sol');
         // now let's test the result
     });
 
-    afterAll(async () => {
+    afterAll(() => {
         //
     });
 
     /**
      * file should have been generated
      */
-    test('file should have been generated', async (done) => {
+    test('file should have been generated', (done) => {
         const result = fs.existsSync(path.join(process.cwd(), 'docs'));
         if (result) {
             fs.watch(path.join(process.cwd(), 'docs'), (eventType, filename) => {
@@ -43,7 +43,7 @@ describe('Render File - Plane', () => {
     /**
      * Read file text
      */
-    test('should have the text', async (done) => {
+    test('should have the text', (done) => {
         const pdfPath = path.join(process.cwd(), 'docs', 'Plane.pdf');
         const content = [
             'Plane',

@@ -3,21 +3,21 @@ const fs = require('fs');
 const { generate } = require('../../src/index');
 
 describe('Render File - ERC20', () => {
-    beforeAll(async () => {
+    beforeAll(() => {
         jest.setTimeout(20000);
         // first render
         generate(true, './docs', './test/contracts/ERC20.sol');
         // now let's test the result
     });
 
-    afterAll(async () => {
+    afterAll(() => {
         //
     });
 
     /**
      * file should have been generated
      */
-    test('file should have been generated', async (done) => {
+    test('file should have been generated', (done) => {
         const result = fs.existsSync(path.join(process.cwd(), 'docs'));
         if (result) {
             fs.watch(path.join(process.cwd(), 'docs'), (eventType, filename) => {
