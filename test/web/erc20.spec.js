@@ -1,12 +1,13 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
-const { generate } = require('../src/index');
+const { generate } = require('../../src/index');
 
 describe('Render Web Page - ERC20', () => {
     let browser;
     let page;
 
     beforeAll(async () => {
+        jest.setTimeout(20000);
         // first render
         generate(false, './docs', './test/contracts/ERC20.sol');
         // now let's test the result

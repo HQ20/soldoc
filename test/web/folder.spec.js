@@ -1,14 +1,15 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
-const { generate } = require('../src/index');
+const { generate } = require('../../src/index');
 
-describe('Render Web Page - Plane', () => {
+describe('Render Web Page - Complete folder', () => {
     let browser;
     let page;
 
     beforeAll(async () => {
+        jest.setTimeout(20000);
         // first render
-        generate(false, './docs', './test/contracts/Plane.sol');
+        generate(false, './docs', './test/contracts/');
         // now let's test the result
         // open the browser
         browser = await puppeteer.launch();
@@ -43,16 +44,17 @@ describe('Render Web Page - Plane', () => {
     });
 
     /**
-     * All the methods should be listed in the main body
+     * All the contracts should be listed in the side menu
      */
-    test('should have all methods listed (main body)', async (done) => {
+    test('should have all contracts listed (side menu)', async (done) => {
         const cardsNames = [
-            'constructor',
-            'Land',
-            'land',
+            'ERC20',
+            'IERC20',
+            'Plane',
+            'Tree',
         ];
-        await page.waitFor('.Card .Card__Title');
-        const cards = await page.$$('.Card .Card__Title');
+        await page.waitFor('dt');
+        const cards = await page.$$('dt');
         for (let c = 0; c < cards.length; c += 1) {
             // eslint-disable-next-line no-await-in-loop
             const text = await page.evaluate(e => e.textContent, cards[c]);
@@ -62,32 +64,38 @@ describe('Render Web Page - Plane', () => {
     });
 
     /**
-     * The title comment
+     * All the contracts methods should be listed in the side menu
      */
-    test('should title comment', async (done) => {
-        await page.waitFor('.Content h3');
-        const element = await page.$('.Content h3');
-        const text = await page.evaluate(e => e.textContent, element);
-        // TODO: remove trim
-        expect(text.trim()).toBe('The Plane contract :airplane:');
-        done();
-    });
-
-    /**
-     * All the authors should be listed in the main body
-     */
-    test('should have all authors listed', async (done) => {
+    test('should have all contracts methods listed (side menu)', async (done) => {
         const cardsNames = [
-            'by Wilbur & Orville',
-            'by Bernardo Vieira',
+            'totalSupply',
+            'balanceOf',
+            'allowance',
+            'transfer',
+            'approve',
+            'transferFrom',
+            'increaseAllowance',
+            'decreaseAllowance',
+            '_transfer',
+            '_mint',
+            '_burn',
+            '_approve',
+            '_burnFrom',
+            'transfer',
+            'approve',
+            'transferFrom',
+            'totalSupply',
+            'balanceOf',
+            'allowance',
+            'land',
+            'age',
         ];
-        await page.waitFor('#author');
-        const cards = await page.$$('#author');
+        await page.waitFor('dd');
+        const cards = await page.$$('dd');
         for (let c = 0; c < cards.length; c += 1) {
             // eslint-disable-next-line no-await-in-loop
             const text = await page.evaluate(e => e.textContent, cards[c]);
-            // TODO: remove trim
-            expect(cardsNames).toContain(text.trim());
+            expect(cardsNames).toContain(text);
         }
         done();
     });
