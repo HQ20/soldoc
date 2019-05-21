@@ -54,6 +54,7 @@
         "meow": "5.0.0",
         "mustache": "3.0.1",
         "pdf-from-html": "0.1.0-beta.2",
+        "pdf-to-text": "^0.0.7",
         "sol-comments-parser": "0.1.0-alpha",
         "solidity-parser-antlr": "0.4.2"
     },
@@ -66,10 +67,10 @@
         "eslint-plugin-jsx-a11y": "6.2.1",
         "eslint-plugin-react": "7.12.4",
         "expect.js": "0.3.1",
-        "puppeteer": "1.16.0",
         "jest": "24.8.0",
         "jest-puppeteer": "4.1.1",
-        "jsdoc": "3.5.5"
+        "jsdoc": "3.5.5",
+        "puppeteer": "1.16.0"
     },
     "nyc": {
         "all": true,

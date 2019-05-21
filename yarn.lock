@@ -3615,6 +3615,11 @@ pdf-from-html@0.1.0-beta.2:
     mustache "3.0.1"
     puppeteer "1.14.0"
 
+pdf-to-text@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/pdf-to-text/-/pdf-to-text-0.0.7.tgz#d1cd75b6a9f3782a14bcdf9fe6bc02f74cd7ecd3"
+  integrity sha1-0c11tqnzeCoUvN+f5rwC90zX7NM=
+
 pend@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/pend/-/pend-1.2.0.tgz#7a57eb550a6783f9115331fcf4663d5c8e007a50"
