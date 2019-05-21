@@ -3,6 +3,7 @@ language: node_js
 node_js:
     - "lts/dubnium"
 install:
+    - sudo apt-get install -y poppler-utils
     - npm install
 script:
     - npm run coverage:ci
