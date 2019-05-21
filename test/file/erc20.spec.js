@@ -18,14 +18,23 @@ describe('Render File - ERC20', () => {
      * file should have been generated
      */
     test('file should have been generated', async (done) => {
-        fs.watch(path.join(process.cwd()), (e, f) => {
-            if (f === 'docs') {
-                fs.watch(path.join(process.cwd(), 'docs'), (eventType, filename) => {
-                    if (eventType === 'change' && filename === 'ERC20.pdf') {
-                        done();
-                    }
-                });
-            }
-        });
+        const result = fs.existsSync(path.join(process.cwd(), 'docs'));
+        if (result) {
+            fs.watch(path.join(process.cwd(), 'docs'), (eventType, filename) => {
+                if (eventType === 'change' && filename === 'ERC20.pdf') {
+                    done();
+                }
+            });
+        } else {
+            fs.watch(path.join(process.cwd()), (e, f) => {
+                if (f === 'docs') {
+                    fs.watch(path.join(process.cwd(), 'docs'), (eventType, filename) => {
+                        if (eventType === 'change' && filename === 'ERC20.pdf') {
+                            done();
+                        }
+                    });
+                }
+            });
+        }
     });
 });
