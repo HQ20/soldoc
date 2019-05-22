@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const Mustache = require('mustache');
+const emoji = require('node-emoji');
 
 
 /**
@@ -61,12 +62,20 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
             contract.solidityFilePath,
             contractsStructure,
         );
+        const formatEmojify = (code, name) => `<i alt="${code}" class="twa twa-${name}"></i>`;
         // write it to a file
-        fs.writeFileSync(path.join(process.cwd(), outputFolder, `${contract.filename}.html`), HTMLContent);
+        fs.writeFileSync(
+            path.join(process.cwd(), outputFolder, `${contract.filename}.html`),
+            emoji.emojify(HTMLContent, null, formatEmojify),
+        );
         // copy styles
         fs.copyFileSync(
             path.join(contract.currentFolder, 'src/template/reset.css'),
             path.join(process.cwd(), outputFolder, 'reset.css'),
+        );
+        fs.copyFileSync(
+            path.join(contract.currentFolder, 'src/template/twemoji-awesome.css'),
+            path.join(process.cwd(), outputFolder, 'twemoji-awesome.css'),
         );
         fs.copyFileSync(
             path.join(contract.currentFolder, 'src/template/styles.css'),
