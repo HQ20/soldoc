@@ -52,8 +52,12 @@ function mergeInfoFile(solidityFile) {
                 };
             } else {
                 let paramComments = new Map();
-                if (rawContractData.comments.function.get(node.name) !== undefined) {
-                    paramComments = rawContractData.comments.function.get(node.name).param;
+                let rawComments;
+                if (rawContractData.comments.function !== undefined) {
+                    if (rawContractData.comments.function.get(node.name) !== undefined) {
+                        paramComments = rawContractData.comments.function.get(node.name).param;
+                        rawComments = rawContractData.comments.function.get(node.name);
+                    }
                 }
                 contractDataWithComments.functions.push({
                     ast: node,
@@ -61,7 +65,7 @@ function mergeInfoFile(solidityFile) {
                     isPrivate: node.visibility === 'private',
                     isInternal: node.visibility === 'internal',
                     isExternal: node.visibility === 'external',
-                    comments: rawContractData.comments.function.get(node.name),
+                    comments: rawComments,
                     paramComments,
                     params: () => (val, render) => paramComments.get(render(val)),
                 });
@@ -69,8 +73,10 @@ function mergeInfoFile(solidityFile) {
         },
     });
     // add contract comments
-    contractDataWithComments.contract = rawContractData
-        .comments.contract.get(path.parse(solidityFile).name);
+    if (rawContractData.comments.contract !== undefined) {
+        contractDataWithComments.contract = rawContractData
+            .comments.contract.get(path.parse(solidityFile).name);
+    }
     // return new info
     return [rawContractData.ast[0].name, contractDataWithComments];
 }
