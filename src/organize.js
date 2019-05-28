@@ -33,9 +33,19 @@ function mergeInfoFile(solidityFile) {
     // visit all the methods and add the commands to it
     parser.visit(rawContractData.ast, {
         EventDefinition: (node) => {
+            let paramComments = new Map();
+            let rawComments;
+            if (rawContractData.comments.event !== undefined) {
+                if (rawContractData.comments.event.get(node.name) !== undefined) {
+                    paramComments = rawContractData.comments.event.get(node.name).param;
+                    rawComments = rawContractData.comments.event.get(node.name);
+                }
+            }
             contractDataWithComments.events.push({
                 ast: node,
-                comments: rawContractData.comments.event.get(node.name),
+                comments: rawComments,
+                paramComments,
+                params: () => (val, render) => paramComments.get(render(val)),
             });
         },
         FunctionDefinition: (node) => {
