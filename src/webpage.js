@@ -41,6 +41,7 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
         const contractInfo = {};
         // add name
         contractInfo.name = contract.contractName;
+        contractInfo.filename = contract.filename;
         contractInfo.functions = [];
         // add functions name
         contract.contractData.functions.forEach((func) => {
