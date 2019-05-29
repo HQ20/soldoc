@@ -85,7 +85,7 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
     }
     contractsPreparedData.forEach((contract) => {
         // transform the template
-        const HTMLContent = transformTemplate(
+        let HTMLContent = transformTemplate(
             path.join(contract.currentFolder, 'src/template/index.html'),
             contract.contractName,
             contract.contractData,
@@ -93,6 +93,14 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
             contractsStructure,
             hasLICENSE,
         );
+        const match = HTMLContent.match(/(?<!\[)https?:&#x2F;&#x2F;[a-zA-Z0-9.&#x2F;\-_]+/g);
+        if (match !== null) {
+            let transform = match.map(url => url.replace(/&#x2F;/g, '/'));
+            transform = transform.map(url => `<a href="${url}">${url}</a>`);
+            for (let i = 0; i < match.length; i += 1) {
+                HTMLContent = HTMLContent.replace(match[i], transform[i]);
+            }
+        }
         const formatEmojify = (code, name) => `<i alt="${code}" class="twa twa-${name}"></i>`;
         // write it to a file
         fs.writeFileSync(
@@ -110,12 +118,11 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
         // render it, from markdown to html
         const READMEconverted = md.render(READMEText);
         const README = READMEconverted
-            .replace(new RegExp('<h1>', 'g'), '<h1 class="title is-1">')
-            .replace(new RegExp('<h2>', 'g'), '<h2 class="title is-2">')
-            .replace(new RegExp('<h3>', 'g'), '<h3 class="title is-3">')
-            .replace(new RegExp('<h4>', 'g'), '<h4 class="title is-4">')
-            .replace(new RegExp('<ul>', 'g'), '<ul class="menu-list">');
-        // console.log(result);
+            .replace(/<h1>/g, '<h1 class="title is-1">')
+            .replace(/<h2>/g, '<h2 class="title is-2">')
+            .replace(/<h3>/g, '<h3 class="title is-3">')
+            .replace(/<h4>/g, '<h4 class="title is-4">')
+            .replace(/<ul>/g, '<ul class="menu-list">');
         // put all data together
         const view = {
             contractsStructure,
@@ -137,7 +144,7 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
             path.join(contractsPreparedData[0].currentFolder, 'src/template/index.html'),
         ));
         const LICENSEText = String(fs.readFileSync(path.join(process.cwd(), 'LICENSE'))).trim();
-        const LICENSE = LICENSEText.replace(new RegExp('\\n', 'g'), '<br>');
+        const LICENSE = LICENSEText.replace(/\n/g, '<br>');
         // put all data together
         const view = {
             contractsStructure,

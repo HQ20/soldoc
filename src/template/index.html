@@ -39,6 +39,11 @@
             color: black;
         }
 
+        small.generated {
+            font-size: .65em;
+            font-style: italic;
+        }
+
         /*readme*/
         .README li {
             padding: 5px 40px;
@@ -139,6 +144,7 @@
             {{#contractData.contract.notice}}
                 <p>{{contractData.contract.notice}}</p>
             {{/contractData.contract.notice}}
+            <small class="generated">Generated in {{currentDate}}</small>
         </div>
 
         {{#contractData.constructor}}
