@@ -111,13 +111,13 @@ exports.generatePDF = (contractsPreparedData, outputFolder) => {
             }
             if (func.ast.parameters !== null) {
                 func.ast.parameters.parameters.forEach((commentInput) => {
-                    content += `\n\r* @param \`${commentInput.typeName.name}\` `
+                    content += `\n\r@param \`${commentInput.typeName.name}\` `
                         + `**${commentInput.name}** ${func.paramComments.get(commentInput.name)}`;
                 });
             }
             if (func.ast.returnParameters !== null) {
                 func.ast.returnParameters.parameters.forEach((commentOutput) => {
-                    content += `\n\r* @return \`${commentOutput.typeName.name}\` `
+                    content += `\n\r@return \`${commentOutput.typeName.name}\` `
                         + `${func.comments.return}`;
                 });
             }
