@@ -129,12 +129,12 @@
     <div class="container">
 
         <div class="notification">
-            <h1 class="title is-1">{{contract.name}}</h1>
+            <h1 class="title is-1" id="contractName">{{contract.name}}</h1>
             {{#contractData.contract.title}}
                 <h2 class="subtitle">{{contractData.contract.title}}
-                    {{#contractData.contract.author}}
-                    by <i>{{contractData.contract.author}}</i>
-                    {{/contractData.contract.author}}
+                {{#contractData.contract.author}}
+                by <i id="author">@{{contractData.contract.author}}</i>
+                {{/contractData.contract.author}}
                 </h2>
             {{/contractData.contract.title}}
             {{filePath}}
@@ -157,7 +157,7 @@
                                 <strong class="method">constructor</strong>
                             </a>
                             {{#comments.author}}
-                                by <small>@{{comments.author}}</small>
+                                by <small id="author">@{{comments.author}}</small>
                             {{/comments.author}}
                             <br />
                             {{#comments.dev}}
@@ -203,7 +203,7 @@
                                 <strong class="method">{{ast.name}}</strong>
                             </a>
                             {{#comments.author}}
-                                by <small>@{{comments.author}}</small>
+                                by <small id="author">@{{comments.author}}</small>
                             {{/comments.author}}
                             <br />
                             {{#comments.dev}}
@@ -249,7 +249,7 @@
                                 <strong class="method">{{ast.name}}</strong>
                             </a>
                             {{#comments.author}}
-                                by <small>@{{comments.author}}</small>
+                                by <small id="author">@{{comments.author}}</small>
                             {{/comments.author}}
                             <br />
                             {{#comments.dev}}
