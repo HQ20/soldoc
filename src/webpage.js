@@ -36,7 +36,9 @@ md.renderer.rules.emoji = (token, idx) => `<i class="twa twa-${token[idx].markup
  * @param {object} contractData Contract data, containing ast and comments to be rendered
  * @param {string} contractPath Path to contract file
  */
-function transformTemplate(templateFile, contractName, contractData, contractPath, contractsStructure) {
+function transformTemplate(
+    templateFile, contractName, contractData, contractPath, contractsStructure, hasLICENSE,
+) {
     // read template into a string
     const templateContent = String(fs.readFileSync(templateFile));
     // put all data together
@@ -48,6 +50,8 @@ function transformTemplate(templateFile, contractName, contractData, contractPat
         contractData,
         contractsStructure,
         currentDate: new Date(),
+        hasLICENSE,
+        CONTRACT: true,
     };
     // calls the render engine
     const output = Mustache.render(templateContent, view);
@@ -61,6 +65,7 @@ function transformTemplate(templateFile, contractName, contractData, contractPat
 exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
     // create a list of contracts and methods
     const contractsStructure = [];
+    const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
     contractsPreparedData.forEach((contract) => {
         const contractInfo = {};
         // add name
@@ -86,6 +91,7 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
             contract.contractData,
             contract.solidityFilePath,
             contractsStructure,
+            hasLICENSE,
         );
         const formatEmojify = (code, name) => `<i alt="${code}" class="twa twa-${name}"></i>`;
         // write it to a file
@@ -113,6 +119,7 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
         // put all data together
         const view = {
             contractsStructure,
+            hasLICENSE,
             README,
         };
         // calls the render engine
@@ -120,6 +127,28 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
         // write it to a file
         fs.writeFileSync(
             path.join(process.cwd(), outputFolder, 'index.html'),
+            output,
+        );
+    }
+    // If there's a LICENSE
+    if (hasLICENSE) {
+        // insert into index.html
+        const templateContent = String(fs.readFileSync(
+            path.join(contractsPreparedData[0].currentFolder, 'src/template/index.html'),
+        ));
+        const LICENSEText = String(fs.readFileSync(path.join(process.cwd(), 'LICENSE'))).trim();
+        const LICENSE = LICENSEText.replace(new RegExp('\\n', 'g'), '<br>');
+        // put all data together
+        const view = {
+            contractsStructure,
+            hasLICENSE: true,
+            LICENSE,
+        };
+        // calls the render engine
+        const output = Mustache.render(templateContent, view);
+        // write it to a file
+        fs.writeFileSync(
+            path.join(process.cwd(), outputFolder, 'license.html'),
             output,
         );
     }

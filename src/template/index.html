@@ -67,14 +67,30 @@
                 <a class="navbar-item" href="index.html">
                     Home
                 </a>
-
-                <a class="navbar-item" href="https://github.com/HQ20/soldoc/wiki/About">
-                    About
+                {{#hasLICENSE}}
+                <a class="navbar-item" href="license.html">
+                    LICENSE
                 </a>
+                {{/hasLICENSE}}
 
-                <a class="navbar-item" href="https://github.com/HQ20/soldoc/issues">
-                    Report an issue
-                </a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                    More soldoc
+                    </a>
+
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" href="https://github.com/HQ20/soldoc/wiki/About">
+                            About
+                        </a>
+                        <a class="navbar-item" href="#">
+                            Contact
+                        </a>
+                        <hr class="navbar-divider">
+                        <a class="navbar-item" href="https://github.com/HQ20/soldoc/issues">
+                            Report an issue
+                        </a>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -97,7 +113,14 @@
         </div>
     </div>
     {{/README}}
-    {{^README}}
+    {{#LICENSE}}
+    <div class="container">
+        <div class="LICENSE" style="text-align: center;">
+            {{{LICENSE}}}
+        </div>
+    </div>
+    {{/LICENSE}}
+    {{#CONTRACT}}
     <div class="container">
 
         <div class="notification">
@@ -264,7 +287,7 @@
         </div>
         {{/contractData.functions}}
     </div>
-    {{/README}}
+    {{/CONTRACT}}
 </body>
 
 </html>
