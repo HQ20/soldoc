@@ -5,10 +5,10 @@ const pdfUtil = require('pdf-to-text');
 const { generate } = require('../../src/index');
 
 describe('Render File - Plane', () => {
-    beforeAll(() => {
+    beforeAll(async () => {
         jest.setTimeout(20000);
         // first render
-        generate(true, './docs', './test/contracts/Plane.sol');
+        await generate(true, './docs', './test/contracts/Plane.sol');
         // now let's test the result
     });
 

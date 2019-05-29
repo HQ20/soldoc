@@ -36,8 +36,8 @@ describe('Render Web Page - Complete folder', () => {
      * The main contract being shown should be named "Plane"
      */
     test('should be named "Plane"', async (done) => {
-        await page.waitFor('.Content .Content__Title');
-        const element = await page.$('.Content .Content__Title');
+        await page.waitFor('h1#contractName');
+        const element = await page.$('h1#contractName');
         const text = await page.evaluate(e => e.textContent, element);
         expect(text).toBe('Plane');
         done();
@@ -53,8 +53,8 @@ describe('Render Web Page - Complete folder', () => {
             'Plane',
             'Tree',
         ];
-        await page.waitFor('dt');
-        const cards = await page.$$('dt');
+        await page.waitFor('aside.menu p.menu-label');
+        const cards = await page.$$('aside.menu p.menu-label');
         for (let c = 0; c < cards.length; c += 1) {
             // eslint-disable-next-line no-await-in-loop
             const text = await page.evaluate(e => e.textContent, cards[c]);
@@ -90,8 +90,8 @@ describe('Render Web Page - Complete folder', () => {
             'land',
             'age',
         ];
-        await page.waitFor('dd');
-        const cards = await page.$$('dd');
+        await page.waitFor('aside.menu ul a');
+        const cards = await page.$$('aside.menu ul a');
         for (let c = 0; c < cards.length; c += 1) {
             // eslint-disable-next-line no-await-in-loop
             const text = await page.evaluate(e => e.textContent, cards[c]);

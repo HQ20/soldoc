@@ -3,10 +3,10 @@ const fs = require('fs');
 const { generate } = require('../../src/index');
 
 describe('Render File - ERC20', () => {
-    beforeAll(() => {
+    beforeAll(async () => {
         jest.setTimeout(20000);
         // first render
-        generate(true, './docs', './test/contracts/ERC20.sol');
+        await generate(true, './docs', './test/contracts/ERC20.sol');
         // now let's test the result
     });
 

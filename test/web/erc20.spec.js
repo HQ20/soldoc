@@ -36,8 +36,8 @@ describe('Render Web Page - ERC20', () => {
      * The main contract being shown should be named "ERC20"
      */
     test('should be named "ERC20"', async (done) => {
-        await page.waitFor('.Content .Content__Title');
-        const element = await page.$('.Content .Content__Title');
+        await page.waitFor('h1#contractName');
+        const element = await page.$('h1#contractName');
         const text = await page.evaluate(e => e.textContent, element);
         expect(text).toBe('ERC20');
         done();
@@ -62,8 +62,8 @@ describe('Render Web Page - ERC20', () => {
             '_approve',
             '_burnFrom',
         ];
-        await page.waitFor('.Card .Card__Title');
-        const cards = await page.$$('.Card .Card__Title');
+        await page.waitFor('strong.method');
+        const cards = await page.$$('strong.method');
         for (let c = 0; c < cards.length; c += 1) {
             // eslint-disable-next-line no-await-in-loop
             const text = await page.evaluate(e => e.textContent, cards[c]);
@@ -106,8 +106,8 @@ describe('Render Web Page - ERC20', () => {
             + 'from the sender\'s allowance for said account. Uses the internal burn function. '
             + 'Emits an Approval event (reflecting the reduced allowance).',
         ];
-        await page.waitFor('.Card p > i');
-        const cards = await page.$$('.Card p > i');
+        await page.waitFor('.box .media .content p > i');
+        const cards = await page.$$('.box .media .content p > i');
         for (let c = 0; c < cards.length; c += 1) {
             // eslint-disable-next-line no-await-in-loop
             const text = await page.evaluate(e => e.textContent, cards[c]);

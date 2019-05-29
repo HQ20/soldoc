@@ -36,8 +36,8 @@ describe('Render Web Page - Plane', () => {
      * The main contract being shown should be named "Plane"
      */
     test('should be named "Plane"', async (done) => {
-        await page.waitFor('.Content .Content__Title');
-        const element = await page.$('.Content .Content__Title');
+        await page.waitFor('h1#contractName');
+        const element = await page.$('h1#contractName');
         const text = await page.evaluate(e => e.textContent, element);
         expect(text).toBe('Plane');
         done();
@@ -52,8 +52,8 @@ describe('Render Web Page - Plane', () => {
             'Land',
             'land',
         ];
-        await page.waitFor('.Card .Card__Title');
-        const cards = await page.$$('.Card .Card__Title');
+        await page.waitFor('strong.method');
+        const cards = await page.$$('strong.method');
         for (let c = 0; c < cards.length; c += 1) {
             // eslint-disable-next-line no-await-in-loop
             const text = await page.evaluate(e => e.textContent, cards[c]);
@@ -66,11 +66,12 @@ describe('Render Web Page - Plane', () => {
      * The title comment
      */
     test('should title comment', async (done) => {
-        await page.waitFor('.Content h3');
-        const element = await page.$('.Content h3');
+        await page.waitFor('div.container h2.subtitle');
+        const element = await page.$('div.container h2.subtitle');
         const text = await page.evaluate(e => e.textContent, element);
         // TODO: remove trim
-        expect(text.trim()).toBe('The Plane contract');
+        // because of them emoji there's an extra space. TODO: improve it!
+        expect(text.replace(/\n[ ]*/g, '').trim()).toBe('The Plane contract  by @Wilbur & Orville');
         done();
     });
 
@@ -79,8 +80,8 @@ describe('Render Web Page - Plane', () => {
      */
     test('should have all authors listed', async (done) => {
         const cardsNames = [
-            'by Wilbur & Orville',
-            'by Bernardo Vieira',
+            '@Wilbur & Orville',
+            '@Bernardo Vieira',
         ];
         await page.waitFor('#author');
         const cards = await page.$$('#author');
