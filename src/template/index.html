@@ -2,6 +2,7 @@
 
 <head>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/github.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/twemoji-awesome-clone@1.0.0/twemoji-awesome.css">
     <style>
         aside {
@@ -37,6 +38,18 @@
         a strong {
             color: black;
         }
+
+        /*readme*/
+        .README li {
+            padding: 5px 40px;
+        }
+
+        .README h1,.README h2,.README h3,.README h4 {
+            margin-block-start: 0.83em;
+            margin-block-end: 0.83em;
+            margin-inline-start: 0px;
+            margin-inline-end: 0px;
+        }
     </style>
     <title>soldoc</title>
 </head>
@@ -51,11 +64,11 @@
 
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item">
+                <a class="navbar-item" href="index.html">
                     Home
                 </a>
 
-                <a class="navbar-item">
+                <a class="navbar-item" href="https://github.com/HQ20/soldoc/wiki/About">
                     About
                 </a>
 
@@ -77,6 +90,14 @@
         {{/contractsStructure}}
     </aside>
 
+    {{#README}}
+    <div class="container">
+        <div class="README">
+            {{{README}}}
+        </div>
+    </div>
+    {{/README}}
+    {{^README}}
     <div class="container">
 
         <div class="notification">
@@ -243,6 +264,7 @@
         </div>
         {{/contractData.functions}}
     </div>
+    {{/README}}
 </body>
 
 </html>
