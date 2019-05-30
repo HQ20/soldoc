@@ -27,7 +27,7 @@ md.renderer.rules.emoji = (token, idx) => `<i class="em em-${token[idx].markup}"
  * @param contractsPreparedData prepared data
  */
 exports.generatePDF = (contractsPreparedData, outputFolder) => {
-    contractsPreparedData.forEach((contract) => {
+    contractsPreparedData.forEach(async (contract) => {
         let content = '';
         // extract contracts comments
         if (contract.contractData.contract !== undefined) {
@@ -125,6 +125,6 @@ exports.generatePDF = (contractsPreparedData, outputFolder) => {
         // render it, from markdown to html
         const result = md.render(String(content));
         // generate
-        toPdf.generatePDF(outputFolder, contract.filename, result);
+        await toPdf.generatePDF(outputFolder, contract.filename, result);
     });
 };
