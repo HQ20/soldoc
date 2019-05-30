@@ -16,7 +16,7 @@
         "lint:js": "eslint src/*.js .",
         "test": "jest",
         "coverage": "jest --coverage",
-        "coverage:ci": "jest --detectOpenHandles && cat ./coverage/lcov.info | coveralls",
+        "coverage:ci": "jest --coverage --detectOpenHandles --forceExit && cat ./coverage/lcov.info | coveralls",
         "docs": "jsdoc ./src/*.js -d ./docs"
     },
     "repository": {

@@ -11,7 +11,6 @@ describe('Render File - ERC20', () => {
     });
 
     afterAll(() => {
-        console.log('afterAll');
         //
     });
 
