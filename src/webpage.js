@@ -11,7 +11,7 @@ const md = require('markdown-it')({
             try {
                 return `<pre class="hljs"><code>${
                     hljs.highlight(lang, str, true).value
-                    }</code></pre>`;
+                }</code></pre>`;
                 // eslint-disable-next-line no-empty
             } catch (__) { }
         }
@@ -179,4 +179,5 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
             output,
         );
     }
+    return 0;
 };
