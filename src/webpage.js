@@ -11,7 +11,7 @@ const md = require('markdown-it')({
             try {
                 return `<pre class="hljs"><code>${
                     hljs.highlight(lang, str, true).value
-                }</code></pre>`;
+                    }</code></pre>`;
                 // eslint-disable-next-line no-empty
             } catch (__) { }
         }
@@ -137,6 +137,25 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
             path.join(process.cwd(), outputFolder, 'index.html'),
             output,
         );
+        // if there's an image reference in readme, copy it
+        const files = [];
+        // read dir
+        const filesList = fs.readdirSync(process.cwd());
+        // iterate over what was found
+        filesList.forEach((file) => {
+            const stats = fs.lstatSync(path.join(process.cwd(), file));
+            // if not, push file to list, only if it is valid
+            if (stats.isFile() && path.extname(file) === '.png') {
+                files.push(file);
+            }
+        });
+        // and if the file is n readme, copy it
+        files.forEach((file) => {
+            if (output.includes(file)) {
+                fs.copyFileSync(path.join(process.cwd(), file), path.join(process.cwd(), outputFolder, file));
+            }
+        });
+        return files;
     }
     // If there's a LICENSE
     if (hasLICENSE) {
