@@ -13,6 +13,7 @@ describe('Render File - Plane', () => {
     });
 
     afterAll(() => {
+        console.log('afterAll');
         //
     });
 
