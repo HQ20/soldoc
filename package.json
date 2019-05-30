@@ -6,6 +6,10 @@
     "bin": {
         "soldoc": "bin/cli.js"
     },
+    "files": [
+        "/bin",
+        "/src"
+    ],
     "scripts": {
         "demo-html": "./bin/cli.js docs/ test/contracts",
         "demo-pdf": "./bin/cli.js --pdf docs/ test/contracts/ERC20.sol",
