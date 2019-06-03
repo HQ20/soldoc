@@ -48,6 +48,7 @@ exports.generate = (toPdf, ignoreFilesList, outputFolder, filePathInput) => {
     fs.lstat(filePathInput, (err, stats) => {
         // Handle error
         if (err) {
+            console.log(`The file you are looking for (${filePathInput}) doesn't exist!`);
             return 1;
         }
         let files = [];
