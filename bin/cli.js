@@ -22,8 +22,31 @@ const cli = meow(helpMessage, {
         pdf: {
             type: 'boolean',
         },
+        ignore: {
+            type: 'string',
+        },
     },
 });
 
-console.log('Wait...might take a moment!');
-generate(cli.flags.pdf, String(cli.input[0]), String(cli.input[1]));
+function main() {
+    if (cli.input.length !== 2) {
+        console.error('You must be doing somethinf wrong. Use soldoc --help.');
+        return 1;
+    }
+
+    if (cli.flags.pdf) {
+        console.log('Wait...might take a moment!');
+    } else {
+        console.log('');
+    }
+    let ignoreList = [];
+    if (cli.flags.ignore && cli.flags.ignore.length > 0) {
+        const commaPosition = cli.flags.ignore.indexOf(',');
+        if (commaPosition >= -1) {
+            ignoreList = cli.flags.ignore.split(',');
+        }
+    }
+    return generate(cli.flags.pdf, ignoreList, String(cli.input[0]), String(cli.input[1]));
+}
+
+main();
