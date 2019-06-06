@@ -21,7 +21,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/hq20/soldoc.git"
+        "url": "git+https://github.com/soldocjs/soldoc.git"
     },
     "keywords": [
         "solidity",
@@ -47,9 +47,9 @@
     ],
     "license": "GPL-3.0-only",
     "bugs": {
-        "url": "https://github.com/hq20/soldoc/issues"
+        "url": "https://github.com/soldocjs/soldoc/issues"
     },
-    "homepage": "https://github.com/hq20/soldoc#readme",
+    "homepage": "https://github.com/soldocjs/soldoc#readme",
     "dependencies": {
         "chalk": "2.4.2",
         "highlight.js": "9.15.6",
