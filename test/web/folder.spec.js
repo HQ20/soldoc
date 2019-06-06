@@ -9,7 +9,7 @@ describe('Render Web Page - Complete folder', () => {
     beforeAll(async () => {
         jest.setTimeout(20000);
         // first render
-        generate(false, './docs', './test/contracts/');
+        generate(false, [], './docs', './test/contracts/');
         // now let's test the result
         // open the browser
         browser = await puppeteer.launch();
