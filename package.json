@@ -11,7 +11,7 @@
         "/src"
     ],
     "scripts": {
-        "demo-html": "./bin/cli.js --ignore ERC20.sol,IERC20.sol docs/ test/contracts",
+        "demo-html": "./bin/cli.js --ignore Ignore.sol,IERC20.sol docs/ test/contracts",
         "demo-pdf": "./bin/cli.js --pdf docs/ test/contracts/ERC20.sol",
         "lint:js": "eslint src/*.js .",
         "test": "jest",
