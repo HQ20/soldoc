@@ -27,6 +27,8 @@ md.use(mdemoji);
 // set mdemoji rules
 md.renderer.rules.emoji = (token, idx) => `<i class="twa twa-${token[idx].markup}"></i>`;
 
+const defaultTemplatePath = 'src/template/web/index.html';
+
 
 /**
  * Using the given parameters, calls the Mustache engine
@@ -86,7 +88,7 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
     contractsPreparedData.forEach((contract) => {
         // transform the template
         let HTMLContent = transformTemplate(
-            path.join(contract.currentFolder, 'src/template/index.html'),
+            path.join(contract.currentFolder, defaultTemplatePath),
             contract.contractName,
             contract.contractData,
             contract.solidityFilePath,
@@ -113,7 +115,7 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
     if (fs.existsSync(path.join(process.cwd(), 'README.md'))) {
         // insert into index.html
         const templateContent = String(fs.readFileSync(
-            path.join(contractsPreparedData[0].currentFolder, 'src/template/index.html'),
+            path.join(contractsPreparedData[0].currentFolder, defaultTemplatePath),
         ));
         const READMEText = String(fs.readFileSync(path.join(process.cwd(), 'README.md'))).trim();
         // render it, from markdown to html
@@ -161,7 +163,7 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
     if (hasLICENSE) {
         // insert into index.html
         const templateContent = String(fs.readFileSync(
-            path.join(contractsPreparedData[0].currentFolder, 'src/template/index.html'),
+            path.join(contractsPreparedData[0].currentFolder, defaultTemplatePath),
         ));
         const LICENSEText = String(fs.readFileSync(path.join(process.cwd(), 'LICENSE'))).trim();
         const LICENSE = LICENSEText.replace(/\n/g, '<br>');
