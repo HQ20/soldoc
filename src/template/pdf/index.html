@@ -1,0 +1,171 @@
+<html>
+
+<head>
+    <!-- this is the coor schema used in <code> tags. You can change this -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/languages/javascript.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <!-- has a few nice things -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/3.2.0/css/bootstrap.css">
+    <!-- support emojies :heart: -->
+    <link rel="stylesheet" href="https://afeld.github.io/emoji-css/emoji.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+    <style>
+        /* some emoji class */
+        .emoji {
+            height: 1em;
+            width: 1em;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        body {
+            /* this will force puppeter to print was is exactly shown if seen in a browser */
+            -webkit-print-color-adjust: exact;
+        }
+
+        .content {
+            margin: 3% 15%;
+        }
+
+        .box {
+            border: #606c7621 1px solid;
+            border-radius: 10px;
+            padding: 20px 40px;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="content">
+        <h1>ERC20</h1>
+        <p>- Standard ERC20 token <i class="em em-wink"></i></p>
+        <p><em>Implementation of the basic standard token. <a
+                    href="https://eips.ethereum.org/EIPS/eip-20">https://eips.ethereum.org/EIPS/eip-20</a> Originally
+                based on code by FirstBlood: <a
+                    href="https://github.com/Firstbloodio/token/blob/master/smart_contract/FirstBloodToken.sol">https://github.com/Firstbloodio/token/blob/master/smart_contract/FirstBloodToken.sol</a>
+                This implementation emits additional Approval events, allowing applications to reconstruct the allowance
+                status for all accounts just by listening to said events. Note that this isn’t required by the
+                specification, and other compliant implementations may not do it.</em></p>
+        <div class="box">
+            <h2>totalSupply</h2> by <i>Bernardo Vieira</i>
+            <div>
+                <p><strong>@dev</strong> Total number of tokens in existence</p>
+                <p>@return <code>uint256</code></p>
+            </div>
+        </div>
+        <h2>balanceOf</h2>
+        <p><strong>@dev</strong> Gets the balance of the specified address.</p>
+        <p>@param <code>address</code> <strong>owner</strong> The address to query the balance of.</p>
+        <p>@return <code>uint256</code> A uint256 representing the amount owned by the passed address.</p>
+        <div class="box">
+            <div><h2>allowance</h2></div>
+            <pre><code class="javascript">function allowance(address owner, address spender) public view returns (uint256)</code></pre>
+            <p><strong>@dev</strong> Function to check the amount of tokens that an owner allowed to a spender.</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Input/Output</th>
+                        <th>Variable type</th>
+                        <th>Variable name</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Input</td>
+                        <td><code>address</code></td>
+                        <td><strong>owner</strong></td>
+                        <td>The address which owns the funds.</td>
+                    </tr>
+                    <tr>
+                        <td>Input</td>
+                        <td><code>address</code></td>
+                        <td><strong>spender</strong></td>
+                        <td>The address which will spend the funds.</td>
+                    </tr>
+                    <tr>
+                        <td>Output</td>
+                        <td><code>address</code></td>
+                        <td></td>
+                        <td>A uint256 specifying the amount of tokens still available for the spender.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h2>transfer</h2>
+        <p><strong>@dev</strong> Transfer token to a specified address</p>
+        <p>@param <code>address</code> <strong>to</strong> The address to transfer to.</p>
+        <p>@param <code>uint256</code> <strong>value</strong> The amount to be transferred.</p>
+        <p>@return <code>bool</code></p>
+        <h2>approve</h2>
+        <p><strong>@dev</strong> Approve the passed address to spend the specified amount of tokens on behalf of
+            msg.sender. Beware that changing an allowance with this method brings the risk that someone may use both the
+            old and the new allowance by unfortunate transaction ordering. One possible solution to mitigate this race
+            condition is to first reduce the spender’s allowance to 0 and set the desired value afterwards: <a
+                href="https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729">https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729</a>
+        </p>
+        <p>@param <code>address</code> <strong>spender</strong> The address which will spend the funds.</p>
+        <p>@param <code>uint256</code> <strong>value</strong> The amount of tokens to be spent.</p>
+        <p>@return <code>bool</code></p>
+        <h2>transferFrom</h2>
+        <p><strong>@dev</strong> Transfer tokens from one address to another. Note that while this function emits an
+            Approval event, this is not required as per the specification, and other compliant implementations may not
+            emit the event.</p>
+        <p>@param <code>address</code> <strong>from</strong> The address which you want to send tokens from</p>
+        <p>@param <code>address</code> <strong>to</strong> The address which you want to transfer to</p>
+        <p>@param <code>uint256</code> <strong>value</strong> The amount of tokens to be transferred</p>
+        <p>@return <code>bool</code></p>
+        <h2>increaseAllowance</h2>
+        <p><strong>@dev</strong> Increase the amount of tokens that an owner allowed to a spender. approve should be
+            called when _allowed[msg.sender][spender] == 0. To increment allowed value is better to use this function to
+            avoid 2 calls (and wait until the first transaction is mined) From MonolithDAO Token.sol Emits an Approval
+            event.</p>
+        <p>@param <code>address</code> <strong>spender</strong> The address which will spend the funds.</p>
+        <p>@param <code>uint256</code> <strong>addedValue</strong> The amount of tokens to increase the allowance by.
+        </p>
+        <p>@return <code>bool</code></p>
+        <h2>decreaseAllowance</h2>
+        <p><strong>@dev</strong> Decrease the amount of tokens that an owner allowed to a spender. approve should be
+            called when _allowed[msg.sender][spender] == 0. To decrement allowed value is better to use this function to
+            avoid 2 calls (and wait until the first transaction is mined) From MonolithDAO Token.sol Emits an Approval
+            event.</p>
+        <p>@param <code>address</code> <strong>spender</strong> The address which will spend the funds.</p>
+        <p>@param <code>uint256</code> <strong>subtractedValue</strong> The amount of tokens to decrease the allowance
+            by.</p>
+        <p>@return <code>bool</code></p>
+        <h2>_transfer</h2>
+        <p><strong>@dev</strong> Transfer token for a specified addresses</p>
+        <p>@param <code>address</code> <strong>from</strong> The address to transfer from.</p>
+        <p>@param <code>address</code> <strong>to</strong> The address to transfer to.</p>
+        <p>@param <code>uint256</code> <strong>value</strong> The amount to be transferred.</p>
+        <h2>_mint</h2>
+        <p><strong>@dev</strong> Internal function that mints an amount of the token and assigns it to an account. This
+            encapsulates the modification of balances such that the proper events are emitted.</p>
+        <p>@param <code>address</code> <strong>account</strong> The account that will receive the created tokens.</p>
+        <p>@param <code>uint256</code> <strong>value</strong> The amount that will be created.</p>
+        <h2>_burn</h2>
+        <p><strong>@dev</strong> Internal function that burns an amount of the token of a given account.</p>
+        <p>@param <code>address</code> <strong>account</strong> The account whose tokens will be burnt.</p>
+        <p>@param <code>uint256</code> <strong>value</strong> The amount that will be burnt.</p>
+        <h2>_approve</h2>
+        <p><strong>@dev</strong> Approve an address to spend another addresses’ tokens.</p>
+        <p>@param <code>address</code> <strong>owner</strong> The address that owns the tokens.</p>
+        <p>@param <code>address</code> <strong>spender</strong> The address that will spend the tokens.</p>
+        <p>@param <code>uint256</code> <strong>value</strong> The number of tokens that can be spent.</p>
+        <h2>_burnFrom</h2>
+        <p><strong>@dev</strong> Internal function that burns an amount of the token of a given account, deducting from
+            the sender’s allowance for said account. Uses the internal burn function. Emits an Approval event
+            (reflecting the reduced allowance).</p>
+        <p>@param <code>address</code> <strong>account</strong> The account whose tokens will be burnt.</p>
+        <p>@param <code>uint256</code> <strong>value</strong> The amount that will be burnt.</p>
+
+    </div>
+</body>
+
+</html>
