@@ -1,6 +1,10 @@
+const fs = require('fs');
+const path = require('path');
+const Mustache = require('mustache');
 const toPdf = require('pdf-from-html');
 const hljs = require('highlight.js');
-const emoji = require('markdown-it-emoji');
+const emoji = require('node-emoji');
+const mdemoji = require('markdown-it-emoji');
 const md = require('markdown-it')({
     highlight(str, lang) {
         if (lang && hljs.getLanguage(lang)) {
@@ -18,113 +22,59 @@ const md = require('markdown-it')({
 });
 
 // use emoji plugin
-md.use(emoji);
+md.use(mdemoji);
 // set emoji rules
 md.renderer.rules.emoji = (token, idx) => `<i class="em em-${token[idx].markup}"></i>`;
 
+
+function transformTemplate(
+    templateFile, contractName, contractData, contractPath,
+) {
+    // read template into a string
+    const templateContent = String(fs.readFileSync(templateFile));
+    // put all data together
+    const view = {
+        filePath: contractPath,
+        contract: {
+            name: contractName,
+        },
+        contractData,
+        currentDate: new Date(),
+        CONTRACT: true,
+    };
+    // calls the render engine
+    const output = Mustache.render(templateContent, view);
+    return output;
+}
+
+const defaultTemplatePath = 'src/template/pdf/index.html';
 
 /**
  * @param contractsPreparedData prepared data
  */
 exports.generatePDF = (contractsPreparedData, outputFolder) => {
     contractsPreparedData.forEach(async (contract) => {
-        let content = '';
-        // extract contracts comments
-        if (contract.contractData.contract !== undefined) {
-            const {
-                title, dev, notice, author,
-            } = contract.contractData.contract;
-            content += `# ${contract.contractName}`;
-            if (title.length > 0 || author.length > 0) {
-                content += '\n\r\\- ';
-                if (title.length > 0) {
-                    content += `${title} `;
-                }
-                if (author.length > 0) {
-                    content += `*by ${author}*`;
-                }
-            }
-            if (notice.length > 0) {
-                content += `\n\r${notice}`;
-            }
-            if (dev.length > 0) {
-                content += `\n\r*${dev}*`;
+        let HTMLContent = transformTemplate(
+            path.join(contract.currentFolder, defaultTemplatePath),
+            contract.contractName,
+            contract.contractData,
+            contract.solidityFilePath,
+        );
+        // transform damn weird URLS into real liks
+        const match = HTMLContent.match(/(?<!\[)https?:&#x2F;&#x2F;[a-zA-Z0-9.&#x2F;\-_]+/g);
+        if (match !== null) {
+            let transform = match.map(url => url.replace(/&#x2F;/g, '/'));
+            transform = transform.map(url => `<a href="${url}">${url}</a>`);
+            for (let i = 0; i < match.length; i += 1) {
+                HTMLContent = HTMLContent.replace(match[i], transform[i]);
             }
         }
-        // extract constructor comments
-        if (contract.contractData.constructor !== null) {
-            const {
-                dev, notice, author,
-            } = contract.contractData.constructor.comments;
-            if (notice.length > 0) {
-                content += `\n\r${notice}`;
-            }
-            if (dev.length > 0) {
-                content += `\n\r*${dev}*`;
-            }
-            if (author.length > 0) {
-                content += `\n\r\\- *by ${author}*`;
-            }
-        }
-        // extract event comments
-        contract.contractData.events.forEach((event) => {
-            content += `\n\r## ${event.ast.name}`;
-            if (event.comments === undefined) {
-                return;
-            }
-            const {
-                notice, dev, author,
-            } = event.comments;
-            if (notice.length > 0) {
-                content += `\n\r${notice}`;
-            }
-            if (dev.length > 0) {
-                content += `\n\r**@dev** ${dev}`;
-            }
-            if (author.length > 0) {
-                content += `\n\r*by ${author}*`;
-            }
-            if (event.ast.parameters !== null) {
-                event.ast.parameters.parameters.forEach((commentInput) => {
-                    content += `\n\r* @param \`${commentInput.typeName.name}\` `
-                        + `**${commentInput.name}** ${event.comments.param.get(commentInput.name)}`;
-                });
-            }
-        });
-        // extract functions comments
-        contract.contractData.functions.forEach((func) => {
-            content += `\n\r## ${func.ast.name}`;
-            if (func.comments === undefined) {
-                return;
-            }
-            const {
-                notice, dev, author,
-            } = func.comments;
-            if (notice.length > 0) {
-                content += `\n\r* ${notice}`;
-            }
-            if (dev.length > 0) {
-                content += `\n\r**@dev** ${dev}`;
-            }
-            if (author.length > 0) {
-                content += `\n\r*by ${author}*`;
-            }
-            if (func.ast.parameters !== null) {
-                func.ast.parameters.parameters.forEach((commentInput) => {
-                    content += `\n\r@param \`${commentInput.typeName.name}\` `
-                        + `**${commentInput.name}** ${func.paramComments.get(commentInput.name)}`;
-                });
-            }
-            if (func.ast.returnParameters !== null) {
-                func.ast.returnParameters.parameters.forEach((commentOutput) => {
-                    content += `\n\r@return \`${commentOutput.typeName.name}\` `
-                        + `${func.comments.return}`;
-                });
-            }
-        });
-        // render it, from markdown to html
-        const result = md.render(String(content));
+        const formatEmojify = (code, name) => `<i alt="${code}" class="twa twa-${name}"></i>`;
         // generate
-        await toPdf.generatePDF(outputFolder, contract.filename, result);
+        await toPdf.generatePDF(
+            outputFolder,
+            contract.filename,
+            emoji.emojify(HTMLContent, null, formatEmojify),
+        );
     });
 };
