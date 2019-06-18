@@ -1,31 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-const Mustache = require('mustache');
 const toPdf = require('pdf-from-html');
-const hljs = require('highlight.js');
 const emoji = require('node-emoji');
-const mdemoji = require('markdown-it-emoji');
-const md = require('markdown-it')({
-    highlight(str, lang) {
-        if (lang && hljs.getLanguage(lang)) {
-            try {
-                return `<pre class="hljs"><code>${
-                    hljs.highlight(lang, str, true).value
-                }</code></pre>`;
-                // eslint-disable-next-line no-empty
-            } catch (__) { }
-        }
-        return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
-    },
-    linkify: true,
-    typographer: true,
-});
 const { transformTemplate } = require('./renderHTML');
-
-// use emoji plugin
-md.use(mdemoji);
-// set emoji rules
-md.renderer.rules.emoji = (token, idx) => `<i class="em em-${token[idx].markup}"></i>`;
 
 
 const defaultTemplatePath = 'src/template/pdf/index.html';
@@ -34,6 +11,11 @@ const defaultTemplatePath = 'src/template/pdf/index.html';
  * @param contractsPreparedData prepared data
  */
 exports.generatePDF = (contractsPreparedData, outputFolder) => {
+    // verify if the docs/ folder exist and creates it if not
+    const destinationDocsFolderPath = path.join(process.cwd(), outputFolder);
+    if (!fs.existsSync(destinationDocsFolderPath)) {
+        fs.mkdirSync(destinationDocsFolderPath);
+    }
     contractsPreparedData.forEach(async (contract) => {
         let HTMLContent = transformTemplate(
             path.join(contract.currentFolder, defaultTemplatePath),

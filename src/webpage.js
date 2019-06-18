@@ -1,32 +1,13 @@
 const fs = require('fs');
 const path = require('path');
-const Mustache = require('mustache');
 const emoji = require('node-emoji');
-// to render README.md
-const hljs = require('highlight.js');
-const mdemoji = require('markdown-it-emoji');
-const md = require('markdown-it')({
-    highlight(str, lang) {
-        if (lang && hljs.getLanguage(lang)) {
-            try {
-                return `<pre class="hljs"><code>${
-                    hljs.highlight(lang, str, true).value
-                }</code></pre>`;
-                // eslint-disable-next-line no-empty
-            } catch (__) { }
-        }
-        return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
-    },
-    html: true,
-    linkify: true,
-    typographer: true,
-});
-const { transformTemplate } = require('./renderHTML');
+const {
+    transformTemplate,
+    renderLicense,
+    renderReadme,
+    organizeContractsStructure,
+} = require('./renderHTML');
 
-// use mdemoji plugin
-md.use(mdemoji);
-// set mdemoji rules
-md.renderer.rules.emoji = (token, idx) => `<i class="twa twa-${token[idx].markup}"></i>`;
 
 const defaultTemplatePath = 'src/template/web/index.html';
 
@@ -36,20 +17,8 @@ const defaultTemplatePath = 'src/template/web/index.html';
  */
 exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
     // create a list of contracts and methods
-    const contractsStructure = [];
+    const contractsStructure = organizeContractsStructure(contractsPreparedData);
     const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
-    contractsPreparedData.forEach((contract) => {
-        const contractInfo = {};
-        // add name
-        contractInfo.name = contract.contractName;
-        contractInfo.filename = contract.filename;
-        contractInfo.functions = [];
-        // add functions name
-        contract.contractData.functions.forEach((func) => {
-            contractInfo.functions.push({ name: func.ast.name });
-        });
-        contractsStructure.push(contractInfo);
-    });
     // verify if the docs/ folder exist and creates it if not
     const destinationDocsFolderPath = path.join(process.cwd(), outputFolder);
     if (!fs.existsSync(destinationDocsFolderPath)) {
@@ -87,27 +56,11 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
         const templateContent = String(fs.readFileSync(
             path.join(contractsPreparedData[0].currentFolder, defaultTemplatePath),
         ));
-        const READMEText = String(fs.readFileSync(path.join(process.cwd(), 'README.md'))).trim();
-        // render it, from markdown to html
-        const READMEconverted = md.render(READMEText);
-        const README = READMEconverted
-            .replace(/<h1>/g, '<h1 class="title is-1">')
-            .replace(/<h2>/g, '<h2 class="title is-2">')
-            .replace(/<h3>/g, '<h3 class="title is-3">')
-            .replace(/<h4>/g, '<h4 class="title is-4">')
-            .replace(/<ul>/g, '<ul class="menu-list">');
-        // put all data together
-        const view = {
-            contractsStructure,
-            hasLICENSE,
-            README,
-        };
-        // calls the render engine
-        const output = Mustache.render(templateContent, view);
+        const outputReadme = renderReadme(templateContent, contractsStructure, hasLICENSE);
         // write it to a file
         fs.writeFileSync(
             path.join(process.cwd(), outputFolder, 'index.html'),
-            output,
+            outputReadme,
         );
         // if there's an image reference in readme, copy it
         const files = [];
@@ -123,11 +76,10 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
         });
         // and if the file is n readme, copy it
         files.forEach((file) => {
-            if (output.includes(file)) {
+            if (outputReadme.includes(file)) {
                 fs.copyFileSync(path.join(process.cwd(), file), path.join(process.cwd(), outputFolder, file));
             }
         });
-        return files;
     }
     // If there's a LICENSE
     if (hasLICENSE) {
@@ -135,20 +87,11 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
         const templateContent = String(fs.readFileSync(
             path.join(contractsPreparedData[0].currentFolder, defaultTemplatePath),
         ));
-        const LICENSEText = String(fs.readFileSync(path.join(process.cwd(), 'LICENSE'))).trim();
-        const LICENSE = LICENSEText.replace(/\n/g, '<br>');
-        // put all data together
-        const view = {
-            contractsStructure,
-            hasLICENSE: true,
-            LICENSE,
-        };
-        // calls the render engine
-        const output = Mustache.render(templateContent, view);
+        const outputLicense = renderLicense(templateContent, contractsStructure, outputFolder);
         // write it to a file
         fs.writeFileSync(
             path.join(process.cwd(), outputFolder, 'license.html'),
-            output,
+            outputLicense,
         );
     }
     return 0;
