@@ -20,32 +20,13 @@ const md = require('markdown-it')({
     linkify: true,
     typographer: true,
 });
+const { transformTemplate } = require('./renderHTML');
 
 // use emoji plugin
 md.use(mdemoji);
 // set emoji rules
 md.renderer.rules.emoji = (token, idx) => `<i class="em em-${token[idx].markup}"></i>`;
 
-
-function transformTemplate(
-    templateFile, contractName, contractData, contractPath,
-) {
-    // read template into a string
-    const templateContent = String(fs.readFileSync(templateFile));
-    // put all data together
-    const view = {
-        filePath: contractPath,
-        contract: {
-            name: contractName,
-        },
-        contractData,
-        currentDate: new Date(),
-        CONTRACT: true,
-    };
-    // calls the render engine
-    const output = Mustache.render(templateContent, view);
-    return output;
-}
 
 const defaultTemplatePath = 'src/template/pdf/index.html';
 
