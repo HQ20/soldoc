@@ -2,7 +2,10 @@ const fs = require('fs');
 const path = require('path');
 const toPdf = require('pdf-from-html');
 const emoji = require('node-emoji');
-const { transformTemplate } = require('./renderHTML');
+const {
+    transformTemplate,
+    organizeContractsStructure,
+} = require('./renderHTML');
 
 
 const defaultTemplatePath = 'src/template/pdf/index.html';
@@ -11,17 +14,23 @@ const defaultTemplatePath = 'src/template/pdf/index.html';
  * @param contractsPreparedData prepared data
  */
 exports.generatePDF = (contractsPreparedData, outputFolder) => {
+    // create a list of contracts and methods
+    const contractsStructure = organizeContractsStructure(contractsPreparedData);
+    const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
     // verify if the docs/ folder exist and creates it if not
     const destinationDocsFolderPath = path.join(process.cwd(), outputFolder);
     if (!fs.existsSync(destinationDocsFolderPath)) {
         fs.mkdirSync(destinationDocsFolderPath);
     }
     contractsPreparedData.forEach(async (contract) => {
+        // transform the template
         let HTMLContent = transformTemplate(
             path.join(contract.currentFolder, defaultTemplatePath),
             contract.contractName,
             contract.contractData,
             contract.solidityFilePath,
+            contractsStructure,
+            hasLICENSE,
         );
         // transform damn weird URLS into real liks
         const match = HTMLContent.match(/(?<!\[)https?:&#x2F;&#x2F;[a-zA-Z0-9.&#x2F;\-_]+/g);

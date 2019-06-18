@@ -39,7 +39,7 @@
             padding: 4% 0%;
         }
 
-        div h4 {
+        div.box h4 {
             float: left;
             margin-right: 1%;
         }
@@ -60,6 +60,14 @@
         .hljs {
             background: inherit;
         }
+
+        div.content-list {
+            text-align: center;
+        }
+
+        div.content-list > ul {
+            list-style: none;
+        }
     </style>
 </head>
 
@@ -71,6 +79,22 @@
         {{#contractData.contract.title}}
             <p>{{contractData.contract.title}}</p>
         {{/contractData.contract.title}}
+
+        {{#contractsStructure}}
+        <h4 style="text-align: center;">Contents</h4>
+        <br/>
+        <div class="content-list">
+            <p>INTRO</p>
+            <p>METHODS</p>
+            <ul>
+                {{#functions}}
+                <li><a href="#{{name}}">{{name}}</a></li>
+                {{/functions}}
+            </ul>
+        </div>
+        {{/contractsStructure}}
+
+        <h3>INTRO</h3>
         {{#contractData.contract.dev}}
             <p>{{contractData.contract.dev}}</p>
         {{/contractData.contract.dev}}
@@ -78,6 +102,7 @@
             <p>{{contractData.contract.notice}}</p>
         {{/contractData.contract.notice}}
 
+        <h3>METHODS</h3>
         {{#contractData.constructor}}
         <div class="box">
             <div><h4>constructor &rarr;</h4></div>
