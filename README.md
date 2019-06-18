@@ -11,6 +11,7 @@ Please note that, there's also a pdf example in `./example` folder. This pdf is 
 ## Features
 * Generates documentation with soft colors :eyes:
 * Generates a basic PDF :necktie:
+* Both HTML page and PDF support emojis :speak_no_evil:
 * Really fast :rabbit2:
 
 ## Installation and Usage

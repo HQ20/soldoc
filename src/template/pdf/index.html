@@ -1,0 +1,190 @@
+<html>
+
+<head>
+    <!-- this is the coor schema used in <code> tags. You can change this -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/languages/javascript.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <!-- has a few nice things -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/3.2.0/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+    <!-- support emojies :heart: -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/twemoji-awesome-clone@1.0.0/twemoji-awesome.css">
+    <style>
+        /* some emoji class */
+        * {
+            font-size: 10pt;
+        }
+        .emoji {
+            height: 1em;
+            width: 1em;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        body {
+            /* this will force puppeter to print was is exactly shown if seen in a browser */
+            -webkit-print-color-adjust: exact;
+        }
+
+        .content {
+            margin: 3% 5%;
+        }
+
+        .box {
+            padding: 4% 0%;
+        }
+
+        div h4 {
+            float: left;
+            margin-right: 1%;
+        }
+
+        code.hljs {
+            padding: 0px;
+        }
+
+        code.hljs, span[class^="hljs-"] {
+            font-size: 7pt;
+            line-break: auto;
+        }
+
+        code.hljs > span {
+            white-space: pre-line;
+        }
+
+        .hljs {
+            background: inherit;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="content">
+        {{#CONTRACT}}
+        <h1>{{contract.name}}</h1>
+        {{#contractData.contract.title}}
+            <p>{{contractData.contract.title}}</p>
+        {{/contractData.contract.title}}
+        {{#contractData.contract.dev}}
+            <p>{{contractData.contract.dev}}</p>
+        {{/contractData.contract.dev}}
+        {{#contractData.contract.notice}}
+            <p>{{contractData.contract.notice}}</p>
+        {{/contractData.contract.notice}}
+
+        {{#contractData.constructor}}
+        <div class="box">
+            <div><h4>constructor &rarr;</h4></div>
+            <pre><code class="javascript">constructor(address owner, address spender);</code></pre>
+            {{#comments.dev}}
+                <p><i>{{comments.dev}}</i></p>
+            {{/comments.dev}}
+            {{#comments.notice}}
+                <p>{{comments.notice}}</p>
+            {{/comments.notice}}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Input/Output</th>
+                        <th>Data type</th>
+                        <th>Variable name</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#ast.parameters.parameters}}
+                    <tr>
+                        <td>input</td>
+                        <td>{{typeName.name}}</td>
+                        <td>{{name}}</td>
+                        <td>{{#params}}{{name}}{{/params}}</td>
+                    </tr>
+                    {{/ast.parameters.parameters}}
+                </tbody>
+            </table>
+        </div>
+        {{/contractData.constructor}}
+        {{#contractData.events}}
+        <div class="box">
+            <div><h4>{{ast.name}} &rarr;</h4></div>
+            <pre><code class="javascript">event example(address owner, address spender);</code></pre>
+            {{#comments.dev}}
+                <p><i>{{comments.dev}}</i></p>
+            {{/comments.dev}}
+            {{#comments.notice}}
+                <p>{{comments.notice}}</p>
+            {{/comments.notice}}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Input/Output</th>
+                        <th>Data type</th>
+                        <th>Variable name</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#ast.parameters.parameters}}
+                    <tr>
+                        <td>input</td>
+                        <td>{{typeName.name}}</td>
+                        <td>{{name}}</td>
+                        <td>{{#params}}{{name}}{{/params}}</td>
+                    </tr>
+                    {{/ast.parameters.parameters}}
+                </tbody>
+            </table>
+        </div>
+        {{/contractData.events}}
+        {{#contractData.functions}}
+        <div class="box">
+            <div><h4>{{ast.name}} &rarr;</h4></div>
+            <pre><code class="javascript">function example(address owner, address spender) public view returns (uint256)</code></pre>
+            {{#comments.dev}}
+                <p><i>{{comments.dev}}</i></p>
+            {{/comments.dev}}
+            {{#comments.notice}}
+                <p>{{comments.notice}}</p>
+            {{/comments.notice}}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Input/Output</th>
+                        <th>Variable type</th>
+                        <th>Variable name</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#ast.parameters.parameters}}
+                    <tr>
+                        <td>input</td>
+                        <td>{{typeName.name}}</td>
+                        <td>{{name}}</td>
+                        <td>{{#params}}{{name}}{{/params}}</td>
+                    </tr>
+                    {{/ast.parameters.parameters}}
+                    {{#ast.returnParameters.parameters}}
+                    <tr>
+                        <td>output</td>
+                        <td>{{typeName.name}}</td>
+                        <td>{{name}}</td>
+                        <td>{{comments.return}}</td>
+                    </tr>
+                    {{/ast.returnParameters.parameters}}
+                </tbody>
+            </table>
+        </div>
+        {{/contractData.functions}}
+        {{/CONTRACT}}
+
+    </div>
+</body>
+
+</html>
