@@ -48,13 +48,17 @@
             padding: 0px;
         }
 
-        span[class^="hljs-"] {
+        code.hljs, span[class^="hljs-"] {
             font-size: 7pt;
             line-break: auto;
         }
 
         code.hljs > span {
             white-space: pre-line;
+        }
+
+        .hljs {
+            background: inherit;
         }
     </style>
 </head>
@@ -74,6 +78,70 @@
             <p>{{contractData.contract.notice}}</p>
         {{/contractData.contract.notice}}
 
+        {{#contractData.constructor}}
+        <div class="box">
+            <div><h4>constructor &rarr;</h4></div>
+            <pre><code class="javascript">constructor(address owner, address spender);</code></pre>
+            {{#comments.dev}}
+                <p><i>{{comments.dev}}</i></p>
+            {{/comments.dev}}
+            {{#comments.notice}}
+                <p>{{comments.notice}}</p>
+            {{/comments.notice}}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Input/Output</th>
+                        <th>Data type</th>
+                        <th>Variable name</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#ast.parameters.parameters}}
+                    <tr>
+                        <td>input</td>
+                        <td>{{typeName.name}}</td>
+                        <td>{{name}}</td>
+                        <td>{{#params}}{{name}}{{/params}}</td>
+                    </tr>
+                    {{/ast.parameters.parameters}}
+                </tbody>
+            </table>
+        </div>
+        {{/contractData.constructor}}
+        {{#contractData.events}}
+        <div class="box">
+            <div><h4>{{ast.name}} &rarr;</h4></div>
+            <pre><code class="javascript">event example(address owner, address spender);</code></pre>
+            {{#comments.dev}}
+                <p><i>{{comments.dev}}</i></p>
+            {{/comments.dev}}
+            {{#comments.notice}}
+                <p>{{comments.notice}}</p>
+            {{/comments.notice}}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Input/Output</th>
+                        <th>Data type</th>
+                        <th>Variable name</th>
+                        <th>Comment</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#ast.parameters.parameters}}
+                    <tr>
+                        <td>input</td>
+                        <td>{{typeName.name}}</td>
+                        <td>{{name}}</td>
+                        <td>{{#params}}{{name}}{{/params}}</td>
+                    </tr>
+                    {{/ast.parameters.parameters}}
+                </tbody>
+            </table>
+        </div>
+        {{/contractData.events}}
         {{#contractData.functions}}
         <div class="box">
             <div><h4>{{ast.name}} &rarr;</h4></div>

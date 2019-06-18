@@ -47,16 +47,14 @@ describe('Render File - Plane', () => {
         const pdfPath = path.join(process.cwd(), 'docs', 'Plane.pdf');
         const content = [
             'Plane',
-            '- The Plane contract',
-            'by Wilbur & Orville',
             'This is a plane constructor',
-            '*May flight, or may not *',
-            '- *by Bernardo Vieira *',
+            'May flight, or may not',
             'Land',
             'This is a plane event',
-            '@dev Emitted by land function',
-            '*by Bernardo Vieira *',
-            '@param uint256 _time The time it lands',
+            'Emitted by land function',
+            'uint256',
+            '_time',
+            'The time it lands',
             'land',
         ];
 
