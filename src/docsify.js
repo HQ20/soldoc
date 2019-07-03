@@ -21,14 +21,19 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
     contractsPreparedData.forEach((contract) => {
         // transform the template
         let MDContent = `# ${contract.contractName}${lineBreak}`;
-        if (contract.contractData.contract.dev) {
-            MDContent += `*${contract.contractData.contract.dev}*${lineBreak}`;
-        }
-        if (contract.contractData.contract.notice) {
-            MDContent += `${contract.contractData.contract.notice}${lineBreak}`;
+        if (contract.contractData.contract !== undefined) {
+            if (contract.contractData.contract.dev) {
+                MDContent += `*${contract.contractData.contract.dev}*${lineBreak}`;
+            }
+            if (contract.contractData.contract.notice) {
+                MDContent += `${contract.contractData.contract.notice}${lineBreak}`;
+            }
         }
         contract.contractData.functions.forEach((f) => {
             MDContent += `## ${f.ast.name}${lineBreak}`;
+            if (f.comments === undefined) {
+                return;
+            }
             if (f.comments.dev) {
                 MDContent += `*${f.comments.dev}*${lineBreak}`;
             }
@@ -54,6 +59,7 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
                         + `${(f.comments.return.length === 0) ? ('N/A') : (f.comments.return)}|${lineBreak}`;
                 });
             }
+            MDContent += lineBreak;
         });
         // write it to a file
         fs.writeFileSync(
@@ -61,21 +67,25 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
             MDContent,
         );
     });
-    // generate summary file (essential in gitbook)
-    let SUMMARYContent = '# Summary\r\n';
+    // generate _sidebar file (essential in docsify, to have a custom sidebar)
+    let SIDEBARContent = `* WELCOME${lineBreak}\t* [Home](/)${lineBreak}`;
+    if (hasLICENSE) {
+        SIDEBARContent += `\t* [LICENSE](LICENSE.md)${lineBreak}`;
+        fs.copyFileSync(
+            path.join(process.cwd(), 'LICENSE'),
+            path.join(process.cwd(), outputFolder, 'LICENSE.md'),
+        );
+    }
     contractsStructure.forEach((s) => {
-        SUMMARYContent += `* [${s.name}](${s.name}.md)${lineBreak}`;
+        SIDEBARContent += `* ${s.name}${lineBreak}`;
         s.functions.forEach((f) => {
-            SUMMARYContent += `\t* [${f.name}](${s.name}.md)${lineBreak}`;
+            SIDEBARContent += `\t* [${f.name}](${s.name}.md)${lineBreak}`;
         });
-        if (hasLICENSE) {
-            SUMMARYContent += `* [LICENSE](LICENSE.md)${lineBreak}`;
-        }
     });
-    // create summary file
+    // create _sidebar file
     fs.writeFileSync(
-        path.join(process.cwd(), outputFolder, 'SUMMARY.md'),
-        SUMMARYContent,
+        path.join(process.cwd(), outputFolder, '_sidebar.md'),
+        SIDEBARContent,
     );
     // Copy readme if it exists, otherwise, create a sampe
     if (fs.existsSync(path.join(process.cwd(), 'README.md'))) {
