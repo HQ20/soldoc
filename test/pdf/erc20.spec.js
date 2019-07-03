@@ -6,7 +6,7 @@ describe('Render File - ERC20', () => {
     beforeAll(() => {
         jest.setTimeout(20000);
         // first render
-        generate(true, [], './docs', './test/contracts/ERC20.sol');
+        generate('pdf', [], './docs', './test/contracts/ERC20.sol');
         // now let's test the result
     });
 
