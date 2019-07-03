@@ -5,8 +5,10 @@ const {
     transformTemplate,
     renderLicense,
     renderReadme,
-    organizeContractsStructure,
 } = require('./renderHTML');
+const {
+    organizeContractsStructure,
+} = require('./organize');
 
 
 const defaultTemplatePath = 'src/template/html/index.html';

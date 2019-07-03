@@ -2,8 +2,9 @@ const path = require('path');
 const fs = require('fs');
 
 const { prepareForFile } = require('./organize');
-const webpage = require('./html');
+const html = require('./html');
 const pdf = require('./pdf');
+const gitbook = require('./gitbook');
 
 /**
  * Get all files in folder, recursively.
@@ -67,11 +68,11 @@ exports.generate = (outputType, ignoreFilesList, outputFolder, filePathInput) =>
     const prepared = [];
     files.forEach(file => prepared.push(prepareForFile(file)));
     if (outputType === 'pdf') {
-        pdf.generatePDF(prepared, outputFolder);
+        pdf.generateDocumentation(prepared, outputFolder);
     } else if (outputType === 'html') {
-        webpage.generateDocumentation(prepared, outputFolder);
+        html.generateDocumentation(prepared, outputFolder);
     } else if (outputType === 'gitbook') {
-        console.error('Not supported yet!');
+        gitbook.generateDocumentation(prepared, outputFolder);
     } else if (outputType === 'docsify') {
         console.error('Not supported yet!');
     } else {
