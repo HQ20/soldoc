@@ -1,51 +1,12 @@
 const fs = require('fs');
 const path = require('path');
-const Mustache = require('mustache');
 const toPdf = require('pdf-from-html');
-const hljs = require('highlight.js');
 const emoji = require('node-emoji');
-const mdemoji = require('markdown-it-emoji');
-const md = require('markdown-it')({
-    highlight(str, lang) {
-        if (lang && hljs.getLanguage(lang)) {
-            try {
-                return `<pre class="hljs"><code>${
-                    hljs.highlight(lang, str, true).value
-                }</code></pre>`;
-                // eslint-disable-next-line no-empty
-            } catch (__) { }
-        }
-        return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
-    },
-    linkify: true,
-    typographer: true,
-});
+const {
+    transformTemplate,
+    organizeContractsStructure,
+} = require('./renderHTML');
 
-// use emoji plugin
-md.use(mdemoji);
-// set emoji rules
-md.renderer.rules.emoji = (token, idx) => `<i class="em em-${token[idx].markup}"></i>`;
-
-
-function transformTemplate(
-    templateFile, contractName, contractData, contractPath,
-) {
-    // read template into a string
-    const templateContent = String(fs.readFileSync(templateFile));
-    // put all data together
-    const view = {
-        filePath: contractPath,
-        contract: {
-            name: contractName,
-        },
-        contractData,
-        currentDate: new Date(),
-        CONTRACT: true,
-    };
-    // calls the render engine
-    const output = Mustache.render(templateContent, view);
-    return output;
-}
 
 const defaultTemplatePath = 'src/template/pdf/index.html';
 
@@ -53,12 +14,23 @@ const defaultTemplatePath = 'src/template/pdf/index.html';
  * @param contractsPreparedData prepared data
  */
 exports.generatePDF = (contractsPreparedData, outputFolder) => {
+    // create a list of contracts and methods
+    const contractsStructure = organizeContractsStructure(contractsPreparedData);
+    const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
+    // verify if the docs/ folder exist and creates it if not
+    const destinationDocsFolderPath = path.join(process.cwd(), outputFolder);
+    if (!fs.existsSync(destinationDocsFolderPath)) {
+        fs.mkdirSync(destinationDocsFolderPath);
+    }
     contractsPreparedData.forEach(async (contract) => {
+        // transform the template
         let HTMLContent = transformTemplate(
             path.join(contract.currentFolder, defaultTemplatePath),
             contract.contractName,
             contract.contractData,
             contract.solidityFilePath,
+            contractsStructure,
+            hasLICENSE,
         );
         // transform damn weird URLS into real liks
         const match = HTMLContent.match(/(?<!\[)https?:&#x2F;&#x2F;[a-zA-Z0-9.&#x2F;\-_]+/g);

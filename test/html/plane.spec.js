@@ -2,14 +2,14 @@ const puppeteer = require('puppeteer');
 const path = require('path');
 const { generate } = require('../../src/index');
 
-describe('Render Web Page - Complete folder', () => {
+describe('Render Web Page - Plane', () => {
     let browser;
     let page;
 
     beforeAll(async () => {
         jest.setTimeout(20000);
         // first render
-        generate(false, [], './docs', './test/contracts/');
+        generate('html', [], './docs', './test/contracts/Plane.sol');
         // now let's test the result
         // open the browser
         browser = await puppeteer.launch();
@@ -44,17 +44,16 @@ describe('Render Web Page - Complete folder', () => {
     });
 
     /**
-     * All the contracts should be listed in the side menu
+     * All the methods should be listed in the main body
      */
-    test('should have all contracts listed (side menu)', async (done) => {
+    test('should have all methods listed (main body)', async (done) => {
         const cardsNames = [
-            'ERC20',
-            'IERC20',
-            'Plane',
-            'Tree',
+            'constructor',
+            'Land',
+            'land',
         ];
-        await page.waitFor('aside.menu p.menu-label');
-        const cards = await page.$$('aside.menu p.menu-label');
+        await page.waitFor('strong.method');
+        const cards = await page.$$('strong.method');
         for (let c = 0; c < cards.length; c += 1) {
             // eslint-disable-next-line no-await-in-loop
             const text = await page.evaluate(e => e.textContent, cards[c]);
@@ -64,38 +63,33 @@ describe('Render Web Page - Complete folder', () => {
     });
 
     /**
-     * All the contracts methods should be listed in the side menu
+     * The title comment
      */
-    test('should have all contracts methods listed (side menu)', async (done) => {
+    test('should title comment', async (done) => {
+        await page.waitFor('div.container h2.subtitle');
+        const element = await page.$('div.container h2.subtitle');
+        const text = await page.evaluate(e => e.textContent, element);
+        // TODO: remove trim
+        // because of them emoji there's an extra space. TODO: improve it!
+        expect(text.replace(/\n[ ]*/g, '').trim()).toBe('The Plane contract  by @Wilbur & Orville');
+        done();
+    });
+
+    /**
+     * All the authors should be listed in the main body
+     */
+    test('should have all authors listed', async (done) => {
         const cardsNames = [
-            'totalSupply',
-            'balanceOf',
-            'allowance',
-            'transfer',
-            'approve',
-            'transferFrom',
-            'increaseAllowance',
-            'decreaseAllowance',
-            '_transfer',
-            '_mint',
-            '_burn',
-            '_approve',
-            '_burnFrom',
-            'transfer',
-            'approve',
-            'transferFrom',
-            'totalSupply',
-            'balanceOf',
-            'allowance',
-            'land',
-            'age',
+            '@Wilbur & Orville',
+            '@Bernardo Vieira',
         ];
-        await page.waitFor('aside.menu ul a');
-        const cards = await page.$$('aside.menu ul a');
+        await page.waitFor('#author');
+        const cards = await page.$$('#author');
         for (let c = 0; c < cards.length; c += 1) {
             // eslint-disable-next-line no-await-in-loop
             const text = await page.evaluate(e => e.textContent, cards[c]);
-            expect(cardsNames).toContain(text);
+            // TODO: remove trim
+            expect(cardsNames).toContain(text.trim());
         }
         done();
     });
