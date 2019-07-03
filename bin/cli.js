@@ -24,6 +24,7 @@ const cli = meow(helpMessage, {
         output: {
             type: 'string',
             alias: 'o',
+            default: 'html',
         },
         ignore: {
             type: 'string',
