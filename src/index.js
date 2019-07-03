@@ -38,38 +38,47 @@ function deepListFiles(folder, ignoreFilesList) {
 
 /**
  * Main method to be called. Will create the HTML using the other methods.
- * @param {boolean} toPdf boolean flag to generate pdf or html
+ * @param {string} outputType the output type of the given documentation
  * @param {string} ignoreFilesList an array of files to be ignored
  * @param {string} outputFolder directory to output the result, either pdf or html
  * @param {string} filePathInput the path to file or folder to be analized
  */
-exports.generate = (toPdf, ignoreFilesList, outputFolder, filePathInput) => {
+exports.generate = (outputType, ignoreFilesList, outputFolder, filePathInput) => {
     // verify the type of the given input
-    fs.lstat(filePathInput, (err, stats) => {
+    let stats;
+    try {
+        stats = fs.lstatSync(filePathInput);
+    } catch (e) {
         // Handle error
-        if (err) {
-            console.log(`The file you are looking for (${filePathInput}) doesn't exist!`);
-            return 1;
-        }
-        let files = [];
-        // verify if the input is a directory, file or array of files
-        if (stats.isDirectory()) {
-            // if it's a folder, get all files recursively
-            files = deepListFiles(filePathInput, ignoreFilesList);
-        } else if (stats.isFile() && !ignoreFilesList.includes(filePathInput)) {
-            // if it's a file, just get the file
-            files.push(filePathInput);
-        } else {
-            //
-        }
-        // iterate over files to generate HTML
-        const prepared = [];
-        files.forEach(file => prepared.push(prepareForFile(file)));
-        if (toPdf) {
-            pdf.generatePDF(prepared, outputFolder);
-        } else {
-            webpage.generateDocumentation(prepared, outputFolder);
-        }
-        return 0;
-    });
+        console.log(`The file you are looking for (${filePathInput}) doesn't exist!`);
+        return 1;
+    }
+
+    let files = [];
+    // verify if the input is a directory, file or array of files
+    if (stats.isDirectory()) {
+        // if it's a folder, get all files recursively
+        files = deepListFiles(filePathInput, ignoreFilesList);
+    } else if (stats.isFile() && !ignoreFilesList.includes(filePathInput)) {
+        // if it's a file, just get the file
+        files.push(filePathInput);
+    } else {
+        //
+    }
+    // iterate over files to generate HTML
+    const prepared = [];
+    files.forEach(file => prepared.push(prepareForFile(file)));
+    if (outputType === 'pdf') {
+        pdf.generatePDF(prepared, outputFolder);
+    } else if (outputType === 'html') {
+        webpage.generateDocumentation(prepared, outputFolder);
+    } else if (outputType === 'gitbook') {
+        //
+    } else if (outputType === 'docsify') {
+        //
+    } else {
+        console.error('Invalid output type! Try --help for more info.');
+        return 1;
+    }
+    return 0;
 };

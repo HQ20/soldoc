@@ -10,20 +10,24 @@ Usage
 
 Options
     --help, -h  To get help
-    --pdf to generate a PDF file
+    --output -o The output type [html/pdf/gitbook/docsify] default: html
+    --ignore -i An array of files to ignore
 
 Examples
     $ soldoc docs/ contracts/Sample.sol
     $ soldoc docs/ contracts/
-    $ soldoc --pdf docs/ Sample.sol
+    $ soldoc --output pdf docs/ Sample.sol
+    $ soldoc --output gitbook --ignore Migrations.sol docs/ Sample.sol
 `;
 const cli = meow(helpMessage, {
     flags: {
-        pdf: {
-            type: 'boolean',
+        output: {
+            type: 'string',
+            alias: 'o',
         },
         ignore: {
             type: 'string',
+            alias: 'i',
         },
     },
 });
@@ -34,10 +38,9 @@ function main() {
         return 1;
     }
 
-    if (cli.flags.pdf) {
+    // pdf generation is a bit slower
+    if (cli.flags.output === 'pdf') {
         console.log('Wait...might take a moment!');
-    } else {
-        console.log('');
     }
     let ignoreList = [];
     if (cli.flags.ignore && cli.flags.ignore.length > 0) {
@@ -46,7 +49,7 @@ function main() {
             ignoreList = cli.flags.ignore.split(',');
         }
     }
-    return generate(cli.flags.pdf, ignoreList, String(cli.input[0]), String(cli.input[1]));
+    return generate(cli.flags.output, ignoreList, String(cli.input[0]), String(cli.input[1]));
 }
 
 main();
