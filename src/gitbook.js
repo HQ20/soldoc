@@ -51,7 +51,7 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
                 }
                 f.ast.returnParameters.parameters.forEach((p) => {
                     MDContent += `|output|${p.typeName.name}|${(p.name === null) ? ('N/A') : (p.name)}|`
-                    + `${(f.comments.return.length === 0) ? ('N/A') : (f.comments.return)}|${lineBreak}`;
+                        + `${(f.comments.return.length === 0) ? ('N/A') : (f.comments.return)}|${lineBreak}`;
                 });
             }
         });
@@ -77,4 +77,16 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
         path.join(process.cwd(), outputFolder, 'SUMMARY.md'),
         SUMMARYContent,
     );
+    // Copy readme if it exists, otherwise, create a sampe
+    if (fs.existsSync(path.join(process.cwd(), 'README.md'))) {
+        fs.copyFileSync(
+            path.join(process.cwd(), 'README.md'),
+            path.join(process.cwd(), outputFolder, 'README.md'),
+        );
+    } else {
+        fs.writeFileSync(
+            path.join(process.cwd(), outputFolder, 'README.md'),
+            '# Hello',
+        );
+    }
 };
