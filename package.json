@@ -12,7 +12,7 @@
     ],
     "scripts": {
         "demo-html": "./bin/cli.js --ignore Ignore.sol,IERC20.sol docs/ test/contracts",
-        "demo-pdf": "./bin/cli.js --pdf docs/ test/contracts/ERC20.sol",
+        "demo-pdf": "./bin/cli.js --output pdf docs/ test/contracts/Plane.sol",
         "lint:js": "eslint src/*.js .",
         "test": "jest",
         "coverage": "jest --coverage",

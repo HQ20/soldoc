@@ -9,7 +9,7 @@ const {
 } = require('./renderHTML');
 
 
-const defaultTemplatePath = 'src/template/web/index.html';
+const defaultTemplatePath = 'src/template/html/index.html';
 
 /**
  * To write!

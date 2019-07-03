@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 
 const { prepareForFile } = require('./organize');
-const webpage = require('./webpage');
+const webpage = require('./html');
 const pdf = require('./pdf');
 
 /**
@@ -62,8 +62,6 @@ exports.generate = (outputType, ignoreFilesList, outputFolder, filePathInput) =>
     } else if (stats.isFile() && !ignoreFilesList.includes(filePathInput)) {
         // if it's a file, just get the file
         files.push(filePathInput);
-    } else {
-        //
     }
     // iterate over files to generate HTML
     const prepared = [];
@@ -73,9 +71,9 @@ exports.generate = (outputType, ignoreFilesList, outputFolder, filePathInput) =>
     } else if (outputType === 'html') {
         webpage.generateDocumentation(prepared, outputFolder);
     } else if (outputType === 'gitbook') {
-        //
+        console.error('Not supported yet!');
     } else if (outputType === 'docsify') {
-        //
+        console.error('Not supported yet!');
     } else {
         console.error('Invalid output type! Try --help for more info.');
         return 1;

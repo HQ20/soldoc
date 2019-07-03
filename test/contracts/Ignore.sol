@@ -9,7 +9,8 @@ contract Ignore {
         return rings + 1;
     }
 
-    // solium-disable-next-line soldoc-ignore
+    // soldoc-ignore
+    // solium-disable-next-line
     function ignoredCombined(uint256 rings) external pure returns (uint256) {
         return rings + 1;
     }
