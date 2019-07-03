@@ -106,3 +106,22 @@ exports.prepareForFile = (solidityFilePath) => {
         filename, currentFolder, contractName, contractData, solidityFilePath,
     };
 };
+
+exports.organizeContractsStructure = (
+    contractsPreparedData,
+) => {
+    const contractsStructure = [];
+    contractsPreparedData.forEach((contract) => {
+        const contractInfo = {};
+        // add name
+        contractInfo.name = contract.contractName;
+        contractInfo.filename = contract.filename;
+        contractInfo.functions = [];
+        // add functions name
+        contract.contractData.functions.forEach((func) => {
+            contractInfo.functions.push({ name: func.ast.name });
+        });
+        contractsStructure.push(contractInfo);
+    });
+    return contractsStructure;
+};

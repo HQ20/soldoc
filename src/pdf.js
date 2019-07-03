@@ -4,8 +4,10 @@ const toPdf = require('pdf-from-html');
 const emoji = require('node-emoji');
 const {
     transformTemplate,
-    organizeContractsStructure,
 } = require('./renderHTML');
+const {
+    organizeContractsStructure,
+} = require('./organize');
 
 
 const defaultTemplatePath = 'src/template/pdf/index.html';
@@ -13,7 +15,7 @@ const defaultTemplatePath = 'src/template/pdf/index.html';
 /**
  * @param contractsPreparedData prepared data
  */
-exports.generatePDF = (contractsPreparedData, outputFolder) => {
+exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
     // create a list of contracts and methods
     const contractsStructure = organizeContractsStructure(contractsPreparedData);
     const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
