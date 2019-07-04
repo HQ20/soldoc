@@ -3,6 +3,11 @@ const path = require('path');
 const {
     organizeContractsStructure,
 } = require('./organize');
+const {
+    renderContracts,
+    renderReadme,
+    renderDocumentationIndex,
+} = require('./renderMD');
 
 const lineBreak = '\r\n';
 
@@ -18,87 +23,19 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
     if (!fs.existsSync(destinationDocsFolderPath)) {
         fs.mkdirSync(destinationDocsFolderPath);
     }
-    contractsPreparedData.forEach((contract) => {
-        // transform the template
-        let MDContent = `# ${contract.contractName}${lineBreak}`;
-        if (contract.contractData.contract !== undefined) {
-            if (contract.contractData.contract.dev) {
-                MDContent += `*${contract.contractData.contract.dev}*${lineBreak}`;
-            }
-            if (contract.contractData.contract.notice) {
-                MDContent += `${contract.contractData.contract.notice}${lineBreak}`;
-            }
-        }
-        contract.contractData.functions.forEach((f) => {
-            MDContent += `## ${f.ast.name}${lineBreak}`;
-            if (f.comments === undefined) {
-                return;
-            }
-            if (f.comments.dev) {
-                MDContent += `*${f.comments.dev}*${lineBreak}`;
-            }
-            if (f.comments.notice) {
-                MDContent += `${f.comments.notice}${lineBreak}`;
-            }
-            let table = false;
-            if (f.ast.parameters.parameters.length > 0) {
-                table = true;
-                MDContent += `${lineBreak}|Input/Output|Data Type|Variable Name|Comment|${lineBreak}`
-                    + `|----------|----------|----------|----------|${lineBreak}`;
-                f.ast.parameters.parameters.forEach((p) => {
-                    MDContent += `|input|${p.typeName.name}|${p.name}|${f.comments.param.get(p.name)}|${lineBreak}`;
-                });
-            }
-            if (f.ast.returnParameters !== null && f.ast.returnParameters.parameters.length > 0) {
-                if (!table) {
-                    MDContent += `${lineBreak}|Input/Output|Data Type|Variable Name|Comment|${lineBreak}`
-                        + `|----------|----------|----------|----------|${lineBreak}`;
-                }
-                f.ast.returnParameters.parameters.forEach((p) => {
-                    MDContent += `|output|${p.typeName.name}|${(p.name === null) ? ('N/A') : (p.name)}|`
-                        + `${(f.comments.return.length === 0) ? ('N/A') : (f.comments.return)}|${lineBreak}`;
-                });
-            }
-            MDContent += lineBreak;
-        });
-        // write it to a file
-        fs.writeFileSync(
-            path.join(process.cwd(), outputFolder, `${contract.filename}.md`),
-            MDContent,
-        );
-    });
+    renderContracts(contractsPreparedData, outputFolder, lineBreak);
     // generate _sidebar file (essential in docsify, to have a custom sidebar)
     let SIDEBARContent = `* WELCOME${lineBreak}\t* [Home](/)${lineBreak}`;
-    if (hasLICENSE) {
-        SIDEBARContent += `\t* [LICENSE](LICENSE.md)${lineBreak}`;
-        fs.copyFileSync(
-            path.join(process.cwd(), 'LICENSE'),
-            path.join(process.cwd(), outputFolder, 'LICENSE.md'),
-        );
-    }
-    contractsStructure.forEach((s) => {
-        SIDEBARContent += `* ${s.name}${lineBreak}`;
-        s.functions.forEach((f) => {
-            SIDEBARContent += `\t* [${f.name}](${s.name}.md)${lineBreak}`;
-        });
-    });
+    SIDEBARContent = renderDocumentationIndex(
+        SIDEBARContent, outputFolder, contractsStructure, hasLICENSE, lineBreak,
+    );
     // create _sidebar file
     fs.writeFileSync(
         path.join(process.cwd(), outputFolder, '_sidebar.md'),
         SIDEBARContent,
     );
     // Copy readme if it exists, otherwise, create a sampe
-    if (fs.existsSync(path.join(process.cwd(), 'README.md'))) {
-        fs.copyFileSync(
-            path.join(process.cwd(), 'README.md'),
-            path.join(process.cwd(), outputFolder, 'README.md'),
-        );
-    } else {
-        fs.writeFileSync(
-            path.join(process.cwd(), outputFolder, 'README.md'),
-            '# Hello',
-        );
-    }
+    renderReadme(outputFolder);
     // copy html base
     fs.copyFileSync(
         path.join(__dirname, 'template/docsify/index.html'),
@@ -107,6 +44,6 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
     // write nojekill
     fs.writeFileSync(
         path.join(process.cwd(), outputFolder, '.nojekill'),
-        '# Hello',
+        ' ',
     );
 };
