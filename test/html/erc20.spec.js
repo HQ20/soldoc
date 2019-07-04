@@ -2,21 +2,21 @@ const puppeteer = require('puppeteer');
 const path = require('path');
 const { generate } = require('../../src/index');
 
-describe('Render Web Page - ERC20', () => {
+describe('Render HTML Page - ERC20', () => {
     let browser;
     let page;
 
     beforeAll(async () => {
         jest.setTimeout(20000);
         // first render
-        generate('html', [], './docs', './test/contracts/ERC20.sol');
+        generate('html', [], './docs/test-html-erc20', './test/contracts/ERC20.sol');
         // now let's test the result
         // open the browser
         browser = await puppeteer.launch();
         // open a new page
         page = await browser.newPage();
         // and navigate to the rendered page
-        await page.goto(path.join('file://', process.cwd(), '/docs/ERC20.html'));
+        await page.goto(path.join('file://', process.cwd(), '/docs/test-html-erc20/ERC20.html'));
     });
 
     afterAll(async () => {
