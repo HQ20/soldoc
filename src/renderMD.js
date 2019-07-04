@@ -65,6 +65,25 @@ exports.renderReadme = (outputFolder) => {
             '# Hello',
         );
     }
+    const outputReadme = fs.readFileSync(path.join(process.cwd(), 'README.md'));
+    // if there's an image reference in readme, copy it
+    const files = [];
+    // read dir
+    const filesList = fs.readdirSync(process.cwd());
+    // iterate over what was found
+    filesList.forEach((file) => {
+        const stats = fs.lstatSync(path.join(process.cwd(), file));
+        // if not, push file to list, only if it is valid
+        if (stats.isFile() && (path.extname(file) === '.png' || path.extname(file) === '.jpg')) {
+            files.push(file);
+        }
+    });
+    // and if the file is n readme, copy it
+    files.forEach((file) => {
+        if (outputReadme.includes(file)) {
+            fs.copyFileSync(path.join(process.cwd(), file), path.join(process.cwd(), outputFolder, file));
+        }
+    });
 };
 
 exports.renderDocumentationIndex = (content, outputFolder, contractsStructure, hasLICENSE, lineBreak) => {
