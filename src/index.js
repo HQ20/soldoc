@@ -5,6 +5,7 @@ const { prepareForFile } = require('./organize');
 const html = require('./html');
 const pdf = require('./pdf');
 const gitbook = require('./gitbook');
+const docsify = require('./docsify');
 
 /**
  * Get all files in folder, recursively.
@@ -67,6 +68,11 @@ exports.generate = (outputType, ignoreFilesList, outputFolder, filePathInput) =>
     // iterate over files to generate HTML
     const prepared = [];
     files.forEach(file => prepared.push(prepareForFile(file)));
+    // verify if the docs/ folder exist and creates it if not
+    const destinationDocsFolderPath = path.join(process.cwd(), outputFolder);
+    if (!fs.existsSync(destinationDocsFolderPath)) {
+        fs.mkdirSync(destinationDocsFolderPath, { recursive: true });
+    }
     if (outputType === 'pdf') {
         pdf.generateDocumentation(prepared, outputFolder);
     } else if (outputType === 'html') {
@@ -74,7 +80,7 @@ exports.generate = (outputType, ignoreFilesList, outputFolder, filePathInput) =>
     } else if (outputType === 'gitbook') {
         gitbook.generateDocumentation(prepared, outputFolder);
     } else if (outputType === 'docsify') {
-        console.error('Not supported yet!');
+        docsify.generateDocumentation(prepared, outputFolder);
     } else {
         console.error('Invalid output type! Try --help for more info.');
         return 1;

@@ -2,21 +2,21 @@ const puppeteer = require('puppeteer');
 const path = require('path');
 const { generate } = require('../../src/index');
 
-describe('Render Web Page - Complete folder', () => {
+describe('Render HTML Page - Complete folder', () => {
     let browser;
     let page;
 
     beforeAll(async () => {
         jest.setTimeout(20000);
         // first render
-        generate('html', [], './docs', './test/contracts/');
+        generate('html', [], './docs/test-html-folder', './test/contracts/');
         // now let's test the result
         // open the browser
         browser = await puppeteer.launch();
         // open a new page
         page = await browser.newPage();
         // and navigate to the rendered page
-        await page.goto(path.join('file://', process.cwd(), '/docs/Plane.html'));
+        await page.goto(path.join('file://', process.cwd(), '/docs/test-html-folder/Plane.html'));
     });
 
     afterAll(async () => {

@@ -8,7 +8,7 @@ describe('Render File - Plane', () => {
     beforeAll(() => {
         jest.setTimeout(20000);
         // first render
-        generate('pdf', [], './docs', './test/contracts/Plane.sol');
+        generate('pdf', [], './docs/test-pdf-plane', './test/contracts/Plane.sol');
         // now let's test the result
     });
 
@@ -20,17 +20,17 @@ describe('Render File - Plane', () => {
      * file should have been generated
      */
     test('file should have been generated', (done) => {
-        const result = fs.existsSync(path.join(process.cwd(), 'docs'));
+        const result = fs.existsSync(path.join(process.cwd(), 'docs/test-pdf-plane'));
         if (result) {
-            fs.watch(path.join(process.cwd(), 'docs'), (eventType, filename) => {
+            fs.watch(path.join(process.cwd(), 'docs/test-pdf-plane'), (eventType, filename) => {
                 if (eventType === 'change' && filename === 'Plane.pdf') {
                     done();
                 }
             });
         } else {
             fs.watch(path.join(process.cwd()), (e, f) => {
-                if (f === 'docs') {
-                    fs.watch(path.join(process.cwd(), 'docs'), (eventType, filename) => {
+                if (f === 'test-pdf-plane') {
+                    fs.watch(path.join(process.cwd(), 'docs/test-pdf-plane'), (eventType, filename) => {
                         if (eventType === 'change' && filename === 'Plane.pdf') {
                             done();
                         }
@@ -44,7 +44,7 @@ describe('Render File - Plane', () => {
      * Read file text
      */
     test('should have the text', (done) => {
-        const pdfPath = path.join(process.cwd(), 'docs', 'Plane.pdf');
+        const pdfPath = path.join(process.cwd(), 'docs/test-pdf-plane', 'Plane.pdf');
         const content = [
             'Plane',
             'This is a plane constructor',

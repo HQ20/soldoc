@@ -19,16 +19,26 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
     const contractsStructure = organizeContractsStructure(contractsPreparedData);
     const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
     renderContracts(contractsPreparedData, outputFolder, lineBreak);
-    // generate summary file (essential in gitbook)
-    let SUMMARYContent = `# Summary\r\n* WELCOME${lineBreak}`;
-    SUMMARYContent = renderDocumentationIndex(
-        SUMMARYContent, outputFolder, contractsStructure, hasLICENSE, lineBreak,
+    // generate _sidebar file (essential in docsify, to have a custom sidebar)
+    let SIDEBARContent = `* WELCOME${lineBreak}\t* [Home](/)${lineBreak}`;
+    SIDEBARContent = renderDocumentationIndex(
+        SIDEBARContent, outputFolder, contractsStructure, hasLICENSE, lineBreak,
     );
-    // create summary file
+    // create _sidebar file
     fs.writeFileSync(
-        path.join(process.cwd(), outputFolder, 'SUMMARY.md'),
-        SUMMARYContent,
+        path.join(process.cwd(), outputFolder, '_sidebar.md'),
+        SIDEBARContent,
     );
     // Copy readme if it exists, otherwise, create a sampe
     renderReadme(outputFolder);
+    // copy html base
+    fs.copyFileSync(
+        path.join(__dirname, 'template/docsify/index.html'),
+        path.join(process.cwd(), outputFolder, 'index.html'),
+    );
+    // write nojekill
+    fs.writeFileSync(
+        path.join(process.cwd(), outputFolder, '.nojekill'),
+        ' ',
+    );
 };
