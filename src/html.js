@@ -21,11 +21,6 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
     // create a list of contracts and methods
     const contractsStructure = organizeContractsStructure(contractsPreparedData);
     const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
-    // verify if the docs/ folder exist and creates it if not
-    const destinationDocsFolderPath = path.join(process.cwd(), outputFolder);
-    if (!fs.existsSync(destinationDocsFolderPath)) {
-        fs.mkdirSync(destinationDocsFolderPath);
-    }
     contractsPreparedData.forEach((contract) => {
         // transform the template
         let HTMLContent = transformTemplate(

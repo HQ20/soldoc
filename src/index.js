@@ -68,6 +68,11 @@ exports.generate = (outputType, ignoreFilesList, outputFolder, filePathInput) =>
     // iterate over files to generate HTML
     const prepared = [];
     files.forEach(file => prepared.push(prepareForFile(file)));
+    // verify if the docs/ folder exist and creates it if not
+    const destinationDocsFolderPath = path.join(process.cwd(), outputFolder);
+    if (!fs.existsSync(destinationDocsFolderPath)) {
+        fs.mkdirSync(destinationDocsFolderPath, { recursive: true });
+    }
     if (outputType === 'pdf') {
         pdf.generateDocumentation(prepared, outputFolder);
     } else if (outputType === 'html') {
