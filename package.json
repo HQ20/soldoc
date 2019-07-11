@@ -64,18 +64,18 @@
         "solidity-parser-antlr": "0.4.6"
     },
     "devDependencies": {
-        "coveralls": "3.0.3",
-        "eslint": "5.15.3",
-        "eslint-config-airbnb": "17.1.0",
-        "eslint-config-airbnb-base": "13.1.0",
-        "eslint-plugin-import": "2.16.0",
-        "eslint-plugin-jsx-a11y": "6.2.1",
-        "eslint-plugin-react": "7.12.4",
+        "coveralls": "3.0.4",
+        "eslint": "6.0.1",
+        "eslint-config-airbnb": "17.1.1",
+        "eslint-config-airbnb-base": "13.2.0",
+        "eslint-plugin-import": "2.18.0",
+        "eslint-plugin-jsx-a11y": "6.2.3",
+        "eslint-plugin-react": "7.14.2",
         "expect.js": "0.3.1",
         "jest": "24.8.0",
-        "jest-puppeteer": "4.1.1",
-        "jsdoc": "3.5.5",
-        "puppeteer": "1.16.0"
+        "jest-puppeteer": "4.2.0",
+        "jsdoc": "3.6.2",
+        "puppeteer": "1.18.1"
     },
     "nyc": {
         "all": true,
