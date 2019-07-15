@@ -71,7 +71,7 @@ describe('Render HTML Page - Plane', () => {
         const text = await page.evaluate(e => e.textContent, element);
         // TODO: remove trim
         // because of them emoji there's an extra space. TODO: improve it!
-        expect(text.replace(/\n[ ]*/g, '').trim()).toBe('The Plane contract  by @Wilbur & Orville');
+        expect(text.replace(/\n[ ]*/g, '').trim()).toBe('The Plane contract by @Wilbur & Orville');
         done();
     });
 

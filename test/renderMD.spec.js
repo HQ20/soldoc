@@ -47,11 +47,11 @@ describe('Render MD - ERC20', () => {
      */
     test('should list dev comments in functions', async (done) => {
         expect(mdResultFile).toMatch('*Function to check the amount of tokens that '
-            + 'an owner allowed to a spender. *');
-        expect(mdResultFile).toMatch('*Transfer token to a specified address *');
+            + 'an owner allowed to a spender.*');
+        expect(mdResultFile).toMatch('*Transfer token to a specified address*');
         expect(mdResultFile).toMatch('*Transfer tokens from one address to another.'
             + ' Note that while this function emits an Approval event, this is not required as '
-            + 'per the specification, and other compliant implementations may not emit the event. *');
+            + 'per the specification, and other compliant implementations may not emit the event.*');
         done();
     });
 
@@ -62,7 +62,7 @@ describe('Render MD - ERC20', () => {
         expect(mdResultFile).toMatch(
             '|Input/Output|Data Type|Variable Name|Comment|\r\n'
             + '|----------|----------|----------|----------|\r\n'
-            + '|input|address|spender|The address which will spend the funds. |\r\n'
+            + '|input|address|spender|The address which will spend the funds.|\r\n'
             + '|input|uint256|value|The amount of tokens to be spent.|\r\n'
             + '|output|bool|N/A|N/A|',
         );
