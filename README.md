@@ -44,5 +44,20 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 Please make sure to update tests as appropriate.
 
+## Credits
+Credits to all external open/free material used.
+
+Thank you all.
+
+### Logo
+The sun
+* https://www.iconfinder.com/icons/2995005/giallo_sole_soleggiato_sun_sunny_weather_yellow_icon
+* https://creativecommons.org/licenses/by/3.0/
+
+### Font Family
+* https://www.dafont.com/pt/subscriber.font
+
+Thank you. Danke. Merci. Grazie. Gracias. Arigato. Obrigado.
+
 ## License
 [GPL-3.0](LICENSE)
