@@ -14,15 +14,15 @@ exports.renderContracts = (contractsPreparedData, outputFolder, lineBreak) => {
             }
         }
         contract.contractData.functions.forEach((f) => {
-            MDContent += `## ${f.ast.name}${lineBreak}`;
+            MDContent += `## ${f.ast.name}${lineBreak}${lineBreak}`;
             if (f.comments === undefined) {
                 return;
             }
             if (f.comments.dev) {
-                MDContent += `*${f.comments.dev}*${lineBreak}`;
+                MDContent += `*${f.comments.dev}*${lineBreak}${lineBreak}`;
             }
             if (f.comments.notice) {
-                MDContent += `${f.comments.notice}${lineBreak}`;
+                MDContent += `${f.comments.notice}${lineBreak}${lineBreak}`;
             }
             let table = false;
             if (f.ast.parameters.parameters.length > 0) {
@@ -54,18 +54,20 @@ exports.renderContracts = (contractsPreparedData, outputFolder, lineBreak) => {
 };
 
 exports.renderReadme = (outputFolder) => {
+    let outputReadme;
     if (fs.existsSync(path.join(process.cwd(), 'README.md'))) {
         fs.copyFileSync(
             path.join(process.cwd(), 'README.md'),
             path.join(process.cwd(), outputFolder, 'README.md'),
         );
+        outputReadme = fs.readFileSync(path.join(process.cwd(), 'README.md'));
     } else {
         fs.writeFileSync(
             path.join(process.cwd(), outputFolder, 'README.md'),
             '# Hello',
         );
+        outputReadme = '# Hello';
     }
-    const outputReadme = fs.readFileSync(path.join(process.cwd(), 'README.md'));
     // if there's an image reference in readme, copy it
     const files = [];
     // read dir
