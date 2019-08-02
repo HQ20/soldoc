@@ -5,6 +5,8 @@ const meow = require('meow');
 const { generate } = require('../src/index');
 
 const helpMessage = `
+🐼️ .- hello friend, here's what I have. Thanks to use soldoc.
+
 Usage
     $ soldoc [options] <output-folder> <file(s)>
 
@@ -35,13 +37,16 @@ const cli = meow(helpMessage, {
 
 function main() {
     if (cli.input.length !== 2) {
-        console.error('You must be doing somethinf wrong. Use soldoc --help.');
+        console.error(
+            'You must be doing something wrong. There\'s a 🐼️ available to help you, '
+            + 'just write \'soldoc --help\'.\r\n\r\n\t🐼 ️🐼️ are really cool! Aren\'t they?',
+        );
         return 1;
     }
 
     // pdf generation is a bit slower
     if (cli.flags.output === 'pdf') {
-        console.log('Wait...might take a moment!');
+        console.log('Wait...might take a moment! 🐼️ is doing is stuff...');
     }
     let ignoreList = [];
     if (cli.flags.ignore && cli.flags.ignore.length > 0) {
