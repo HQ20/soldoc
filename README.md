@@ -10,8 +10,9 @@ Please note that, there's also a pdf example in `./example` folder. This pdf is 
 
 ## Features
 * Generates documentation with soft colors :eyes:
-* Generates a basic PDF :necktie:
-* Both HTML page and PDF support emojis :speak_no_evil:
+* The generated output can be pure HTML :grin:, a PDF file :necktie:, gitbook format :scream: or docsify format :boom:
+* All formats support emojis :speak_no_evil:
+* Ignore documentation generator for some specific files :sunglasses:
 * Really fast :rabbit2:
 
 ## Installation and Usage
@@ -29,6 +30,10 @@ soldoc docs/ Sample.sol
 # View documentation
 open ./docs/Sample.html
 ```
+
+soldoc supports many output formats, being pure HTML the default one.
+
+Use `soldoc --help` to get more information about output formats and other options.
 
 ## Use internally
 
@@ -58,6 +63,9 @@ The sun
 * https://www.dafont.com/pt/subscriber.font
 
 Thank you. Danke. Merci. Grazie. Gracias. Arigato. Obrigado.
+
+## Thanks to
+* [Connor](connorltodd), who drafted the initial HTML template.
 
 ## License
 [GPL-3.0](LICENSE)
