@@ -65,7 +65,7 @@ The sun
 Thank you. Danke. Merci. Grazie. Gracias. Arigato. Obrigado.
 
 ## Thanks to
-* [Connor](connorltodd), who drafted the initial HTML template.
+* [Connor](https://github.com/connorltodd), who drafted the initial HTML template.
 
 ## License
 [GPL-3.0](LICENSE)
