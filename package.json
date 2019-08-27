@@ -1,6 +1,6 @@
 {
     "name": "soldoc",
-    "version": "0.1.1",
+    "version": "0.1.2-beta.0",
     "description": "An html page and pdf solidity documentation generator, based in NatSpec format.",
     "main": "src/index.js",
     "bin": {
@@ -13,6 +13,7 @@
     "scripts": {
         "demo-html": "./bin/cli.js --ignore Ignore.sol,IERC20.sol docs/ test/contracts",
         "demo-pdf": "./bin/cli.js --output pdf docs/ test/contracts/Plane.sol",
+        "lint": "npm run lint:js",
         "lint:js": "eslint src/*.js .",
         "test": "jest",
         "coverage": "jest --coverage",
@@ -39,12 +40,6 @@
         "name": "Bernardo Vieira",
         "github": "obernardovieira"
     },
-    "contributors": [
-        {
-            "name": "Connor Todd",
-            "github": "connorltodd"
-        }
-    ],
     "license": "GPL-3.0-only",
     "bugs": {
         "url": "https://github.com/hq20/soldoc/issues"
