@@ -3,7 +3,7 @@
 When contributing to this repository, please first discuss the change you wish to make via issue.
 
 Please note we have a code of conduct, please follow it in all your interactions with the project.
-If you haven't already, come find us in [gitter](https://gitter.im/soldocjs/community). We want you working on things you're excited about.
+If you haven't already, come find us in [gitter](https://gitter.im/hq20/community). We want you working on things you're excited about.
 
 ## Pull Request Process
 
