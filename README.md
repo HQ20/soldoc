@@ -70,6 +70,7 @@ Thank you. Danke. Merci. Grazie. Gracias. Arigato. Obrigado.
 
 ## Thanks to
 * [Connor](https://github.com/connorltodd), who drafted the initial HTML template.
+* [zlocate](https://github.com/zlocate)
 
 ## License
 [GPL-3.0](LICENSE)
