@@ -52,6 +52,7 @@ exports.generate = (outputType, ignoreFilesList, outputFolder, filePathInput) =>
         stats = fs.lstatSync(filePathInput);
     } catch (e) {
         // Handle error
+        // eslint-disable-next-line no-console
         console.log(`The file you are looking for (${filePathInput}) doesn't exist!`);
         return 1;
     }
@@ -82,6 +83,7 @@ exports.generate = (outputType, ignoreFilesList, outputFolder, filePathInput) =>
     } else if (outputType === 'docsify') {
         docsify.generateDocumentation(prepared, outputFolder);
     } else {
+        // eslint-disable-next-line no-console
         console.error('Invalid output type! Try --help for more info.');
         return 1;
     }

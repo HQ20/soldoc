@@ -37,6 +37,7 @@ const cli = meow(helpMessage, {
 
 function main() {
     if (cli.input.length !== 2) {
+        // eslint-disable-next-line no-console
         console.error(
             'You must be doing something wrong. There\'s a 🐼️ available to help you, '
             + 'just write \'soldoc --help\'.\r\n\r\n\t🐼 ️🐼️ are really cool! Aren\'t they?',
@@ -46,6 +47,7 @@ function main() {
 
     // pdf generation is a bit slower
     if (cli.flags.output === 'pdf') {
+        // eslint-disable-next-line no-console
         console.log('Wait...might take a moment! 🐼️ is doing is stuff...');
     }
     let ignoreList = [];
