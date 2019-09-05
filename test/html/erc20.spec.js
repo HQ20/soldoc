@@ -38,7 +38,7 @@ describe('Render HTML Page - ERC20', () => {
     test('should be named "ERC20"', async (done) => {
         await page.waitFor('h1#contractName');
         const element = await page.$('h1#contractName');
-        const text = await page.evaluate(e => e.textContent, element);
+        const text = await page.evaluate((e) => e.textContent, element);
         expect(text).toBe('ERC20');
         done();
     });
@@ -66,7 +66,7 @@ describe('Render HTML Page - ERC20', () => {
         const cards = await page.$$('strong.method');
         for (let c = 0; c < cards.length; c += 1) {
             // eslint-disable-next-line no-await-in-loop
-            const text = await page.evaluate(e => e.textContent, cards[c]);
+            const text = await page.evaluate((e) => e.textContent, cards[c]);
             expect(cardsNames).toContain(text);
         }
         done();
@@ -110,7 +110,7 @@ describe('Render HTML Page - ERC20', () => {
         const cards = await page.$$('.box .media .content p > i');
         for (let c = 0; c < cards.length; c += 1) {
             // eslint-disable-next-line no-await-in-loop
-            const text = await page.evaluate(e => e.textContent, cards[c]);
+            const text = await page.evaluate((e) => e.textContent, cards[c]);
             // TODO: remove .trim after updating to next version of sol-comments-parser
             expect(cardsNames).toContain(text.trim());
         }

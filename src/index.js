@@ -27,7 +27,7 @@ function deepListFiles(folder, ignoreFilesList) {
             // if so, navigate
             const result = deepListFiles(path.join(folder, file), ignoreFilesList);
             // push them all
-            result.forEach(r => files.push(r));
+            result.forEach((r) => files.push(r));
             return;
         }
         // if not, push file to list, only if it is valid
@@ -68,7 +68,7 @@ exports.generate = (outputType, ignoreFilesList, outputFolder, filePathInput) =>
     }
     // iterate over files to generate HTML
     const prepared = [];
-    files.forEach(file => prepared.push(prepareForFile(file)));
+    files.forEach((file) => prepared.push(prepareForFile(file)));
     // verify if the docs/ folder exist and creates it if not
     const destinationDocsFolderPath = path.join(process.cwd(), outputFolder);
     if (!fs.existsSync(destinationDocsFolderPath)) {

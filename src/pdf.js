@@ -32,8 +32,8 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
         // transform damn weird URLS into real liks
         const match = HTMLContent.match(/(?<!\[)https?:&#x2F;&#x2F;[a-zA-Z0-9.&#x2F;\-_]+/g);
         if (match !== null) {
-            let transform = match.map(url => url.replace(/&#x2F;/g, '/'));
-            transform = transform.map(url => `<a href="${url}">${url}</a>`);
+            let transform = match.map((url) => url.replace(/&#x2F;/g, '/'));
+            transform = transform.map((url) => `<a href="${url}">${url}</a>`);
             for (let i = 0; i < match.length; i += 1) {
                 HTMLContent = HTMLContent.replace(match[i], transform[i]);
             }

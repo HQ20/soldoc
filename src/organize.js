@@ -15,7 +15,7 @@ function prepareFromFile(solidityFile) {
     // parse it using solidity-parser-antlr
     const ast = parser.parse(input);
     // filter for contract definition
-    const astContract = ast.children.filter(child => child.type === 'ContractDefinition');
+    const astContract = ast.children.filter((child) => child.type === 'ContractDefinition');
     // get filtered comments
     const comments = mapComments(input);
     return { ast: astContract, comments };

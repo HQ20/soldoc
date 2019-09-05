@@ -38,7 +38,7 @@ describe('Render HTML Page - Plane', () => {
     test('should be named "Plane"', async (done) => {
         await page.waitFor('h1#contractName');
         const element = await page.$('h1#contractName');
-        const text = await page.evaluate(e => e.textContent, element);
+        const text = await page.evaluate((e) => e.textContent, element);
         expect(text).toBe('Plane');
         done();
     });
@@ -56,7 +56,7 @@ describe('Render HTML Page - Plane', () => {
         const cards = await page.$$('strong.method');
         for (let c = 0; c < cards.length; c += 1) {
             // eslint-disable-next-line no-await-in-loop
-            const text = await page.evaluate(e => e.textContent, cards[c]);
+            const text = await page.evaluate((e) => e.textContent, cards[c]);
             expect(cardsNames).toContain(text);
         }
         done();
@@ -68,7 +68,7 @@ describe('Render HTML Page - Plane', () => {
     test('should title comment', async (done) => {
         await page.waitFor('div.container h2.subtitle');
         const element = await page.$('div.container h2.subtitle');
-        const text = await page.evaluate(e => e.textContent, element);
+        const text = await page.evaluate((e) => e.textContent, element);
         // TODO: remove trim
         // because of them emoji there's an extra space. TODO: improve it!
         expect(text.replace(/\n[ ]*/g, '').trim()).toBe('The Plane contract by @Wilbur & Orville');
@@ -87,7 +87,7 @@ describe('Render HTML Page - Plane', () => {
         const cards = await page.$$('#author');
         for (let c = 0; c < cards.length; c += 1) {
             // eslint-disable-next-line no-await-in-loop
-            const text = await page.evaluate(e => e.textContent, cards[c]);
+            const text = await page.evaluate((e) => e.textContent, cards[c]);
             // TODO: remove trim
             expect(cardsNames).toContain(text.trim());
         }

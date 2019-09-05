@@ -38,7 +38,7 @@ describe('Render HTML Page - Complete folder', () => {
     test('should be named "Plane"', async (done) => {
         await page.waitFor('h1#contractName');
         const element = await page.$('h1#contractName');
-        const text = await page.evaluate(e => e.textContent, element);
+        const text = await page.evaluate((e) => e.textContent, element);
         expect(text).toBe('Plane');
         done();
     });
@@ -57,7 +57,7 @@ describe('Render HTML Page - Complete folder', () => {
         const cards = await page.$$('aside.menu p.menu-label');
         for (let c = 0; c < cards.length; c += 1) {
             // eslint-disable-next-line no-await-in-loop
-            const text = await page.evaluate(e => e.textContent, cards[c]);
+            const text = await page.evaluate((e) => e.textContent, cards[c]);
             expect(cardsNames).toContain(text);
         }
         done();
@@ -94,7 +94,7 @@ describe('Render HTML Page - Complete folder', () => {
         const cards = await page.$$('aside.menu ul a');
         for (let c = 0; c < cards.length; c += 1) {
             // eslint-disable-next-line no-await-in-loop
-            const text = await page.evaluate(e => e.textContent, cards[c]);
+            const text = await page.evaluate((e) => e.textContent, cards[c]);
             expect(cardsNames).toContain(text);
         }
         done();
