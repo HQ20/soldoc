@@ -177,14 +177,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{#ast.parameters.parameters}}
+                                    {{#ast.parameters}}
                                     <tr>
                                         <td>input</td>
                                         <td>{{typeName.name}}</td>
                                         <td>{{name}}</td>
                                         <td>{{#params}}{{name}}{{/params}}</td>
                                     </tr>
-                                    {{/ast.parameters.parameters}}
+                                    {{/ast.parameters}}
                                 </tbody>
                             </table>
                         </p>
@@ -223,14 +223,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{#ast.parameters.parameters}}
+                                    {{#ast.parameters}}
                                     <tr>
                                         <td>input</td>
                                         <td>{{typeName.name}}</td>
                                         <td>{{name}}</td>
                                         <td>{{#params}}{{name}}{{/params}}</td>
                                     </tr>
-                                    {{/ast.parameters.parameters}}
+                                    {{/ast.parameters}}
                                 </tbody>
                             </table>
                         </p>
@@ -269,22 +269,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{#ast.parameters.parameters}}
+                                    {{#ast.parameters}}
                                     <tr>
                                         <td>input</td>
                                         <td>{{typeName.name}}</td>
                                         <td>{{name}}</td>
                                         <td>{{#params}}{{name}}{{/params}}</td>
                                     </tr>
-                                    {{/ast.parameters.parameters}}
-                                    {{#ast.returnParameters.parameters}}
+                                    {{/ast.parameters}}
+                                    {{#ast.returnParameters}}
                                     <tr>
                                         <td>output</td>
                                         <td>{{typeName.name}}</td>
                                         <td>{{name}}</td>
                                         <td>{{comments.return}}</td>
                                     </tr>
-                                    {{/ast.returnParameters.parameters}}
+                                    {{/ast.returnParameters}}
                                 </tbody>
                             </table>
                         </p>
