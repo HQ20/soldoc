@@ -56,7 +56,7 @@
         "pdf-from-html": "0.1.1",
         "pdf-to-text": "0.0.7",
         "sol-comments-parser": "0.1.2-beta.0",
-        "solidity-parser-antlr": "0.4.8"
+        "solidity-parser-antlr": "0.4.11"
     },
     "devDependencies": {
         "coveralls": "3.0.6",

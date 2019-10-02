@@ -25,20 +25,20 @@ exports.renderContracts = (contractsPreparedData, outputFolder, lineBreak) => {
                 MDContent += `${f.comments.notice}${lineBreak}${lineBreak}`;
             }
             let table = false;
-            if (f.ast.parameters.parameters.length > 0) {
+            if (f.ast.parameters.length > 0) {
                 table = true;
                 MDContent += `${lineBreak}|Input/Output|Data Type|Variable Name|Comment|${lineBreak}`
                     + `|----------|----------|----------|----------|${lineBreak}`;
-                f.ast.parameters.parameters.forEach((p) => {
+                f.ast.parameters.forEach((p) => {
                     MDContent += `|input|${p.typeName.name}|${p.name}|${f.comments.param.get(p.name)}|${lineBreak}`;
                 });
             }
-            if (f.ast.returnParameters !== null && f.ast.returnParameters.parameters.length > 0) {
+            if (f.ast.returnParameters !== null && f.ast.returnParameters.length > 0) {
                 if (!table) {
                     MDContent += `${lineBreak}|Input/Output|Data Type|Variable Name|Comment|${lineBreak}`
                         + `|----------|----------|----------|----------|${lineBreak}`;
                 }
-                f.ast.returnParameters.parameters.forEach((p) => {
+                f.ast.returnParameters.forEach((p) => {
                     MDContent += `|output|${p.typeName.name}|${(p.name === null) ? ('N/A') : (p.name)}|`
                         + `${(f.comments.return.length === 0) ? ('N/A') : (f.comments.return)}|${lineBreak}`;
                 });
