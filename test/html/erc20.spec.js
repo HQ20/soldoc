@@ -73,6 +73,42 @@ describe('Render HTML Page - ERC20', () => {
     });
 
     /**
+     * All the inputs and outputs should be listed
+     */
+    test('should have all inputs and outputs listed', async (done) => {
+        const cardsNames = [
+            'input',
+            'address',
+            'owner',
+            'The address to query the balance of.',
+            'output',
+            'uint256',
+            'A uint256 representing the amount owned by the passed address.',
+            'input',
+            'address',
+            'owner',
+            'The address which owns the funds.',
+            'input',
+            'address',
+            'spender',
+            'The address which will spend the funds.',
+            'output',
+            'uint256',
+            'A uint256 specifying the amount of tokens still available for the spender.',
+        ];
+        await page.waitFor('table.table tbody tr td');
+        const cards = await page.$$('table.table tbody tr td');
+        const allCards = [];
+        for (let c = 0; c < cards.length; c += 1) {
+            // eslint-disable-next-line no-await-in-loop
+            const text = await page.evaluate((e) => e.textContent, cards[c]);
+            allCards.push(text);
+        }
+        expect(allCards).toEqual(expect.arrayContaining(cardsNames));
+        done();
+    });
+
+    /**
      * All dev comments show be shown correctly
      */
     test('should have all dev comments', async (done) => {
