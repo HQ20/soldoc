@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 
-
-const meow = require('meow');
-const { generate } = require('../src/index');
+import meow from 'meow';
+import { generate } from './index';
 
 const helpMessage = `
 🐼️ .- hello friend, here's what I have. Thanks to use soldoc.

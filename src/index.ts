@@ -1,5 +1,5 @@
-const path = require('path');
-const fs = require('fs');
+import path from 'path';
+import fs from 'fs';
 
 const { prepareForFile } = require('./organize');
 const html = require('./html');
@@ -12,8 +12,8 @@ const docsify = require('./docsify');
  * @param {string} folder folder path
  * @param {array} ignoreFilesList an array of files to be ignored
  */
-function deepListFiles(folder, ignoreFilesList) {
-    const files = [];
+function deepListFiles(folder: string, ignoreFilesList: string []): string[] {
+    const files: string[] = [];
     // read dir
     const filesList = fs.readdirSync(folder);
     // iterate over what was found
@@ -43,17 +43,17 @@ function deepListFiles(folder, ignoreFilesList) {
  * @param {string} outputType the output type of the given documentation
  * @param {string} ignoreFilesList an array of files to be ignored
  * @param {string} outputFolder directory to output the result, either pdf or html
- * @param {string} filePathInput the path to file or folder to be analized
+ * @param {string} inputPath the path to file or folder to be analized
  */
-exports.generate = (outputType, ignoreFilesList, outputFolder, filePathInput) => {
+export function generate(outputType: string, ignoreFilesList: string[], outputFolder: string, inputPath: string): number {
     // verify the type of the given input
     let stats;
     try {
-        stats = fs.lstatSync(filePathInput);
+        stats = fs.lstatSync(inputPath);
     } catch (e) {
         // Handle error
         // eslint-disable-next-line no-console
-        console.log(`The file you are looking for (${filePathInput}) doesn't exist!`);
+        console.log(`The file you are looking for (${inputPath}) doesn't exist!`);
         return 1;
     }
 
@@ -61,13 +61,13 @@ exports.generate = (outputType, ignoreFilesList, outputFolder, filePathInput) =>
     // verify if the input is a directory, file or array of files
     if (stats.isDirectory()) {
         // if it's a folder, get all files recursively
-        files = deepListFiles(filePathInput, ignoreFilesList);
-    } else if (stats.isFile() && !ignoreFilesList.includes(filePathInput)) {
+        files = deepListFiles(inputPath, ignoreFilesList);
+    } else if (stats.isFile() && !ignoreFilesList.includes(inputPath)) {
         // if it's a file, just get the file
-        files.push(filePathInput);
+        files.push(inputPath);
     }
     // iterate over files to generate HTML
-    const prepared = [];
+    const prepared: any[] = [];
     files.forEach((file) => prepared.push(prepareForFile(file)));
     // verify if the docs/ folder exist and creates it if not
     const destinationDocsFolderPath = path.join(process.cwd(), outputFolder);

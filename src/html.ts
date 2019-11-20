@@ -1,14 +1,14 @@
-const fs = require('fs');
-const path = require('path');
-const emoji = require('node-emoji');
-const {
+import fs from 'fs';
+import path from 'path';
+import { emojify } from 'node-emoji';
+import {
     transformTemplate,
     renderLicense,
     renderReadme,
-} = require('./renderHTML');
-const {
+} from './renderHTML';
+import {
     organizeContractsStructure,
-} = require('./organize');
+} from './organize';
 
 
 const defaultTemplatePath = 'src/template/html/index.html';
@@ -17,11 +17,11 @@ const defaultTemplatePath = 'src/template/html/index.html';
  * To write!
  * @param {object} contractsData Obect containing all contracts info
  */
-exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
+exports.generateDocumentation = (contractsPreparedData: any, outputFolder: any) => {
     // create a list of contracts and methods
     const contractsStructure = organizeContractsStructure(contractsPreparedData);
     const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
-    contractsPreparedData.forEach((contract) => {
+    contractsPreparedData.forEach((contract: any) => {
         // transform the template
         let HTMLContent = transformTemplate(
             path.join(contract.currentFolder, defaultTemplatePath),
@@ -40,11 +40,11 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
                 HTMLContent = HTMLContent.replace(match[i], transform[i]);
             }
         }
-        const formatEmojify = (code, name) => `<i alt="${code}" class="twa twa-${name}"></i>`;
+        const formatEmojify = (code: any, name: any) => `<i alt="${code}" class="twa twa-${name}"></i>`;
         // write it to a file
         fs.writeFileSync(
             path.join(process.cwd(), outputFolder, `${contract.filename}.html`),
-            emoji.emojify(HTMLContent, null, formatEmojify),
+            emojify(HTMLContent, null as any, formatEmojify),
         );
     });
     // If there's a README...
@@ -60,7 +60,7 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
             outputReadme,
         );
         // if there's an image reference in readme, copy it
-        const files = [];
+        const files: any = [];
         // read dir
         const filesList = fs.readdirSync(process.cwd());
         // iterate over what was found
@@ -72,7 +72,7 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
             }
         });
         // and if the file is n readme, copy it
-        files.forEach((file) => {
+        files.forEach((file: any) => {
             if (outputReadme.includes(file)) {
                 fs.copyFileSync(path.join(process.cwd(), file), path.join(process.cwd(), outputFolder, file));
             }
@@ -84,7 +84,7 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
         const templateContent = String(fs.readFileSync(
             path.join(contractsPreparedData[0].currentFolder, defaultTemplatePath),
         ));
-        const outputLicense = renderLicense(templateContent, contractsStructure, outputFolder);
+        const outputLicense = renderLicense(templateContent, contractsStructure);
         // write it to a file
         fs.writeFileSync(
             path.join(process.cwd(), outputFolder, 'license.html'),

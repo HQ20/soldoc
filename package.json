@@ -2,19 +2,19 @@
     "name": "soldoc",
     "version": "0.1.2-beta.0",
     "description": "An html page and pdf solidity documentation generator, based in NatSpec format.",
-    "main": "src/index.js",
+    "main": "dist/index.js",
     "bin": {
-        "soldoc": "bin/cli.js"
+        "soldoc": "dist/cli.js"
     },
     "files": [
-        "/bin",
-        "/src"
+        "/dist"
     ],
     "scripts": {
         "demo-html": "./bin/cli.js --ignore Ignore.sol,IERC20.sol docs/ test/contracts",
         "demo-pdf": "./bin/cli.js --output pdf docs/ test/contracts/Plane.sol",
         "lint": "npm run lint:js",
         "lint:js": "eslint src/*.js .",
+        "pretest": "tsc",
         "test": "jest",
         "coverage": "jest --coverage",
         "coverage:ci": "jest --coverage --detectOpenHandles --forceExit && cat ./coverage/lcov.info | coveralls",
@@ -46,6 +46,11 @@
     },
     "homepage": "https://github.com/hq20/soldoc#readme",
     "dependencies": {
+        "@types/highlight.js": "9.12.3",
+        "@types/meow": "5.0.0",
+        "@types/mustache": "0.8.32",
+        "@types/node": "12.12.7",
+        "@types/node-emoji": "1.8.1",
         "highlight.js": "9.16.2",
         "markdown-it": "10.0.0",
         "markdown-it-emoji": "1.4.0",
@@ -55,10 +60,10 @@
         "pdf-from-html": "0.1.1",
         "sol-comments-parser": "0.1.2-beta.0",
         "solidity-parser-antlr": "0.4.11",
-        "@types/node": "12.12.7",
         "typescript": "3.7.2"
     },
     "devDependencies": {
+        "@types/jest": "24.0.22",
         "coveralls": "3.0.7",
         "eslint": "6.6.0",
         "eslint-config-airbnb": "18.0.1",
@@ -73,7 +78,6 @@
         "jsdoc": "3.6.3",
         "pdf-to-text": "0.0.7",
         "puppeteer": "1.20.0",
-        "@types/jest": "24.0.22",
         "tslint": "5.20.1",
         "typedoc": "0.15.0",
         "typescript-tslint-plugin": "0.5.4"

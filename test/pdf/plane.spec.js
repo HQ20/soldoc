@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const pdfUtil = require('pdf-to-text');
 
-const { generate } = require('../../src/index');
+const { generate } = require('../../dist/index');
 
 describe('Render File - Plane', () => {
     beforeAll(() => {
