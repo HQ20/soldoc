@@ -54,10 +54,11 @@
         "node-emoji": "1.10.0",
         "pdf-from-html": "0.1.1",
         "sol-comments-parser": "0.1.2-beta.0",
-        "solidity-parser-antlr": "0.4.11"
+        "solidity-parser-antlr": "0.4.11",
+        "@types/node": "12.12.7",
+        "typescript": "3.7.2"
     },
     "devDependencies": {
-        "pdf-to-text": "0.0.7",
         "coveralls": "3.0.7",
         "eslint": "6.6.0",
         "eslint-config-airbnb": "18.0.1",
@@ -70,7 +71,12 @@
         "jest": "24.9.0",
         "jest-puppeteer": "4.3.0",
         "jsdoc": "3.6.3",
-        "puppeteer": "1.20.0"
+        "pdf-to-text": "0.0.7",
+        "puppeteer": "1.20.0",
+        "@types/jest": "24.0.22",
+        "tslint": "5.20.1",
+        "typedoc": "0.15.0",
+        "typescript-tslint-plugin": "0.5.4"
     },
     "nyc": {
         "all": true,
