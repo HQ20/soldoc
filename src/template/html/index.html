@@ -4,10 +4,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/github.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/twemoji-awesome-clone@1.0.0/twemoji-awesome.css">
-    <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAJ6TrAFy+8QCC0vgA7+/vAC6n7ACE0/gAS2RuAKbU5QDAwMAAv+3+ACek6gApoeYAAAAAAAAAAAAAAAAARERERERERABEREREREREAEREREREREQAREREeIRERABJmZSohUREAERERKolVEQAREREozUVRABJmZRDNlFUAEREREQzZRUAREREREM2W1BJmZmZRDNlxUREREREQzZVREREREREMzVJmZmZmURDM0REREREREQzRERERERERAMAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA" rel="icon" type="image/x-icon" />
+    <link
+        href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAJ6TrAFy+8QCC0vgA7+/vAC6n7ACE0/gAS2RuAKbU5QDAwMAAv+3+ACek6gApoeYAAAAAAAAAAAAAAAAARERERERERABEREREREREAEREREREREQAREREeIRERABJmZSohUREAERERKolVEQAREREozUVRABJmZRDNlFUAEREREQzZRUAREREREM2W1BJmZmZRDNlxUREREREQzZVREREREREMzVJmZmZmURDM0REREREREQzRERERERERAMAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA"
+        rel="icon" type="image/x-icon" />
     <style>
         aside {
-            width: 20%;
+            width: 17%;
             padding: 35px 55px;
             float: left;
         }
@@ -28,7 +30,7 @@
         div.container {
             float: left;
             width: 60%;
-            margin: 35px 5%;
+            margin: 35px 0%;
         }
 
         strong.method {
@@ -50,7 +52,10 @@
             padding: 5px 40px;
         }
 
-        .README h1,.README h2,.README h3,.README h4 {
+        .README h1,
+        .README h2,
+        .README h3,
+        .README h4 {
             margin-block-start: 0.83em;
             margin-block-end: 0.83em;
             margin-inline-start: 0px;
@@ -81,7 +86,7 @@
 
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
-                    More soldoc
+                        More soldoc
                     </a>
 
                     <div class="navbar-dropdown">
@@ -101,15 +106,13 @@
             </div>
         </div>
     </nav>
-    <aside class="menu">
-        {{#contractsStructure}}
-        <p class="menu-label">{{name}}</p>
+    <aside class="menu" id="left_aside">
+        <p class="menu-label">Contracts</p>
         <ul class="menu-list">
-            {{#functions}}
+            {{#contractsStructure}}
             <li><a href="{{filename}}.html#{{name}}">{{name}}</a></li>
-            {{/functions}}
+            {{/contractsStructure}}
         </ul>
-        {{/contractsStructure}}
     </aside>
 
     {{#README}}
@@ -132,18 +135,18 @@
         <div class="notification">
             <h1 class="title is-1" id="contractName">{{contract.name}}</h1>
             {{#contractData.contract.title}}
-                <h2 class="subtitle">{{contractData.contract.title}}
+            <h2 class="subtitle">{{contractData.contract.title}}
                 {{#contractData.contract.author}}
                 by <i id="author">@{{contractData.contract.author}}</i>
                 {{/contractData.contract.author}}
-                </h2>
+            </h2>
             {{/contractData.contract.title}}
             {{filePath}}
             {{#contractData.contract.dev}}
-                <p>{{contractData.contract.dev}}</p>
+            <p>{{contractData.contract.dev}}</p>
             {{/contractData.contract.dev}}
             {{#contractData.contract.notice}}
-                <p>{{contractData.contract.notice}}</p>
+            <p>{{contractData.contract.notice}}</p>
             {{/contractData.contract.notice}}
             <small class="generated">Generated in {{currentDate}}</small>
         </div>
@@ -158,14 +161,14 @@
                                 <strong class="method">constructor</strong>
                             </a>
                             {{#comments.author}}
-                                by <small id="author">@{{comments.author}}</small>
+                            by <small id="author">@{{comments.author}}</small>
                             {{/comments.author}}
                             <br />
                             {{#comments.dev}}
-                                <p><i>{{comments.dev}}</i></p>
+                            <p><i>{{comments.dev}}</i></p>
                             {{/comments.dev}}
                             {{#comments.notice}}
-                                <p>{{comments.notice}}</p>
+                            <p>{{comments.notice}}</p>
                             {{/comments.notice}}
                             <table class="table">
                                 <thead>
@@ -204,14 +207,14 @@
                                 <strong class="method">{{ast.name}}</strong>
                             </a>
                             {{#comments.author}}
-                                by <small id="author">@{{comments.author}}</small>
+                            by <small id="author">@{{comments.author}}</small>
                             {{/comments.author}}
                             <br />
                             {{#comments.dev}}
-                                <p><i>{{comments.dev}}</i></p>
+                            <p><i>{{comments.dev}}</i></p>
                             {{/comments.dev}}
                             {{#comments.notice}}
-                                <p>{{comments.notice}}</p>
+                            <p>{{comments.notice}}</p>
                             {{/comments.notice}}
                             <table class="table">
                                 <thead>
@@ -250,14 +253,14 @@
                                 <strong class="method">{{ast.name}}</strong>
                             </a>
                             {{#comments.author}}
-                                by <small id="author">@{{comments.author}}</small>
+                            by <small id="author">@{{comments.author}}</small>
                             {{/comments.author}}
                             <br />
                             {{#comments.dev}}
-                                <p><i>{{comments.dev}}</i></p>
+                            <p><i>{{comments.dev}}</i></p>
                             {{/comments.dev}}
                             {{#comments.notice}}
-                                <p>{{comments.notice}}</p>
+                            <p>{{comments.notice}}</p>
                             {{/comments.notice}}
                             <table class="table">
                                 <thead>
@@ -295,6 +298,16 @@
         {{/contractData.functions}}
     </div>
     {{/CONTRACT}}
+    <aside class="menu">
+        {{#contractsStructure}}
+        <p class="menu-label">{{name}}</p>
+        <ul class="menu-list">
+            {{#functions}}
+            <li><a href="{{filename}}.html#{{name}}">{{name}}</a></li>
+            {{/functions}}
+        </ul>
+        {{/contractsStructure}}
+    </aside>
 </body>
 
 </html>
