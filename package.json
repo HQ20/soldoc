@@ -14,10 +14,10 @@
         "demo-pdf": "./bin/cli.js --output pdf docs/ test/contracts/Plane.sol",
         "lint": "npm run lint:js",
         "lint:js": "eslint src/*.js .",
-        "pretest": "tsc",
-        "test": "jest",
-        "coverage": "jest --coverage",
-        "coverage:ci": "jest --coverage --detectOpenHandles --forceExit && cat ./coverage/lcov.info | coveralls",
+        "pretest": "tsc && cp -r src/template dist",
+        "test": "jest --testTimeout=40000",
+        "coverage": "jest --coverage --testTimeout=40000",
+        "coverage:ci": "jest --coverage --testTimeout=40000 --detectOpenHandles --forceExit && cat ./coverage/lcov.info | coveralls",
         "docs": "jsdoc ./src/*.js -d ./docs"
     },
     "repository": {
@@ -82,21 +82,11 @@
         "typedoc": "0.15.0",
         "typescript-tslint-plugin": "0.5.4"
     },
-    "nyc": {
-        "all": true,
-        "include": [
-            "src/**/*.js"
-        ],
-        "exclude": [
-            "**/*.spec.js",
-            "bin/*.js",
-            "src/utils/*.js"
-        ]
-    },
     "jest": {
         "collectCoverage": true,
         "collectCoverageFrom": [
-            "src/**/*.js",
+            "dist/**/*.js",
+            "!dist/**/cli.js",
             "!./node_modules/"
         ]
     }

@@ -50,7 +50,6 @@ describe('Render File - Plane', () => {
             'This is a plane constructor',
             'May flight, or may not',
             'Land',
-            'This is a plane event',
             'Emitted by land function',
             'uint256',
             '_time',
