@@ -1,17 +1,19 @@
-const fs = require('fs');
-const path = require('path');
-const Mustache = require('mustache');
-// to render README.md
-const hljs = require('highlight.js');
-const mdemoji = require('markdown-it-emoji');
+import fs from 'fs';
+import path from 'path';
+
+import { getLanguage, highlight } from 'highlight.js';
+import mdemoji from 'markdown-it-emoji';
+import { render } from 'mustache';
+
+// tslint:disable-next-line: no-var-requires
 const md = require('markdown-it')({
-    highlight(str, lang) {
-        if (lang && hljs.getLanguage(lang)) {
+    highlight(str: any, lang: any) {
+        if (lang && getLanguage(lang)) {
             try {
                 return `<pre class="hljs"><code>${
-                    hljs.highlight(lang, str, true).value
+                    highlight(lang, str, true).value
                 }</code></pre>`;
-                // eslint-disable-next-line no-empty
+            // tslint:disable-next-line: no-empty
             } catch (__) { }
         }
         return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
@@ -24,7 +26,7 @@ const md = require('markdown-it')({
 // use mdemoji plugin
 md.use(mdemoji);
 // set mdemoji rules
-md.renderer.rules.emoji = (token, idx) => `<i class="twa twa-${token[idx].markup}"></i>`;
+md.renderer.rules.emoji = (token: any, idx: any) => `<i class="twa twa-${token[idx].markup}"></i>`;
 
 /**
  * Using the given parameters, calls the Mustache engine
@@ -34,46 +36,46 @@ md.renderer.rules.emoji = (token, idx) => `<i class="twa twa-${token[idx].markup
  * @param {object} contractData Contract data, containing ast and comments to be rendered
  * @param {string} contractPath Path to contract file
  */
-exports.transformTemplate = (
-    templateFile, contractName, contractData, contractPath, contractsStructure, hasLICENSE,
-) => {
+export function transformTemplate(
+    templateFile: any, contractName: any, contractData: any, contractPath: any, contractsStructure: any, hasLICENSE: any,
+) {
     // read template into a string
     const templateContent = String(fs.readFileSync(templateFile));
     // put all data together
     const view = {
-        filePath: contractPath,
+        CONTRACT: true,
         contract: {
             name: contractName,
         },
         contractData,
         contractsStructure,
         currentDate: new Date(),
+        filePath: contractPath,
         hasLICENSE,
-        CONTRACT: true,
     };
     // calls the render engine
-    const output = Mustache.render(templateContent, view);
+    const output = render(templateContent, view);
     return output;
-};
+}
 
-exports.renderLicense = (
-    templateContent, contractsStructure,
-) => {
+export function renderLicense(
+    templateContent: any, contractsStructure: any,
+) {
     const LICENSEText = String(fs.readFileSync(path.join(process.cwd(), 'LICENSE'))).trim();
     const LICENSE = LICENSEText.replace(/\n/g, '<br>');
     // put all data together
     const view = {
+        LICENSE,
         contractsStructure,
         hasLICENSE: true,
-        LICENSE,
     };
     // calls the render engine
-    return Mustache.render(templateContent, view);
-};
+    return render(templateContent, view);
+}
 
-exports.renderReadme = (
-    templateContent, contractsStructure, hasLICENSE,
-) => {
+export function renderReadme(
+    templateContent: any, contractsStructure: any, hasLICENSE: any,
+) {
     const READMEText = String(fs.readFileSync(path.join(process.cwd(), 'README.md'))).trim();
     // render it, from markdown to html
     const READMEconverted = md.render(READMEText);
@@ -85,10 +87,10 @@ exports.renderReadme = (
         .replace(/<ul>/g, '<ul class="menu-list">');
     // put all data together
     const view = {
+        README,
         contractsStructure,
         hasLICENSE,
-        README,
     };
     // calls the render engine
-    return Mustache.render(templateContent, view);
-};
+    return render(templateContent, view);
+}

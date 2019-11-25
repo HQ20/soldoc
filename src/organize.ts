@@ -1,21 +1,21 @@
-const parser = require('solidity-parser-antlr');
-const path = require('path');
-const fs = require('fs');
+import fs from 'fs';
+import path from 'path';
+import parser from 'solidity-parser-antlr';
 
-const { mapComments } = require('sol-comments-parser');
+import { mapComments } from 'sol-comments-parser';
 
 
 /**
  * Map the comments and returns the contract ast and the mapped comments.
  * @param {string} solidityFile the file's path to be parsed
  */
-function prepareFromFile(solidityFile) {
+function prepareFromFile(solidityFile: string) {
     // read file
     const input = fs.readFileSync(solidityFile).toString();
     // parse it using solidity-parser-antlr
     const ast = parser.parse(input);
     // filter for contract definition
-    const astContract = ast.children.filter((child) => child.type === 'ContractDefinition');
+    const astContract = ast.children.filter((child: any) => child.type === 'ContractDefinition');
     // get filtered comments
     const comments = mapComments(input);
     return { ast: astContract, comments };
@@ -25,14 +25,19 @@ function prepareFromFile(solidityFile) {
  * Merges the contract ast and comments into an array.
  * @param {string} solidityFile the file's path to be parsed
  */
-function mergeInfoFile(solidityFile) {
+function mergeInfoFile(solidityFile: string) {
     // get basic information
     const rawContractData = prepareFromFile(solidityFile);
     // create an array to save the ast and comments
-    const contractDataWithComments = { constructor: null, events: [], functions: [] };
+    const contractDataWithComments = {
+        constructor: null,
+        contract: undefined,
+        events: [] as any,
+        functions: [] as any,
+    };
     // visit all the methods and add the commands to it
     parser.visit(rawContractData.ast, {
-        EventDefinition: (node) => {
+        EventDefinition: (node: any) => {
             let paramComments = new Map();
             let rawComments;
             if (rawContractData.comments.event !== undefined) {
@@ -45,10 +50,10 @@ function mergeInfoFile(solidityFile) {
                 ast: node,
                 comments: rawComments,
                 paramComments,
-                params: () => (val, render) => paramComments.get(render(val)),
+                params: () => (val: any, render: any) => paramComments.get(render(val)),
             });
         },
-        FunctionDefinition: (node) => {
+        FunctionDefinition: (node: any) => {
             if (node.isConstructor) {
                 let paramComments = new Map();
                 if (rawContractData.comments.constructor !== undefined) {
@@ -58,8 +63,8 @@ function mergeInfoFile(solidityFile) {
                     ast: node,
                     comments: rawContractData.comments.constructor,
                     paramComments,
-                    params: () => (val, render) => paramComments.get(render(val)),
-                };
+                    params: () => (val: any, render: any) => paramComments.get(render(val)),
+                } as any;
             } else {
                 let paramComments = new Map();
                 let rawComments;
@@ -71,13 +76,13 @@ function mergeInfoFile(solidityFile) {
                 }
                 contractDataWithComments.functions.push({
                     ast: node,
-                    isPublic: node.visibility === 'public',
-                    isPrivate: node.visibility === 'private',
-                    isInternal: node.visibility === 'internal',
-                    isExternal: node.visibility === 'external',
                     comments: rawComments,
+                    isExternal: node.visibility === 'external',
+                    isInternal: node.visibility === 'internal',
+                    isPrivate: node.visibility === 'private',
+                    isPublic: node.visibility === 'public',
                     paramComments,
-                    params: () => (val, render) => paramComments.get(render(val)),
+                    params: () => (val: any, render: any) => paramComments.get(render(val)),
                 });
             }
         },
@@ -95,7 +100,7 @@ function mergeInfoFile(solidityFile) {
  * Prepare for the given file.
  * @param {string} solidityFilePath the file's path to be parsed
  */
-exports.prepareForFile = (solidityFilePath) => {
+export function prepareForFile(solidityFilePath: string) {
     // get current path folder
     const currentFolder = path.join(__dirname, '../');
     // get ast and comments
@@ -103,25 +108,29 @@ exports.prepareForFile = (solidityFilePath) => {
     // get the filename
     const filename = path.parse(solidityFilePath).name;
     return {
-        filename, currentFolder, contractName, contractData, solidityFilePath,
+        contractData,
+        contractName,
+        currentFolder,
+        filename,
+        solidityFilePath,
     };
-};
+}
 
-exports.organizeContractsStructure = (
-    contractsPreparedData,
-) => {
-    const contractsStructure = [];
-    contractsPreparedData.forEach((contract) => {
-        const contractInfo = {};
+export function organizeContractsStructure(
+    contractsPreparedData: any,
+) {
+    const contractsStructure: any = [];
+    contractsPreparedData.forEach((contract: any) => {
+        const contractInfo: any = {};
         // add name
         contractInfo.name = contract.contractName;
         contractInfo.filename = contract.filename;
         contractInfo.functions = [];
         // add functions name
-        contract.contractData.functions.forEach((func) => {
+        contract.contractData.functions.forEach((func: any) => {
             contractInfo.functions.push({ name: func.ast.name });
         });
         contractsStructure.push(contractInfo);
     });
     return contractsStructure;
-};
+}

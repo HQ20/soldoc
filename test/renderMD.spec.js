@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const { generate } = require('../src/index');
+const { generate } = require('../dist/index');
 
 describe('Render MD - ERC20', () => {
     let mdResultFile;

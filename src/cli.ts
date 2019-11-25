@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 
+import { Console } from 'console';
+import meow from 'meow';
 
-const meow = require('meow');
-const { generate } = require('../src/index');
+import { generate } from './index';
 
 const helpMessage = `
 🐼️ .- hello friend, here's what I have. Thanks to use soldoc.
@@ -23,22 +24,22 @@ Examples
 `;
 const cli = meow(helpMessage, {
     flags: {
-        output: {
+        ignore: {
+            alias: 'i',
             type: 'string',
+        },
+        output: {
             alias: 'o',
             default: 'html',
-        },
-        ignore: {
             type: 'string',
-            alias: 'i',
         },
     },
 });
+const terminalConsole = new Console(process.stdout, process.stderr);
 
 function main() {
     if (cli.input.length !== 2) {
-        // eslint-disable-next-line no-console
-        console.error(
+        terminalConsole.error(
             'You must be doing something wrong. There\'s a 🐼️ available to help you, '
             + 'just write \'soldoc --help\'.\r\n\r\n\t🐼 ️🐼️ are really cool! Aren\'t they?',
         );
@@ -47,8 +48,7 @@ function main() {
 
     // pdf generation is a bit slower
     if (cli.flags.output === 'pdf') {
-        // eslint-disable-next-line no-console
-        console.log('Wait...might take a moment! 🐼️ is doing is stuff...');
+        terminalConsole.log('Wait...might take a moment! 🐼️ is doing is stuff...');
     }
     let ignoreList = [];
     if (cli.flags.ignore && cli.flags.ignore.length > 0) {

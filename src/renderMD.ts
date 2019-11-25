@@ -1,8 +1,8 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
-exports.renderContracts = (contractsPreparedData, outputFolder, lineBreak) => {
-    contractsPreparedData.forEach((contract) => {
+export function renderContracts(contractsPreparedData: any, outputFolder: any, lineBreak: any) {
+    contractsPreparedData.forEach((contract: any) => {
         // transform the template
         let MDContent = `# ${contract.contractName}${lineBreak}`;
         if (contract.contractData.contract !== undefined) {
@@ -13,7 +13,7 @@ exports.renderContracts = (contractsPreparedData, outputFolder, lineBreak) => {
                 MDContent += `${contract.contractData.contract.notice}${lineBreak}`;
             }
         }
-        contract.contractData.functions.forEach((f) => {
+        contract.contractData.functions.forEach((f: any) => {
             MDContent += `## ${f.ast.name}${lineBreak}${lineBreak}`;
             if (f.comments === undefined) {
                 return;
@@ -29,7 +29,7 @@ exports.renderContracts = (contractsPreparedData, outputFolder, lineBreak) => {
                 table = true;
                 MDContent += `${lineBreak}|Input/Output|Data Type|Variable Name|Comment|${lineBreak}`
                     + `|----------|----------|----------|----------|${lineBreak}`;
-                f.ast.parameters.forEach((p) => {
+                f.ast.parameters.forEach((p: any) => {
                     MDContent += `|input|${p.typeName.name}|${p.name}|${f.comments.param.get(p.name)}|${lineBreak}`;
                 });
             }
@@ -38,7 +38,7 @@ exports.renderContracts = (contractsPreparedData, outputFolder, lineBreak) => {
                     MDContent += `${lineBreak}|Input/Output|Data Type|Variable Name|Comment|${lineBreak}`
                         + `|----------|----------|----------|----------|${lineBreak}`;
                 }
-                f.ast.returnParameters.forEach((p) => {
+                f.ast.returnParameters.forEach((p: any) => {
                     MDContent += `|output|${p.typeName.name}|${(p.name === null) ? ('N/A') : (p.name)}|`
                         + `${(f.comments.return.length === 0) ? ('N/A') : (f.comments.return)}|${lineBreak}`;
                 });
@@ -51,10 +51,10 @@ exports.renderContracts = (contractsPreparedData, outputFolder, lineBreak) => {
             MDContent,
         );
     });
-};
+}
 
-exports.renderReadme = (outputFolder) => {
-    let outputReadme;
+export function renderReadme(outputFolder: any) {
+    let outputReadme: any;
     if (fs.existsSync(path.join(process.cwd(), 'README.md'))) {
         fs.copyFileSync(
             path.join(process.cwd(), 'README.md'),
@@ -69,7 +69,7 @@ exports.renderReadme = (outputFolder) => {
         outputReadme = '# Hello';
     }
     // if there's an image reference in readme, copy it
-    const files = [];
+    const files: any = [];
     // read dir
     const filesList = fs.readdirSync(process.cwd());
     // iterate over what was found
@@ -81,14 +81,20 @@ exports.renderReadme = (outputFolder) => {
         }
     });
     // and if the file is n readme, copy it
-    files.forEach((file) => {
+    files.forEach((file: any) => {
         if (outputReadme.includes(file)) {
             fs.copyFileSync(path.join(process.cwd(), file), path.join(process.cwd(), outputFolder, file));
         }
     });
-};
+}
 
-exports.renderDocumentationIndex = (content, outputFolder, contractsStructure, hasLICENSE, lineBreak) => {
+export function renderDocumentationIndex(
+    content: any,
+    outputFolder: any,
+    contractsStructure: any,
+    hasLICENSE: any,
+    lineBreak: any,
+) {
     let documentationIndexContent = content;
     if (hasLICENSE) {
         documentationIndexContent += `\t* [LICENSE](LICENSE.md)${lineBreak}`;
@@ -98,8 +104,8 @@ exports.renderDocumentationIndex = (content, outputFolder, contractsStructure, h
         );
     }
     documentationIndexContent += `* CONTRACTS${lineBreak}`;
-    contractsStructure.forEach((s) => {
+    contractsStructure.forEach((s: any) => {
         documentationIndexContent += `\t* [${s.name}](${s.name}.md)${lineBreak}`;
     });
     return documentationIndexContent;
-};
+}

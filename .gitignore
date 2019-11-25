@@ -62,3 +62,6 @@ typings/
 
 # ignore docs
 docs/
+
+# ignore .js.map
+*.js.map

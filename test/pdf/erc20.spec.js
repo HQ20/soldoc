@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const { generate } = require('../../src/index');
+const { generate } = require('../../dist/index');
 
 describe('Render File - ERC20', () => {
     beforeAll(() => {

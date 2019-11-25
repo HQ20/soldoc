@@ -1,19 +1,22 @@
-const path = require('path');
-const fs = require('fs');
+import { Console } from 'console';
+import fs from 'fs';
+import path from 'path';
 
-const { prepareForFile } = require('./organize');
-const html = require('./html');
-const pdf = require('./pdf');
-const gitbook = require('./gitbook');
-const docsify = require('./docsify');
+import { generateDocumentation as generateDocumentationDocsify } from './docsify';
+import { generateDocumentation as generateDocumentationGitbook } from './gitbook';
+import { generateDocumentation as generateDocumentationHTML } from './html';
+import { prepareForFile } from './organize';
+import { generateDocumentation as generateDocumentationPDF } from './pdf';
+
+const terminalConsole = new Console(process.stdout, process.stderr);
 
 /**
  * Get all files in folder, recursively.
  * @param {string} folder folder path
  * @param {array} ignoreFilesList an array of files to be ignored
  */
-function deepListFiles(folder, ignoreFilesList) {
-    const files = [];
+function deepListFiles(folder: string, ignoreFilesList: string []): string[] {
+    const files: string[] = [];
     // read dir
     const filesList = fs.readdirSync(folder);
     // iterate over what was found
@@ -43,17 +46,16 @@ function deepListFiles(folder, ignoreFilesList) {
  * @param {string} outputType the output type of the given documentation
  * @param {string} ignoreFilesList an array of files to be ignored
  * @param {string} outputFolder directory to output the result, either pdf or html
- * @param {string} filePathInput the path to file or folder to be analized
+ * @param {string} inputPath the path to file or folder to be analized
  */
-exports.generate = (outputType, ignoreFilesList, outputFolder, filePathInput) => {
+export function generate(outputType: string, ignoreFilesList: string[], outputFolder: string, inputPath: string): number {
     // verify the type of the given input
     let stats;
     try {
-        stats = fs.lstatSync(filePathInput);
+        stats = fs.lstatSync(inputPath);
     } catch (e) {
         // Handle error
-        // eslint-disable-next-line no-console
-        console.log(`The file you are looking for (${filePathInput}) doesn't exist!`);
+        terminalConsole.log(`The file you are looking for (${inputPath}) doesn't exist!`);
         return 1;
     }
 
@@ -61,13 +63,13 @@ exports.generate = (outputType, ignoreFilesList, outputFolder, filePathInput) =>
     // verify if the input is a directory, file or array of files
     if (stats.isDirectory()) {
         // if it's a folder, get all files recursively
-        files = deepListFiles(filePathInput, ignoreFilesList);
-    } else if (stats.isFile() && !ignoreFilesList.includes(filePathInput)) {
+        files = deepListFiles(inputPath, ignoreFilesList);
+    } else if (stats.isFile() && !ignoreFilesList.includes(inputPath)) {
         // if it's a file, just get the file
-        files.push(filePathInput);
+        files.push(inputPath);
     }
     // iterate over files to generate HTML
-    const prepared = [];
+    const prepared: any[] = [];
     files.forEach((file) => prepared.push(prepareForFile(file)));
     // verify if the docs/ folder exist and creates it if not
     const destinationDocsFolderPath = path.join(process.cwd(), outputFolder);
@@ -75,17 +77,16 @@ exports.generate = (outputType, ignoreFilesList, outputFolder, filePathInput) =>
         fs.mkdirSync(destinationDocsFolderPath, { recursive: true });
     }
     if (outputType === 'pdf') {
-        pdf.generateDocumentation(prepared, outputFolder);
+        generateDocumentationPDF(prepared, outputFolder);
     } else if (outputType === 'html') {
-        html.generateDocumentation(prepared, outputFolder);
+        generateDocumentationHTML(prepared, outputFolder);
     } else if (outputType === 'gitbook') {
-        gitbook.generateDocumentation(prepared, outputFolder);
+        generateDocumentationGitbook(prepared, outputFolder);
     } else if (outputType === 'docsify') {
-        docsify.generateDocumentation(prepared, outputFolder);
+        generateDocumentationDocsify(prepared, outputFolder);
     } else {
-        // eslint-disable-next-line no-console
-        console.error('Invalid output type! Try --help for more info.');
+        terminalConsole.error('Invalid output type! Try --help for more info.');
         return 1;
     }
     return 0;
-};
+}

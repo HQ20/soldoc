@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const pdfUtil = require('pdf-to-text');
 
-const { generate } = require('../../src/index');
+const { generate } = require('../../dist/index');
 
 describe('Render File - Plane', () => {
     beforeAll(() => {
@@ -50,7 +50,6 @@ describe('Render File - Plane', () => {
             'This is a plane constructor',
             'May flight, or may not',
             'Land',
-            'This is a plane event',
             'Emitted by land function',
             'uint256',
             '_time',

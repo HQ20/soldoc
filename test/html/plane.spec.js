@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer');
 const path = require('path');
-const { generate } = require('../../src/index');
+const { generate } = require('../../dist/index');
 
 describe('Render HTML Page - Plane', () => {
     let browser;

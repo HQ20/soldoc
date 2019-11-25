@@ -1,20 +1,20 @@
-const fs = require('fs');
-const path = require('path');
-const {
+import fs from 'fs';
+import path from 'path';
+import {
     organizeContractsStructure,
-} = require('./organize');
-const {
+} from './organize';
+import {
     renderContracts,
-    renderReadme,
     renderDocumentationIndex,
-} = require('./renderMD');
+    renderReadme,
+} from './renderMD';
 
 const lineBreak = '\r\n';
 
 /**
  * @param contractsPreparedData prepared data
  */
-exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
+export function generateDocumentation(contractsPreparedData: any, outputFolder: any) {
     // create a list of contracts and methods
     const contractsStructure = organizeContractsStructure(contractsPreparedData);
     const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
@@ -31,4 +31,4 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
     );
     // Copy readme if it exists, otherwise, create a sampe
     renderReadme(outputFolder);
-};
+}

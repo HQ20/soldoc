@@ -1,13 +1,14 @@
-const fs = require('fs');
-const path = require('path');
-const toPdf = require('pdf-from-html');
-const emoji = require('node-emoji');
-const {
-    transformTemplate,
-} = require('./renderHTML');
-const {
+import fs from 'fs';
+import path from 'path';
+
+import { emojify } from 'node-emoji';
+import toPdf from 'pdf-from-html';
+import {
     organizeContractsStructure,
-} = require('./organize');
+} from './organize';
+import {
+    transformTemplate,
+} from './renderHTML';
 
 
 const defaultTemplatePath = 'src/template/pdf/index.html';
@@ -15,11 +16,11 @@ const defaultTemplatePath = 'src/template/pdf/index.html';
 /**
  * @param contractsPreparedData prepared data
  */
-exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
+export function generateDocumentation(contractsPreparedData: any, outputFolder: any) {
     // create a list of contracts and methods
     const contractsStructure = organizeContractsStructure(contractsPreparedData);
     const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
-    contractsPreparedData.forEach(async (contract) => {
+    contractsPreparedData.forEach(async (contract: any) => {
         // transform the template
         let HTMLContent = transformTemplate(
             path.join(contract.currentFolder, defaultTemplatePath),
@@ -32,18 +33,18 @@ exports.generateDocumentation = (contractsPreparedData, outputFolder) => {
         // transform damn weird URLS into real liks
         const match = HTMLContent.match(/(?<!\[)https?:&#x2F;&#x2F;[a-zA-Z0-9.&#x2F;\-_]+/g);
         if (match !== null) {
-            let transform = match.map((url) => url.replace(/&#x2F;/g, '/'));
-            transform = transform.map((url) => `<a href="${url}">${url}</a>`);
+            let transform = match.map((url: any) => url.replace(/&#x2F;/g, '/'));
+            transform = transform.map((url: any) => `<a href="${url}">${url}</a>`);
             for (let i = 0; i < match.length; i += 1) {
                 HTMLContent = HTMLContent.replace(match[i], transform[i]);
             }
         }
-        const formatEmojify = (code, name) => `<i alt="${code}" class="twa twa-${name}"></i>`;
+        const formatEmojify = (code: any, name: any) => `<i alt="${code}" class="twa twa-${name}"></i>`;
         // generate
         await toPdf.generatePDF(
             outputFolder,
             contract.filename,
-            emoji.emojify(HTMLContent, null, formatEmojify),
+            emojify(HTMLContent, null as any, formatEmojify),
         );
     });
-};
+}
