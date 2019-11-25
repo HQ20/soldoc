@@ -54,7 +54,6 @@ function renderContracts(contractsPreparedData, outputFolder, lineBreak) {
     });
 }
 exports.renderContracts = renderContracts;
-;
 function renderReadme(outputFolder) {
     var outputReadme;
     if (fs_1.default.existsSync(path_1.default.join(process.cwd(), 'README.md'))) {
@@ -85,7 +84,6 @@ function renderReadme(outputFolder) {
     });
 }
 exports.renderReadme = renderReadme;
-;
 function renderDocumentationIndex(content, outputFolder, contractsStructure, hasLICENSE, lineBreak) {
     var documentationIndexContent = content;
     if (hasLICENSE) {
@@ -99,5 +97,4 @@ function renderDocumentationIndex(content, outputFolder, contractsStructure, has
     return documentationIndexContent;
 }
 exports.renderDocumentationIndex = renderDocumentationIndex;
-;
 //# sourceMappingURL=renderMD.js.map

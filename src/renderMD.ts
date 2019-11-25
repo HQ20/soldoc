@@ -51,7 +51,7 @@ export function renderContracts(contractsPreparedData: any, outputFolder: any, l
             MDContent,
         );
     });
-};
+}
 
 export function renderReadme(outputFolder: any) {
     let outputReadme: any;
@@ -86,9 +86,15 @@ export function renderReadme(outputFolder: any) {
             fs.copyFileSync(path.join(process.cwd(), file), path.join(process.cwd(), outputFolder, file));
         }
     });
-};
+}
 
-export function renderDocumentationIndex(content: any, outputFolder: any, contractsStructure: any, hasLICENSE: any, lineBreak: any) {
+export function renderDocumentationIndex(
+    content: any,
+    outputFolder: any,
+    contractsStructure: any,
+    hasLICENSE: any,
+    lineBreak: any,
+) {
     let documentationIndexContent = content;
     if (hasLICENSE) {
         documentationIndexContent += `\t* [LICENSE](LICENSE.md)${lineBreak}`;
@@ -102,4 +108,4 @@ export function renderDocumentationIndex(content: any, outputFolder: any, contra
         documentationIndexContent += `\t* [${s.name}](${s.name}.md)${lineBreak}`;
     });
     return documentationIndexContent;
-};
+}

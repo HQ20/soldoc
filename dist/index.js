@@ -3,13 +3,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var path_1 = __importDefault(require("path"));
+var console_1 = require("console");
 var fs_1 = __importDefault(require("fs"));
-var prepareForFile = require('./organize').prepareForFile;
-var html = require('./html');
-var pdf = require('./pdf');
-var gitbook = require('./gitbook');
-var docsify = require('./docsify');
+var path_1 = __importDefault(require("path"));
+var docsify_1 = require("./docsify");
+var gitbook_1 = require("./gitbook");
+var html_1 = require("./html");
+var organize_1 = require("./organize");
+var pdf_1 = require("./pdf");
+var terminalConsole = new console_1.Console(process.stdout, process.stderr);
 /**
  * Get all files in folder, recursively.
  * @param {string} folder folder path
@@ -55,8 +57,7 @@ function generate(outputType, ignoreFilesList, outputFolder, inputPath) {
     }
     catch (e) {
         // Handle error
-        // eslint-disable-next-line no-console
-        console.log("The file you are looking for (" + inputPath + ") doesn't exist!");
+        terminalConsole.log("The file you are looking for (" + inputPath + ") doesn't exist!");
         return 1;
     }
     var files = [];
@@ -71,31 +72,29 @@ function generate(outputType, ignoreFilesList, outputFolder, inputPath) {
     }
     // iterate over files to generate HTML
     var prepared = [];
-    files.forEach(function (file) { return prepared.push(prepareForFile(file)); });
+    files.forEach(function (file) { return prepared.push(organize_1.prepareForFile(file)); });
     // verify if the docs/ folder exist and creates it if not
     var destinationDocsFolderPath = path_1.default.join(process.cwd(), outputFolder);
     if (!fs_1.default.existsSync(destinationDocsFolderPath)) {
         fs_1.default.mkdirSync(destinationDocsFolderPath, { recursive: true });
     }
     if (outputType === 'pdf') {
-        pdf.generateDocumentation(prepared, outputFolder);
+        pdf_1.generateDocumentation(prepared, outputFolder);
     }
     else if (outputType === 'html') {
-        html.generateDocumentation(prepared, outputFolder);
+        html_1.generateDocumentation(prepared, outputFolder);
     }
     else if (outputType === 'gitbook') {
-        gitbook.generateDocumentation(prepared, outputFolder);
+        gitbook_1.generateDocumentation(prepared, outputFolder);
     }
     else if (outputType === 'docsify') {
-        docsify.generateDocumentation(prepared, outputFolder);
+        docsify_1.generateDocumentation(prepared, outputFolder);
     }
     else {
-        // eslint-disable-next-line no-console
-        console.error('Invalid output type! Try --help for more info.');
+        terminalConsole.error('Invalid output type! Try --help for more info.');
         return 1;
     }
     return 0;
 }
 exports.generate = generate;
-;
 //# sourceMappingURL=index.js.map

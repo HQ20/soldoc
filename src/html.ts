@@ -1,14 +1,15 @@
 import fs from 'fs';
 import path from 'path';
+
 import { emojify } from 'node-emoji';
-import {
-    transformTemplate,
-    renderLicense,
-    renderReadme,
-} from './renderHTML';
 import {
     organizeContractsStructure,
 } from './organize';
+import {
+    renderLicense,
+    renderReadme,
+    transformTemplate,
+} from './renderHTML';
 
 
 const defaultTemplatePath = 'src/template/html/index.html';
@@ -17,7 +18,7 @@ const defaultTemplatePath = 'src/template/html/index.html';
  * To write!
  * @param {object} contractsData Obect containing all contracts info
  */
-exports.generateDocumentation = (contractsPreparedData: any, outputFolder: any) => {
+export function generateDocumentation(contractsPreparedData: any, outputFolder: any) {
     // create a list of contracts and methods
     const contractsStructure = organizeContractsStructure(contractsPreparedData);
     const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
@@ -92,4 +93,4 @@ exports.generateDocumentation = (contractsPreparedData: any, outputFolder: any) 
         );
     }
     return 0;
-};
+}

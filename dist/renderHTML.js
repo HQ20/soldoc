@@ -5,16 +5,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var path_1 = __importDefault(require("path"));
-var mustache_1 = require("mustache");
-// to render README.md
 var highlight_js_1 = require("highlight.js");
 var markdown_it_emoji_1 = __importDefault(require("markdown-it-emoji"));
+var mustache_1 = require("mustache");
+// tslint:disable-next-line: no-var-requires
 var md = require('markdown-it')({
     highlight: function (str, lang) {
         if (lang && highlight_js_1.getLanguage(lang)) {
             try {
                 return "<pre class=\"hljs\"><code>" + highlight_js_1.highlight(lang, str, true).value + "</code></pre>";
-                // eslint-disable-next-line no-empty
+                // tslint:disable-next-line: no-empty
             }
             catch (__) { }
         }
@@ -41,36 +41,34 @@ function transformTemplate(templateFile, contractName, contractData, contractPat
     var templateContent = String(fs_1.default.readFileSync(templateFile));
     // put all data together
     var view = {
-        filePath: contractPath,
+        CONTRACT: true,
         contract: {
             name: contractName,
         },
         contractData: contractData,
         contractsStructure: contractsStructure,
         currentDate: new Date(),
+        filePath: contractPath,
         hasLICENSE: hasLICENSE,
-        CONTRACT: true,
     };
     // calls the render engine
     var output = mustache_1.render(templateContent, view);
     return output;
 }
 exports.transformTemplate = transformTemplate;
-;
 function renderLicense(templateContent, contractsStructure) {
     var LICENSEText = String(fs_1.default.readFileSync(path_1.default.join(process.cwd(), 'LICENSE'))).trim();
     var LICENSE = LICENSEText.replace(/\n/g, '<br>');
     // put all data together
     var view = {
+        LICENSE: LICENSE,
         contractsStructure: contractsStructure,
         hasLICENSE: true,
-        LICENSE: LICENSE,
     };
     // calls the render engine
     return mustache_1.render(templateContent, view);
 }
 exports.renderLicense = renderLicense;
-;
 function renderReadme(templateContent, contractsStructure, hasLICENSE) {
     var READMEText = String(fs_1.default.readFileSync(path_1.default.join(process.cwd(), 'README.md'))).trim();
     // render it, from markdown to html
@@ -83,13 +81,12 @@ function renderReadme(templateContent, contractsStructure, hasLICENSE) {
         .replace(/<ul>/g, '<ul class="menu-list">');
     // put all data together
     var view = {
+        README: README,
         contractsStructure: contractsStructure,
         hasLICENSE: hasLICENSE,
-        README: README,
     };
     // calls the render engine
     return mustache_1.render(templateContent, view);
 }
 exports.renderReadme = renderReadme;
-;
 //# sourceMappingURL=renderHTML.js.map

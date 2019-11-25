@@ -5,8 +5,8 @@ import {
 } from './organize';
 import {
     renderContracts,
-    renderReadme,
     renderDocumentationIndex,
+    renderReadme,
 } from './renderMD';
 
 const lineBreak = '\r\n';
@@ -31,4 +31,4 @@ export function generateDocumentation(contractsPreparedData: any, outputFolder: 
     );
     // Copy readme if it exists, otherwise, create a sampe
     renderReadme(outputFolder);
-};
+}

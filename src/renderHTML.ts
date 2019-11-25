@@ -1,10 +1,11 @@
 import fs from 'fs';
 import path from 'path';
-import { render } from 'mustache';
-// to render README.md
+
 import { getLanguage, highlight } from 'highlight.js';
 import mdemoji from 'markdown-it-emoji';
+import { render } from 'mustache';
 
+// tslint:disable-next-line: no-var-requires
 const md = require('markdown-it')({
     highlight(str: any, lang: any) {
         if (lang && getLanguage(lang)) {
@@ -12,7 +13,7 @@ const md = require('markdown-it')({
                 return `<pre class="hljs"><code>${
                     highlight(lang, str, true).value
                 }</code></pre>`;
-                // eslint-disable-next-line no-empty
+            // tslint:disable-next-line: no-empty
             } catch (__) { }
         }
         return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
@@ -42,20 +43,20 @@ export function transformTemplate(
     const templateContent = String(fs.readFileSync(templateFile));
     // put all data together
     const view = {
-        filePath: contractPath,
+        CONTRACT: true,
         contract: {
             name: contractName,
         },
         contractData,
         contractsStructure,
         currentDate: new Date(),
+        filePath: contractPath,
         hasLICENSE,
-        CONTRACT: true,
     };
     // calls the render engine
     const output = render(templateContent, view);
     return output;
-};
+}
 
 export function renderLicense(
     templateContent: any, contractsStructure: any,
@@ -64,13 +65,13 @@ export function renderLicense(
     const LICENSE = LICENSEText.replace(/\n/g, '<br>');
     // put all data together
     const view = {
+        LICENSE,
         contractsStructure,
         hasLICENSE: true,
-        LICENSE,
     };
     // calls the render engine
     return render(templateContent, view);
-};
+}
 
 export function renderReadme(
     templateContent: any, contractsStructure: any, hasLICENSE: any,
@@ -86,10 +87,10 @@ export function renderReadme(
         .replace(/<ul>/g, '<ul class="menu-list">');
     // put all data together
     const view = {
+        README,
         contractsStructure,
         hasLICENSE,
-        README,
     };
     // calls the render engine
     return render(templateContent, view);
-};
+}

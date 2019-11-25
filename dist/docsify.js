@@ -29,5 +29,4 @@ function generateDocumentation(contractsPreparedData, outputFolder) {
     fs_1.default.writeFileSync(path_1.default.join(process.cwd(), outputFolder, '.nojekill'), ' ');
 }
 exports.generateDocumentation = generateDocumentation;
-;
 //# sourceMappingURL=docsify.js.map

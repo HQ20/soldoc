@@ -6,14 +6,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var fs_1 = __importDefault(require("fs"));
 var path_1 = __importDefault(require("path"));
 var node_emoji_1 = require("node-emoji");
-var renderHTML_1 = require("./renderHTML");
 var organize_1 = require("./organize");
+var renderHTML_1 = require("./renderHTML");
 var defaultTemplatePath = 'src/template/html/index.html';
 /**
  * To write!
  * @param {object} contractsData Obect containing all contracts info
  */
-exports.generateDocumentation = function (contractsPreparedData, outputFolder) {
+function generateDocumentation(contractsPreparedData, outputFolder) {
     // create a list of contracts and methods
     var contractsStructure = organize_1.organizeContractsStructure(contractsPreparedData);
     var hasLICENSE = fs_1.default.existsSync(path_1.default.join(process.cwd(), 'LICENSE'));
@@ -68,5 +68,6 @@ exports.generateDocumentation = function (contractsPreparedData, outputFolder) {
         fs_1.default.writeFileSync(path_1.default.join(process.cwd(), outputFolder, 'license.html'), outputLicense);
     }
     return 0;
-};
+}
+exports.generateDocumentation = generateDocumentation;
 //# sourceMappingURL=html.js.map

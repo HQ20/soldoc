@@ -12,8 +12,7 @@
     "scripts": {
         "demo-html": "./bin/cli.js --ignore Ignore.sol,IERC20.sol docs/ test/contracts",
         "demo-pdf": "./bin/cli.js --output pdf docs/ test/contracts/Plane.sol",
-        "lint": "npm run lint:js",
-        "lint:js": "eslint src/*.js .",
+        "lint": "tslint -p .",
         "pretest": "tsc && cp -r src/template dist",
         "test": "jest --testTimeout=40000",
         "coverage": "jest --coverage --testTimeout=40000",
@@ -65,13 +64,6 @@
     "devDependencies": {
         "@types/jest": "24.0.22",
         "coveralls": "3.0.7",
-        "eslint": "6.6.0",
-        "eslint-config-airbnb": "18.0.1",
-        "eslint-config-airbnb-base": "14.0.0",
-        "eslint-plugin-import": "2.18.2",
-        "eslint-plugin-jsx-a11y": "6.2.3",
-        "eslint-plugin-react": "7.16.0",
-        "eslint-plugin-react-hooks": "1.7.0",
         "expect.js": "0.3.1",
         "jest": "24.9.0",
         "jest-puppeteer": "4.3.0",

@@ -25,5 +25,4 @@ function generateDocumentation(contractsPreparedData, outputFolder) {
     renderMD_1.renderReadme(outputFolder);
 }
 exports.generateDocumentation = generateDocumentation;
-;
 //# sourceMappingURL=gitbook.js.map

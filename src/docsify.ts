@@ -5,8 +5,8 @@ import {
 } from './organize';
 import {
     renderContracts,
-    renderReadme,
     renderDocumentationIndex,
+    renderReadme,
 } from './renderMD';
 
 const lineBreak = '\r\n';
@@ -41,4 +41,4 @@ export function generateDocumentation(contractsPreparedData: any, outputFolder: 
         path.join(process.cwd(), outputFolder, '.nojekill'),
         ' ',
     );
-};
+}

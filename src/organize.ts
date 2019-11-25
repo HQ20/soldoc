@@ -1,6 +1,6 @@
-import parser from 'solidity-parser-antlr';
-import path from 'path';
 import fs from 'fs';
+import path from 'path';
+import parser from 'solidity-parser-antlr';
 
 import { mapComments } from 'sol-comments-parser';
 
@@ -30,8 +30,8 @@ function mergeInfoFile(solidityFile: string) {
     const rawContractData = prepareFromFile(solidityFile);
     // create an array to save the ast and comments
     const contractDataWithComments = {
-        contract: undefined,
         constructor: null,
+        contract: undefined,
         events: [] as any,
         functions: [] as any,
     };
@@ -76,11 +76,11 @@ function mergeInfoFile(solidityFile: string) {
                 }
                 contractDataWithComments.functions.push({
                     ast: node,
-                    isPublic: node.visibility === 'public',
-                    isPrivate: node.visibility === 'private',
-                    isInternal: node.visibility === 'internal',
-                    isExternal: node.visibility === 'external',
                     comments: rawComments,
+                    isExternal: node.visibility === 'external',
+                    isInternal: node.visibility === 'internal',
+                    isPrivate: node.visibility === 'private',
+                    isPublic: node.visibility === 'public',
                     paramComments,
                     params: () => (val: any, render: any) => paramComments.get(render(val)),
                 });
@@ -108,9 +108,13 @@ export function prepareForFile(solidityFilePath: string) {
     // get the filename
     const filename = path.parse(solidityFilePath).name;
     return {
-        filename, currentFolder, contractName, contractData, solidityFilePath,
+        contractData,
+        contractName,
+        currentFolder,
+        filename,
+        solidityFilePath,
     };
-};
+}
 
 export function organizeContractsStructure(
     contractsPreparedData: any,
@@ -129,4 +133,4 @@ export function organizeContractsStructure(
         contractsStructure.push(contractInfo);
     });
     return contractsStructure;
-};
+}

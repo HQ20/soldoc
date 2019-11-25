@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var solidity_parser_antlr_1 = __importDefault(require("solidity-parser-antlr"));
-var path_1 = __importDefault(require("path"));
 var fs_1 = __importDefault(require("fs"));
+var path_1 = __importDefault(require("path"));
+var solidity_parser_antlr_1 = __importDefault(require("solidity-parser-antlr"));
 var sol_comments_parser_1 = require("sol-comments-parser");
 /**
  * Map the comments and returns the contract ast and the mapped comments.
@@ -31,8 +31,8 @@ function mergeInfoFile(solidityFile) {
     var rawContractData = prepareFromFile(solidityFile);
     // create an array to save the ast and comments
     var contractDataWithComments = {
-        contract: undefined,
         constructor: null,
+        contract: undefined,
         events: [],
         functions: [],
     };
@@ -78,11 +78,11 @@ function mergeInfoFile(solidityFile) {
                 }
                 contractDataWithComments.functions.push({
                     ast: node,
-                    isPublic: node.visibility === 'public',
-                    isPrivate: node.visibility === 'private',
-                    isInternal: node.visibility === 'internal',
-                    isExternal: node.visibility === 'external',
                     comments: rawComments,
+                    isExternal: node.visibility === 'external',
+                    isInternal: node.visibility === 'internal',
+                    isPrivate: node.visibility === 'private',
+                    isPublic: node.visibility === 'public',
                     paramComments: paramComments_2,
                     params: function () { return function (val, render) { return paramComments_2.get(render(val)); }; },
                 });
@@ -109,11 +109,14 @@ function prepareForFile(solidityFilePath) {
     // get the filename
     var filename = path_1.default.parse(solidityFilePath).name;
     return {
-        filename: filename, currentFolder: currentFolder, contractName: contractName, contractData: contractData, solidityFilePath: solidityFilePath,
+        contractData: contractData,
+        contractName: contractName,
+        currentFolder: currentFolder,
+        filename: filename,
+        solidityFilePath: solidityFilePath,
     };
 }
 exports.prepareForFile = prepareForFile;
-;
 function organizeContractsStructure(contractsPreparedData) {
     var contractsStructure = [];
     contractsPreparedData.forEach(function (contract) {
@@ -131,5 +134,4 @@ function organizeContractsStructure(contractsPreparedData) {
     return contractsStructure;
 }
 exports.organizeContractsStructure = organizeContractsStructure;
-;
 //# sourceMappingURL=organize.js.map

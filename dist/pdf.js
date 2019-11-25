@@ -43,8 +43,8 @@ var fs_1 = __importDefault(require("fs"));
 var path_1 = __importDefault(require("path"));
 var node_emoji_1 = require("node-emoji");
 var pdf_from_html_1 = __importDefault(require("pdf-from-html"));
-var renderHTML_1 = require("./renderHTML");
 var organize_1 = require("./organize");
+var renderHTML_1 = require("./renderHTML");
 var defaultTemplatePath = 'src/template/pdf/index.html';
 /**
  * @param contractsPreparedData prepared data
@@ -80,5 +80,4 @@ function generateDocumentation(contractsPreparedData, outputFolder) {
     }); });
 }
 exports.generateDocumentation = generateDocumentation;
-;
 //# sourceMappingURL=pdf.js.map

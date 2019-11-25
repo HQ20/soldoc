@@ -1,11 +1,14 @@
-import path from 'path';
+import { Console } from 'console';
 import fs from 'fs';
+import path from 'path';
 
-const { prepareForFile } = require('./organize');
-const html = require('./html');
-const pdf = require('./pdf');
-const gitbook = require('./gitbook');
-const docsify = require('./docsify');
+import { generateDocumentation as generateDocumentationDocsify } from './docsify';
+import { generateDocumentation as generateDocumentationGitbook } from './gitbook';
+import { generateDocumentation as generateDocumentationHTML } from './html';
+import { prepareForFile } from './organize';
+import { generateDocumentation as generateDocumentationPDF } from './pdf';
+
+const terminalConsole = new Console(process.stdout, process.stderr);
 
 /**
  * Get all files in folder, recursively.
@@ -52,8 +55,7 @@ export function generate(outputType: string, ignoreFilesList: string[], outputFo
         stats = fs.lstatSync(inputPath);
     } catch (e) {
         // Handle error
-        // eslint-disable-next-line no-console
-        console.log(`The file you are looking for (${inputPath}) doesn't exist!`);
+        terminalConsole.log(`The file you are looking for (${inputPath}) doesn't exist!`);
         return 1;
     }
 
@@ -75,17 +77,16 @@ export function generate(outputType: string, ignoreFilesList: string[], outputFo
         fs.mkdirSync(destinationDocsFolderPath, { recursive: true });
     }
     if (outputType === 'pdf') {
-        pdf.generateDocumentation(prepared, outputFolder);
+        generateDocumentationPDF(prepared, outputFolder);
     } else if (outputType === 'html') {
-        html.generateDocumentation(prepared, outputFolder);
+        generateDocumentationHTML(prepared, outputFolder);
     } else if (outputType === 'gitbook') {
-        gitbook.generateDocumentation(prepared, outputFolder);
+        generateDocumentationGitbook(prepared, outputFolder);
     } else if (outputType === 'docsify') {
-        docsify.generateDocumentation(prepared, outputFolder);
+        generateDocumentationDocsify(prepared, outputFolder);
     } else {
-        // eslint-disable-next-line no-console
-        console.error('Invalid output type! Try --help for more info.');
+        terminalConsole.error('Invalid output type! Try --help for more info.');
         return 1;
     }
     return 0;
-};
+}

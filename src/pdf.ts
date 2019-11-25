@@ -1,13 +1,14 @@
 import fs from 'fs';
 import path from 'path';
+
 import { emojify } from 'node-emoji';
 import toPdf from 'pdf-from-html';
 import {
-    transformTemplate,
-} from './renderHTML';
-import {
     organizeContractsStructure,
 } from './organize';
+import {
+    transformTemplate,
+} from './renderHTML';
 
 
 const defaultTemplatePath = 'src/template/pdf/index.html';
@@ -46,4 +47,4 @@ export function generateDocumentation(contractsPreparedData: any, outputFolder: 
             emojify(HTMLContent, null as any, formatEmojify),
         );
     });
-};
+}
