@@ -48,7 +48,7 @@
         "@types/highlight.js": "9.12.3",
         "@types/meow": "5.0.0",
         "@types/mustache": "0.8.32",
-        "@types/node": "12.12.7",
+        "@types/node": "12.12.14",
         "@types/node-emoji": "1.8.1",
         "highlight.js": "9.16.2",
         "markdown-it": "10.0.0",
@@ -62,7 +62,7 @@
         "typescript": "3.7.2"
     },
     "devDependencies": {
-        "@types/jest": "24.0.22",
+        "@types/jest": "24.0.23",
         "coveralls": "3.0.9",
         "expect.js": "0.3.1",
         "jest": "24.9.0",
@@ -72,7 +72,7 @@
         "puppeteer": "1.20.0",
         "tslint": "5.20.1",
         "typedoc": "0.15.3",
-        "typescript-tslint-plugin": "0.5.4"
+        "typescript-tslint-plugin": "0.5.5"
     },
     "jest": {
         "collectCoverage": true,
