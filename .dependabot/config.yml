@@ -3,10 +3,17 @@ version: 1
 update_configs:
   - package_manager: "javascript"
     directory: "/"
-    update_schedule: "weekly"
+    update_schedule: "daily"
     default_assignees:
       - "obernardovieira"
     ignored_updates:
       - match:
           dependency_name: "jest"
           dependency_name: "web3"
+    automerged_updates:
+      - match:
+          dependency_type: "development"
+          update_type: "all"
+      - match:
+          dependency_type: "production"
+          update_type: "semver:patch"
