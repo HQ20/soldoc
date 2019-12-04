@@ -18,6 +18,7 @@
         "pretest": "yarn build",
         "test": "jest --testTimeout=40000",
         "coverage": "jest --coverage --testTimeout=40000",
+        "precoverage:ci": "yarn build",
         "coverage:ci": "jest --coverage --testTimeout=40000 --detectOpenHandles --forceExit && cat ./coverage/lcov.info | coveralls",
         "docs": "jsdoc ./src/*.js -d ./docs"
     },
