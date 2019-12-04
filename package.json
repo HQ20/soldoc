@@ -10,7 +10,7 @@
         "/dist"
     ],
     "scripts": {
-        "predemo:html": "yarn build",
+        "predemo:html": "yarn build && chmod u+x dist/cli.js",
         "demo:html": "./dist/cli.js --ignore Ignore.sol,IERC20.sol docs/ test/contracts",
         "demo:pdf": "./dist/cli.js --output pdf docs/ test/contracts/Plane.sol",
         "lint": "tslint -p .",
@@ -60,7 +60,7 @@
         "node-emoji": "1.10.0",
         "pdf-from-html": "0.1.1",
         "sol-comments-parser": "0.1.2-beta.0",
-        "solidity-parser-antlr": "git://github.com/obernardovieira/solidity-parser-antlr.git#4f4f21c",
+        "solidity-parser-antlr": "git://github.com/obernardovieira/solidity-parser-antlr.git#5fb4ceb",
         "typescript": "3.7.2"
     },
     "devDependencies": {

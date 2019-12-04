@@ -118,29 +118,29 @@ describe('Render HTML Page - ERC20', () => {
             'Function to check the amount of tokens that an owner allowed to a spender.',
             'Transfer token to a specified address',
             'Approve the passed address to spend the specified amount of tokens on behalf of msg.sender.'
-            + ' Beware that changing an allowance with this method brings the risk that someone may use '
-            + 'both the old and the new allowance by unfortunate transaction ordering. One possible '
-            + 'solution to mitigate this race condition is to first reduce the spender\'s allowance to '
-            + '0 and set the desired value afterwards: https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729',
-            'Transfer tokens from one address to another. Note that while this function emits an Approval '
-            + 'event, this is not required as per the specification, and other compliant implementations '
+            + '\nBeware that changing an allowance with this method brings the risk that someone may use '
+            + 'both the old\nand the new allowance by unfortunate transaction ordering. One possible '
+            + 'solution to mitigate this\nrace condition is to first reduce the spender\'s allowance to '
+            + '0 and set the desired value afterwards:\nhttps://github.com/ethereum/EIPs/issues/20#issuecomment-263524729',
+            'Transfer tokens from one address to another.\nNote that while this function emits an Approval '
+            + 'event, this is not required as per the specification,\nand other compliant implementations '
             + 'may not emit the event.',
-            'Increase the amount of tokens that an owner allowed to a spender. approve should be '
-            + 'called when _allowed[msg.sender][spender] == 0. To increment allowed value is better '
-            + 'to use this function to avoid 2 calls (and wait until the first transaction is mined) '
-            + 'From MonolithDAO Token.sol Emits an Approval event.',
-            'Decrease the amount of tokens that an owner allowed to a spender. approve should be '
-            + 'called when _allowed[msg.sender][spender] == 0. To decrement allowed value is '
-            + 'better to use this function to avoid 2 calls (and wait until the first transaction '
-            + 'is mined) From MonolithDAO Token.sol Emits an Approval event.',
+            'Increase the amount of tokens that an owner allowed to a spender.\napprove should be '
+            + 'called when _allowed[msg.sender][spender] == 0. To increment\nallowed value is better '
+            + 'to use this function to avoid 2 calls (and wait until\nthe first transaction is mined)'
+            + '\nFrom MonolithDAO Token.sol\nEmits an Approval event.',
+            'Decrease the amount of tokens that an owner allowed to a spender.\napprove should be '
+            + 'called when _allowed[msg.sender][spender] == 0. To decrement\nallowed value is '
+            + 'better to use this function to avoid 2 calls (and wait until\nthe first transaction '
+            + 'is mined)\nFrom MonolithDAO Token.sol\nEmits an Approval event.',
             'Transfer token for a specified addresses',
-            'Internal function that mints an amount of the token and assigns it to an account. '
-            + 'This encapsulates the modification of balances such that the proper events are emitted.',
-            'Internal function that burns an amount of the token of a given account.',
+            'Internal function that mints an amount of the token and assigns it to\nan account. '
+            + 'This encapsulates the modification of balances such that the\nproper events are emitted.',
+            'Internal function that burns an amount of the token of a given\naccount.',
             'Approve an address to spend another addresses\' tokens.',
-            'Internal function that burns an amount of the token of a given account, deducting '
-            + 'from the sender\'s allowance for said account. Uses the internal burn function. '
-            + 'Emits an Approval event (reflecting the reduced allowance).',
+            'Internal function that burns an amount of the token of a given\naccount, deducting '
+            + 'from the sender\'s allowance for said account. Uses the\ninternal burn function.'
+            + '\nEmits an Approval event (reflecting the reduced allowance).',
         ];
         await page.waitFor('.box .media .content p > i');
         const cards = await page.$$('.box .media .content p > i');
