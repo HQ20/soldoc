@@ -10,8 +10,8 @@
         "/dist"
     ],
     "scripts": {
-        "demo-html": "./bin/cli.js --ignore Ignore.sol,IERC20.sol docs/ test/contracts",
-        "demo-pdf": "./bin/cli.js --output pdf docs/ test/contracts/Plane.sol",
+        "demo-html": "./dist/cli.js --ignore Ignore.sol,IERC20.sol docs/ test/contracts",
+        "demo-pdf": "./dist/cli.js --output pdf docs/ test/contracts/Plane.sol",
         "lint": "tslint -p .",
         "pretest": "tsc && cp -r src/template dist",
         "test": "jest --testTimeout=40000",
@@ -58,7 +58,7 @@
         "node-emoji": "1.10.0",
         "pdf-from-html": "0.1.1",
         "sol-comments-parser": "0.1.2-beta.0",
-        "solidity-parser-antlr": "0.4.11",
+        "solidity-parser-antlr": "git://github.com/obernardovieira/solidity-parser-antlr.git#4f4f21c",
         "typescript": "3.7.2"
     },
     "devDependencies": {
