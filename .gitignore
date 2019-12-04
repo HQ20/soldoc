@@ -65,3 +65,6 @@ docs/
 
 # ignore .js.map
 *.js.map
+
+# ignore dist
+dist/
