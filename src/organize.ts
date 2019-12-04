@@ -11,7 +11,7 @@ function extendParamsAstWithNatspec(node: any) {
         : node.parameters.map((parameter: any) => (
             {
                 ...parameter,
-                natspec: parameter.name === null
+                natspec: parameter.name === null || node.natspec === null
                     ? ''
                     : node.natspec.params[parameter.name],
             }
@@ -24,9 +24,9 @@ function extendReturnParamsAstWithNatspec(node: any) {
             (parameter: any) => (
                 {
                     ...parameter,
-                    natspec: parameter.name === null
+                    natspec: node.natspec === null
                         ? ''
-                        : node.natspec.params[parameter.name],
+                        : node.natspec.return,
                 }
             ));
 }
