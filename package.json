@@ -10,11 +10,11 @@
         "/dist"
     ],
     "scripts": {
-        "predemo:html": "yarn build && chmod u+x dist/cli.js",
+        "predemo:html": "yarn build",
         "demo:html": "./dist/cli.js --ignore Ignore.sol,IERC20.sol docs/ test/contracts",
         "demo:pdf": "./dist/cli.js --output pdf docs/ test/contracts/Plane.sol",
         "lint": "tslint -p .",
-        "build": "tsc && cp -r src/template dist",
+        "build": "tsc && cp -r src/template dist && chmod u+x dist/cli.js",
         "pretest": "yarn build",
         "test": "jest --testTimeout=40000",
         "coverage": "jest --coverage --testTimeout=40000",
