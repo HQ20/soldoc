@@ -89,6 +89,7 @@ describe('Render HTML Page - Complete folder', () => {
             'allowance',
             'land',
             'age',
+            'reverseAge',
         ];
         await page.waitFor('aside.menu ul a');
         const cards = await page.$$('aside.menu ul a');

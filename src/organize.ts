@@ -6,29 +6,34 @@ import { mapComments } from 'sol-comments-parser';
 
 
 function extendParamsAstWithNatspec(node: any) {
-    return node.parameters === null
-        ? null
-        : node.parameters.map((parameter: any) => (
-            {
-                ...parameter,
-                natspec: parameter.name === null || node.natspec === null
+    if (node.parameters === null) {
+        return null;
+    }
+    return node.parameters.map((parameter: any) => (
+        {
+            ...parameter,
+            natspec:
+                parameter.name === null ||
+                    node.natspec === null ||
+                    node.natspec.params === undefined
                     ? ''
                     : node.natspec.params[parameter.name],
-            }
-        ));
+        }
+    ));
 }
 function extendReturnParamsAstWithNatspec(node: any) {
-    return node.returnParameters === null
-        ? null
-        : node.returnParameters.map(
-            (parameter: any) => (
-                {
-                    ...parameter,
-                    natspec: node.natspec === null
-                        ? ''
-                        : node.natspec.return,
-                }
-            ));
+    if (node.returnParameters === null || node.returnParameters === undefined) {
+        return null;
+    }
+    return node.returnParameters.map(
+        (parameter: any) => (
+            {
+                ...parameter,
+                natspec: node.natspec === null
+                    ? ''
+                    : node.natspec.return,
+            }
+        ));
 }
 /**
  * Merges the contract ast and comments into an array.
@@ -55,32 +60,18 @@ function mergeInfoFile(solidityFile: string) {
     // visit all the methods and add the commands to it
     parser.visit(rawContractData.ast, {
         EventDefinition: (node: any) => {
-            let paramComments = new Map();
-            let rawComments;
-            if (rawContractData.comments.event !== undefined) {
-                if (rawContractData.comments.event.get(node.name) !== undefined) {
-                    paramComments = rawContractData.comments.event.get(node.name).param;
-                    rawComments = rawContractData.comments.event.get(node.name);
-                }
-            }
             contractDataWithComments.events.push({
                 ast: node,
-                comments: rawComments,
-                paramComments,
-                params: () => (val: any, render: any) => paramComments.get(render(val)),
+                parameters: extendParamsAstWithNatspec(node),
+                returnParameters: extendReturnParamsAstWithNatspec(node),
             });
         },
         FunctionDefinition: (node: any) => {
             if (node.isConstructor) {
-                let paramComments = new Map();
-                if (rawContractData.comments.constructor !== undefined) {
-                    paramComments = rawContractData.comments.constructor.param;
-                }
                 contractDataWithComments.constructor = {
                     ast: node,
-                    comments: rawContractData.comments.constructor,
-                    paramComments,
-                    params: () => (val: any, render: any) => paramComments.get(render(val)),
+                    parameters: extendParamsAstWithNatspec(node),
+                    returnParameters: extendReturnParamsAstWithNatspec(node),
                 } as any;
             } else {
                 contractDataWithComments.functions.push({

@@ -107,12 +107,12 @@
         <div class="box">
             <div><h4>constructor &rarr;</h4></div>
             <pre><code class="javascript">constructor(address owner, address spender);</code></pre>
-            {{#comments.dev}}
-                <p><i>{{comments.dev}}</i></p>
-            {{/comments.dev}}
-            {{#comments.notice}}
-                <p>{{comments.notice}}</p>
-            {{/comments.notice}}
+            {{#ast.natspec.dev}}
+                <p><i>{{ast.natspec.dev}}</i></p>
+            {{/ast.natspec.dev}}
+            {{#ast.natspec.notice}}
+                <p>{{ast.natspec.notice}}</p>
+            {{/ast.natspec.notice}}
             <table class="table">
                 <thead>
                     <tr>
@@ -123,14 +123,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{#ast.parameters}}
+                    {{#parameters}}
                     <tr>
                         <td>input</td>
                         <td>{{typeName.name}}</td>
                         <td>{{name}}</td>
-                        <td>{{#params}}{{name}}{{/params}}</td>
+                        <td>{{natspec}}</td>
                     </tr>
-                    {{/ast.parameters}}
+                    {{/parameters}}
                 </tbody>
             </table>
         </div>
@@ -139,12 +139,12 @@
         <div class="box">
             <div><h4>{{ast.name}} &rarr;</h4></div>
             <pre><code class="javascript">event example(address owner, address spender);</code></pre>
-            {{#comments.dev}}
-                <p><i>{{comments.dev}}</i></p>
-            {{/comments.dev}}
-            {{#comments.notice}}
-                <p>{{comments.notice}}</p>
-            {{/comments.notice}}
+            {{#ast.natspec.dev}}
+                <p><i>{{ast.natspec.dev}}</i></p>
+            {{/ast.natspec.dev}}
+            {{#ast.natspec.notice}}
+                <p>{{ast.natspec.notice}}</p>
+            {{/ast.natspec.notice}}
             <table class="table">
                 <thead>
                     <tr>
@@ -155,14 +155,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{#ast.parameters}}
+                    {{#parameters}}
                     <tr>
                         <td>input</td>
                         <td>{{typeName.name}}</td>
                         <td>{{name}}</td>
-                        <td>{{#params}}{{name}}{{/params}}</td>
+                        <td>{{natspec}}</td>
                     </tr>
-                    {{/ast.parameters}}
+                    {{/parameters}}
                 </tbody>
             </table>
         </div>
@@ -171,12 +171,12 @@
         <div class="box">
             <div><h4>{{ast.name}} &rarr;</h4></div>
             <pre><code class="javascript">function example(address owner, address spender) public view returns (uint256)</code></pre>
-            {{#comments.dev}}
-                <p><i>{{comments.dev}}</i></p>
-            {{/comments.dev}}
-            {{#comments.notice}}
-                <p>{{comments.notice}}</p>
-            {{/comments.notice}}
+            {{#ast.natspec.dev}}
+                <p><i>{{ast.natspec.dev}}</i></p>
+            {{/ast.natspec.dev}}
+            {{#ast.natspec.notice}}
+                <p>{{ast.natspec.notice}}</p>
+            {{/ast.natspec.notice}}
             <table>
                 <thead>
                     <tr>
@@ -187,22 +187,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{#ast.parameters}}
+                    {{#parameters}}
                     <tr>
                         <td>input</td>
                         <td>{{typeName.name}}</td>
                         <td>{{name}}</td>
-                        <td>{{#params}}{{name}}{{/params}}</td>
+                        <td>{{natspec}}</td>
                     </tr>
-                    {{/ast.parameters}}
-                    {{#ast.parameters}}
+                    {{/parameters}}
+                    {{#returnParameters}}
                     <tr>
                         <td>output</td>
                         <td>{{typeName.name}}</td>
                         <td>{{name}}</td>
-                        <td>{{comments.return}}</td>
+                        <td>{{natspec}}</td>
                     </tr>
-                    {{/ast.parameters}}
+                    {{/returnParameters}}
                 </tbody>
             </table>
         </div>
