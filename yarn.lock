@@ -3890,10 +3890,9 @@ sol-comments-parser@0.1.2-beta.0:
   resolved "https://registry.yarnpkg.com/sol-comments-parser/-/sol-comments-parser-0.1.2-beta.0.tgz#11a9c0458e2d47f0f5d4bdb38a22baf668f55834"
   integrity sha512-EhZJf9td5/85rukxPL7T17D3fV8FLLThqqgheQ93gMOoVWsXjl4CDpmuT+vYwGUd0doZTWqoYGMLH9hbyXrdrg==
 
-solidity-parser-antlr@0.4.11:
+"solidity-parser-antlr@git://github.com/obernardovieira/solidity-parser-antlr.git#5fb4ceb":
   version "0.4.11"
-  resolved "https://registry.yarnpkg.com/solidity-parser-antlr/-/solidity-parser-antlr-0.4.11.tgz#af43e1f13b3b88309a875455f5d6e565b05ee5f1"
-  integrity sha512-4jtxasNGmyC0midtjH/lTFPZYvTTUMy6agYcF+HoMnzW8+cqo3piFrINb4ZCzpPW+7tTVFCGa5ubP34zOzeuMg==
+  resolved "git://github.com/obernardovieira/solidity-parser-antlr.git#5fb4ceb17418285ef5549b5ce3482fd3c928a227"
 
 source-map-resolve@^0.5.0:
   version "0.5.2"

@@ -50,8 +50,8 @@ describe('Render MD - ERC20', () => {
             + 'an owner allowed to a spender.*');
         expect(mdResultFile).toMatch('*Transfer token to a specified address*');
         expect(mdResultFile).toMatch('*Transfer tokens from one address to another.'
-            + ' Note that while this function emits an Approval event, this is not required as '
-            + 'per the specification, and other compliant implementations may not emit the event.*');
+            + '\nNote that while this function emits an Approval event, this is not required as '
+            + 'per the specification,\nand other compliant implementations may not emit the event.*');
         done();
     });
 

@@ -15,32 +15,32 @@ export function renderContracts(contractsPreparedData: any, outputFolder: any, l
         }
         contract.contractData.functions.forEach((f: any) => {
             MDContent += `## ${f.ast.name}${lineBreak}${lineBreak}`;
-            if (f.comments === undefined) {
+            if (f.ast.natspec === null) {
                 return;
             }
-            if (f.comments.dev) {
-                MDContent += `*${f.comments.dev}*${lineBreak}${lineBreak}`;
+            if (f.ast.natspec.dev) {
+                MDContent += `*${f.ast.natspec.dev}*${lineBreak}${lineBreak}`;
             }
-            if (f.comments.notice) {
-                MDContent += `${f.comments.notice}${lineBreak}${lineBreak}`;
+            if (f.ast.natspec.notice) {
+                MDContent += `${f.ast.natspec.notice}${lineBreak}${lineBreak}`;
             }
             let table = false;
-            if (f.ast.parameters.length > 0) {
+            if (f.parameters.length > 0) {
                 table = true;
                 MDContent += `${lineBreak}|Input/Output|Data Type|Variable Name|Comment|${lineBreak}`
                     + `|----------|----------|----------|----------|${lineBreak}`;
-                f.ast.parameters.forEach((p: any) => {
-                    MDContent += `|input|${p.typeName.name}|${p.name}|${f.comments.param.get(p.name)}|${lineBreak}`;
+                f.parameters.forEach((p: any) => {
+                    MDContent += `|input|${p.typeName.name}|${p.name}|${p.natspec}|${lineBreak}`;
                 });
             }
-            if (f.ast.returnParameters !== null && f.ast.returnParameters.length > 0) {
+            if (f.returnParameters !== null && f.returnParameters.length > 0) {
                 if (!table) {
                     MDContent += `${lineBreak}|Input/Output|Data Type|Variable Name|Comment|${lineBreak}`
                         + `|----------|----------|----------|----------|${lineBreak}`;
                 }
-                f.ast.returnParameters.forEach((p: any) => {
+                f.returnParameters.forEach((p: any) => {
                     MDContent += `|output|${p.typeName.name}|${(p.name === null) ? ('N/A') : (p.name)}|`
-                        + `${(f.comments.return.length === 0) ? ('N/A') : (f.comments.return)}|${lineBreak}`;
+                        + `${(p.natspec === undefined) ? ('N/A') : (p.natspec)}|${lineBreak}`;
                 });
             }
             MDContent += lineBreak;

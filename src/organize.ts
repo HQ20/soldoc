@@ -5,11 +5,36 @@ import parser from 'solidity-parser-antlr';
 import { mapComments } from 'sol-comments-parser';
 
 
+function extendParamsAstWithNatspec(node: any) {
+    return node.parameters === null
+        ? null
+        : node.parameters.map((parameter: any) => (
+            {
+                ...parameter,
+                natspec: parameter.name === null || node.natspec === null
+                    ? ''
+                    : node.natspec.params[parameter.name],
+            }
+        ));
+}
+function extendReturnParamsAstWithNatspec(node: any) {
+    return node.returnParameters === null
+        ? null
+        : node.returnParameters.map(
+            (parameter: any) => (
+                {
+                    ...parameter,
+                    natspec: node.natspec === null
+                        ? ''
+                        : node.natspec.return,
+                }
+            ));
+}
 /**
- * Map the comments and returns the contract ast and the mapped comments.
+ * Merges the contract ast and comments into an array.
  * @param {string} solidityFile the file's path to be parsed
  */
-function prepareFromFile(solidityFile: string) {
+function mergeInfoFile(solidityFile: string) {
     // read file
     const input = fs.readFileSync(solidityFile).toString();
     // parse it using solidity-parser-antlr
@@ -18,16 +43,8 @@ function prepareFromFile(solidityFile: string) {
     const astContract = ast.children.filter((child: any) => child.type === 'ContractDefinition');
     // get filtered comments
     const comments = mapComments(input);
-    return { ast: astContract, comments };
-}
-
-/**
- * Merges the contract ast and comments into an array.
- * @param {string} solidityFile the file's path to be parsed
- */
-function mergeInfoFile(solidityFile: string) {
     // get basic information
-    const rawContractData = prepareFromFile(solidityFile);
+    const rawContractData = { ast: astContract, comments };
     // create an array to save the ast and comments
     const contractDataWithComments = {
         constructor: null,
@@ -66,23 +83,10 @@ function mergeInfoFile(solidityFile: string) {
                     params: () => (val: any, render: any) => paramComments.get(render(val)),
                 } as any;
             } else {
-                let paramComments = new Map();
-                let rawComments;
-                if (rawContractData.comments.function !== undefined) {
-                    if (rawContractData.comments.function.get(node.name) !== undefined) {
-                        paramComments = rawContractData.comments.function.get(node.name).param;
-                        rawComments = rawContractData.comments.function.get(node.name);
-                    }
-                }
                 contractDataWithComments.functions.push({
                     ast: node,
-                    comments: rawComments,
-                    isExternal: node.visibility === 'external',
-                    isInternal: node.visibility === 'internal',
-                    isPrivate: node.visibility === 'private',
-                    isPublic: node.visibility === 'public',
-                    paramComments,
-                    params: () => (val: any, render: any) => paramComments.get(render(val)),
+                    parameters: extendParamsAstWithNatspec(node),
+                    returnParameters: extendReturnParamsAstWithNatspec(node),
                 });
             }
         },
