@@ -11,7 +11,7 @@ import {
 } from './renderHTML';
 
 
-const defaultTemplatePath = 'src/template/pdf/index.html';
+const defaultTemplatePath = 'dist/template/pdf/index.html';
 
 /**
  * @param contractsPreparedData prepared data

@@ -12,7 +12,7 @@ import {
 } from './renderHTML';
 
 
-const defaultTemplatePath = 'src/template/html/index.html';
+const defaultTemplatePath = 'dist/template/html/index.html';
 
 /**
  * To write!
