@@ -72,7 +72,7 @@
         "jest-puppeteer": "4.3.0",
         "jsdoc": "3.6.3",
         "pdf-to-text": "0.0.7",
-        "puppeteer": "1.20.0",
+        "puppeteer": "2.0.0",
         "tslint": "5.20.1",
         "typedoc": "0.15.3",
         "typescript-tslint-plugin": "0.5.5"
