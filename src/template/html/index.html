@@ -1,8 +1,18 @@
 <html>
 
 <head>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css" rel="stylesheet">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- highlight.js -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.8/styles/github.min.css" rel="stylesheet">
+
+    <!-- twemoji-awesome -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/twemoji-awesome-clone@1.0.0/twemoji-awesome.css">
     <link
         href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAJ6TrAFy+8QCC0vgA7+/vAC6n7ACE0/gAS2RuAKbU5QDAwMAAv+3+ACek6gApoeYAAAAAAAAAAAAAAAAARERERERERABEREREREREAEREREREREQAREREeIRERABJmZSohUREAERERKolVEQAREREozUVRABJmZRDNlFUAEREREQzZRUAREREREM2W1BJmZmZRDNlxUREREREQzZVREREREREMzVJmZmZmURDM0REREREREQzRERERERERAMAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA"
@@ -55,6 +65,20 @@
             padding: 0px 4%;
         }
 
+        .soldoc-box {
+            margin-bottom: 50px;
+        }
+
+        .box-info {
+            color: #858585;
+        }
+
+        .method-name-title {
+            padding: .75rem 1.25rem;
+            margin-bottom: 0;
+            border-bottom: 1px solid rgba(0, 0, 0, .125);
+        }
+
         /*readme*/
         .README li {
             padding: 5px 40px;
@@ -69,59 +93,117 @@
             margin-inline-start: 0px;
             margin-inline-end: 0px;
         }
+
+        .box {
+            border-radius: 2px;
+        }
+
+        /* A huge thanks to Alex Raven by A Directory Tree List Style in https://codepen.io/asraven/pen/qbrQMX*/
+
+        .directory-list {
+            margin-block-start: 0px;
+            margin-inline-start: 0px;
+            padding-inline-start: 0px;
+        }
+
+        .directory-list ul {
+            border-left: 1px dashed #ddd;
+            padding-inline-start: 30px;
+        }
+
+        .directory-list li {
+            list-style: none;
+            color: #888;
+            font-size: 17px;
+            font-style: italic;
+            font-weight: normal;
+        }
+
+        .directory-list a {
+            border-bottom: 1px solid transparent;
+            color: #888;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .directory-list a:hover {
+            border-color: #eee;
+            color: #000;
+        }
+
+        .directory-list .folder,
+        .directory-list .folder>a {
+            color: #777;
+            font-weight: bold;
+        }
+
+        /* The icons */
+
+        .directory-list li:before {
+            margin-right: 10px;
+            content: "";
+            height: 20px;
+            vertical-align: middle;
+            width: 20px;
+            background-repeat: no-repeat;
+            display: inline-block;
+            /* file icon by default */
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path fill='lightgrey' d='M85.714,42.857V87.5c0,1.487-0.521,2.752-1.562,3.794c-1.042,1.041-2.308,1.562-3.795,1.562H19.643 c-1.488,0-2.753-0.521-3.794-1.562c-1.042-1.042-1.562-2.307-1.562-3.794v-75c0-1.487,0.521-2.752,1.562-3.794 c1.041-1.041,2.306-1.562,3.794-1.562H50V37.5c0,1.488,0.521,2.753,1.562,3.795s2.307,1.562,3.795,1.562H85.714z M85.546,35.714 H57.143V7.311c3.05,0.558,5.505,1.767,7.366,3.627l17.41,17.411C83.78,30.209,84.989,32.665,85.546,35.714z' /></svg>");
+            background-position: center 2px;
+            background-size: 60% auto;
+        }
+
+        .directory-list li.folder:before {
+            /* folder icon if folder class is specified */
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path fill='lightblue' d='M96.429,37.5v39.286c0,3.423-1.228,6.361-3.684,8.817c-2.455,2.455-5.395,3.683-8.816,3.683H16.071 c-3.423,0-6.362-1.228-8.817-3.683c-2.456-2.456-3.683-5.395-3.683-8.817V23.214c0-3.422,1.228-6.362,3.683-8.817 c2.455-2.456,5.394-3.683,8.817-3.683h17.857c3.422,0,6.362,1.228,8.817,3.683c2.455,2.455,3.683,5.395,3.683,8.817V25h37.5 c3.422,0,6.361,1.228,8.816,3.683C95.201,31.138,96.429,34.078,96.429,37.5z' /></svg>");
+            background-position: center top;
+            background-size: 75% auto;
+        }
     </style>
     <title>soldoc</title>
 </head>
 
 <body>
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-            <a class="navbar-item" href="https://github.com/HQ20/soldoc">
-                <h1 class="title is-1">soldoc</h1>
-            </a>
-        </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-        <div id="navbarBasicExample" class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item" href="index.html">
-                    Home
-                </a>
-                {{#hasLICENSE}}
-                <a class="navbar-item" href="license.html">
-                    LICENSE
-                </a>
-                {{/hasLICENSE}}
-
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        More soldoc
-                    </a>
-
-                    <div class="navbar-dropdown">
-                        <a class="navbar-item" href="https://github.com/HQ20/soldoc/wiki/About">
-                            About
-                        </a>
-                        <a class="navbar-item" href="#">
-                            Contact
-                        </a>
-                        <hr class="navbar-divider">
-                        <a class="navbar-item" href="https://github.com/HQ20/soldoc/issues">
-                            Report an issue
-                        </a>
-                    </div>
-                </div>
-
-            </div>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
         </div>
     </nav>
+    <br /><br /><br />
     <div class="page-content">
         <aside id="contracts" class="menu">
-                <p class="menu-label">CONTRACTS</p>
-            <ul class="menu-list">
-                {{#contracts}}
-                <li><a href="{{filename}}.html">{{name}}</a></li>
-                {{/contracts}}
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                {{#hasLICENSE}}
+                <li>
+                    <a href="license.html">LICENSE</a>
+                </li>
+                {{/hasLICENSE}}
             </ul>
+            <div class="box">
+                <ul class="directory-list">
+                    <li class="folder">some-folder
+                        <ul>
+                            <li class="folder">contracts
+                                <ul>
+                                    {{#contracts}}
+                                    <li><a href="{{filename}}.html">{{name}}</a></li>
+                                    {{/contracts}}
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </aside>
 
         {{#README}}
@@ -140,7 +222,6 @@
         {{/LICENSE}}
         {{#CONTRACT}}
         <div class="container">
-
             <div class="notification">
                 <h1 class="title is-1" id="contractName">{{contract.name}}</h1>
                 {{#contractData.contract.title}}
@@ -157,152 +238,150 @@
                 {{#contractData.contract.notice}}
                 <p>{{contractData.contract.notice}}</p>
                 {{/contractData.contract.notice}}
+                <br />
                 <small class="generated">Generated in {{currentDate}}</small>
             </div>
 
             {{#contractData.constructor}}
-            <div class="box" style="border-top: red 1px solid;">
-                <article class="media">
-                    <div class="media-content">
-                        <div class="content">
-                            <p>
-                                <a name="constructor">
-                                    <strong class="method">constructor</strong>
-                                </a>
-                                {{#comments.author}}
-                                by <small id="author">@{{comments.author}}</small>
-                                {{/comments.author}}
-                                <br />
-                                {{#comments.dev}}
-                                <p><i>{{comments.dev}}</i></p>
-                                {{/comments.dev}}
-                                {{#comments.notice}}
-                                <p>{{comments.notice}}</p>
-                                {{/comments.notice}}
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Input/Output</th>
-                                            <th>Data type</th>
-                                            <th>Variable name</th>
-                                            <th>Comment</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {{#ast.parameters}}
-                                        <tr>
-                                            <td>input</td>
-                                            <td>{{typeName.name}}</td>
-                                            <td>{{name}}</td>
-                                            <td>{{#params}}{{name}}{{/params}}</td>
-                                        </tr>
-                                        {{/ast.parameters}}
-                                    </tbody>
-                                </table>
-                            </p>
-                        </div>
+            <div class="soldoc-box">
+                <p>
+                    <a name="constructor">
+                        <strong class="method">constructor</strong>
+                    </a>
+                    <div class="box-info">
+                        {{#ast.natspec.author}}
+                        by <small id="author">@{{ast.natspec.author}}</small>
+                        {{/ast.natspec.author}}
+                        <br />
+                        {{#ast.natspec.dev}}
+                        <p><i>{{ast.natspec.dev}}</i></p>
+                        {{/ast.natspec.dev}}
+                        {{#ast.natspec.notice}}
+                        <p>{{ast.natspec.notice}}</p>
+                        {{/ast.natspec.notice}}
                     </div>
-                </article>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Type</th>
+                                <th>Name</th>
+                                <th>Natspec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#parameters}}
+                            <tr>
+                                <td>input</td>
+                                <td>{{typeName.name}}</td>
+                                <td>{{name}}</td>
+                                <td>{{natspec}}</td>
+                            </tr>
+                            {{/parameters}}
+                        </tbody>
+                    </table>
+                </p>
             </div>
             {{/contractData.constructor}}
 
             {{#contractData.events}}
-            <div class="box" style="border-top: blue 1px solid;">
-                <article class="media">
-                    <div class="media-content">
-                        <div class="content">
-                            <p>
-                                <a name="{{ast.name}}">
-                                    <strong class="method">{{ast.name}}</strong>
-                                </a>
-                                {{#comments.author}}
-                                by <small id="author">@{{comments.author}}</small>
-                                {{/comments.author}}
-                                <br />
-                                {{#comments.dev}}
-                                <p><i>{{comments.dev}}</i></p>
-                                {{/comments.dev}}
-                                {{#comments.notice}}
-                                <p>{{comments.notice}}</p>
-                                {{/comments.notice}}
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Input/Output</th>
-                                            <th>Data type</th>
-                                            <th>Variable name</th>
-                                            <th>Comment</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {{#ast.parameters}}
-                                        <tr>
-                                            <td>input</td>
-                                            <td>{{typeName.name}}</td>
-                                            <td>{{name}}</td>
-                                            <td>{{#params}}{{name}}{{/params}}</td>
-                                        </tr>
-                                        {{/ast.parameters}}
-                                    </tbody>
-                                </table>
-                            </p>
-                        </div>
+            <div class="soldoc-box">
+                <p>
+                    <a name="{{ast.name}}">
+                        <strong class="method">{{ast.name}}</strong>
+                    </a>
+                    <div class="box-info">
+                        {{#ast.natspec.author}}
+                        by <small id="author">@{{ast.natspec.author}}</small>
+                        {{/ast.natspec.author}}
+                        <br />
+                        {{#ast.natspec.dev}}
+                        <p><i>{{ast.natspec.dev}}</i></p>
+                        {{/ast.natspec.dev}}
+                        {{#ast.natspec.notice}}
+                        <p>{{ast.natspec.notice}}</p>
+                        {{/ast.natspec.notice}}
                     </div>
-                </article>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Type</th>
+                                <th>Name</th>
+                                <th>Natspec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#parameters}}
+                            <tr>
+                                <td>input</td>
+                                <td>{{typeName.name}}</td>
+                                <td>{{name}}</td>
+                                <td>{{natspec}}</td>
+                            </tr>
+                            {{/parameters}}
+                        </tbody>
+                    </table>
+                </p>
             </div>
             {{/contractData.events}}
 
             {{#contractData.functions}}
-            <div class="box">
-                <article class="media">
-                    <div class="media-content">
-                        <div class="content">
-                            <p>
-                                <a name="{{ast.name}}">
-                                    <strong class="method">{{ast.name}}</strong>
-                                </a>
-                                {{#ast.natspec.author}}
-                                by <small id="author">@{{ast.natspec.author}}</small>
-                                {{/ast.natspec.author}}
-                                <br />
-                                {{#ast.natspec.dev}}
-                                <p><i style="white-space: pre;">{{ast.natspec.dev}}</i></p>
-                                {{/ast.natspec.dev}}
-                                {{#ast.natspec.notice}}
-                                <p>{{ast.natspec.notice}}</p>
-                                {{/ast.natspec.notice}}
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Input/Output</th>
-                                            <th>Data type</th>
-                                            <th>Variable name</th>
-                                            <th>Comment</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {{#parameters}}
-                                        <tr>
-                                            <td>input</td>
-                                            <td>{{typeName.name}}</td>
-                                            <td>{{name}}</td>
-                                            <td>{{natspec}}</td>
-                                        </tr>
-                                        {{/parameters}}
-                                        {{#returnParameters}}
-                                        <tr>
-                                            <td>output</td>
-                                            <td>{{typeName.name}}</td>
-                                            <td>{{name}}</td>
-                                            <td>{{natspec}}</td>
-                                        </tr>
-                                        {{/returnParameters}}
-                                    </tbody>
-                                </table>
-                            </p>
+            <div class="soldoc-box">
+                <p>
+                    <a name="{{ast.name}}">
+                        <div class="method-name-title">
+                            <div class="d-flex bd-highlight">
+                                <div class="p-2 flex-grow-1 bd-highlight">
+                                    <h2 style="float: left;">{{ast.name}}</h2>
+                                </div>
+                                <div class="p-2 bd-highlight">
+                                    <span style="float: right;">internal</span>
+                                </div>
+                            </div>
                         </div>
+                    </a>
+                    <div class="box-info">
+                        {{#ast.natspec.author}}
+                        by <small id="author">@{{ast.natspec.author}}</small>
+                        {{/ast.natspec.author}}
+                        <br />
+                        {{#ast.natspec.dev}}
+                        <p><i style="white-space: pre;">{{ast.natspec.dev}}</i></p>
+                        {{/ast.natspec.dev}}
+                        {{#ast.natspec.notice}}
+                        <p>{{ast.natspec.notice}}</p>
+                        {{/ast.natspec.notice}}
                     </div>
-                </article>
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Type</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Natspec</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#parameters}}
+                            <tr>
+                                <td>input</td>
+                                <td>{{typeName.name}}</td>
+                                <td>{{name}}</td>
+                                <td>{{natspec}}</td>
+                            </tr>
+                            {{/parameters}}
+                            {{#returnParameters}}
+                            <tr>
+                                <td>output</td>
+                                <td>{{typeName.name}}</td>
+                                <td>{{name}}</td>
+                                <td>{{natspec}}</td>
+                            </tr>
+                            {{/returnParameters}}
+                        </tbody>
+                    </table>
+                </p>
             </div>
             {{/contractData.functions}}
         </div>
