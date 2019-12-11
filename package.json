@@ -52,7 +52,7 @@
         "@types/highlight.js": "9.12.3",
         "@types/meow": "5.0.0",
         "@types/mustache": "0.8.32",
-        "@types/node": "12.12.16",
+        "@types/node": "12.12.17",
         "@types/node-emoji": "1.8.1",
         "highlight.js": "9.16.2",
         "markdown-it": "10.0.0",
