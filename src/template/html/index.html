@@ -137,6 +137,19 @@
             font-weight: bold;
         }
 
+        .side-list li {
+            padding: 6px 0px;
+            border: 0px;
+        }
+
+        .side-list a {
+            color: #777777;
+        }
+
+        .side-list a:hover {
+            text-decoration: none;
+        }
+
         /* The icons */
 
         .directory-list li:before {
@@ -180,13 +193,11 @@
     </nav>
     <br /><br /><br />
     <div class="page-content">
-        <aside id="contracts" class="menu">
-            <ul>
-                <li><a href="index.html">HOME</a></li>
+        <aside id="contracts">
+            <ul class="list-group side-list">
+                <li class="list-group-item"><a href="index.html">HOME</a></li>
                 {{#hasLICENSE}}
-                <li>
-                    <a href="license.html">LICENSE</a>
-                </li>
+                <li class="list-group-item"><a href="license.html">LICENSE</a></li>
                 {{/hasLICENSE}}
             </ul>
             <div class="box">
@@ -386,12 +397,12 @@
             {{/contractData.functions}}
         </div>
         {{/CONTRACT}}
-        <aside id="methods" class="menu">
+        <aside id="methods">
             {{#contractStructure}}
-            <p class="menu-label">Functions</p>
-            <ul class="menu-list">
+            <p style="color: #777777;">FUNCTIONS</p>
+            <ul style="padding-left: 25px;" class="list-group side-list">
                 {{#functions}}
-                <li><a href="{{filename}}.html#{{name}}">{{name}}</a></li>
+                <li class="list-group-item"><a href="{{filename}}.html#{{name}}">{{name}}</a></li>
                 {{/functions}}
             </ul>
             {{/contractStructure}}
