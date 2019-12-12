@@ -147,7 +147,6 @@ describe('Render HTML Page - ERC20', () => {
         for (let c = 0; c < cards.length; c += 1) {
             // eslint-disable-next-line no-await-in-loop
             const text = await page.evaluate((e) => e.textContent, cards[c]);
-            // TODO: remove .trim after updating to next version of sol-comments-parser
             expect(cardsNames).toContain(text.trim());
         }
         done();

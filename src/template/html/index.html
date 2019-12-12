@@ -223,20 +223,20 @@
         <div class="container">
             <div class="notification">
                 <h1 class="title is-1" id="contractName">{{contract.name}}</h1>
-                {{#contractData.contract.title}}
-                <h2 class="subtitle">{{contractData.contract.title}}
-                    {{#contractData.contract.author}}
-                    by <i id="author">@{{contractData.contract.author}}</i>
-                    {{/contractData.contract.author}}
+                {{#contractData.contract.natspec.title}}
+                <h2 class="subtitle">{{contractData.contract.natspec.title}}
+                    {{#contractData.contract.natspec.author}}
+                    by <i id="author">@{{contractData.contract.natspec.author}}</i>
+                    {{/contractData.contract.natspec.author}}
                 </h2>
-                {{/contractData.contract.title}}
+                {{/contractData.contract.natspec.title}}
                 {{filePath}}
-                {{#contractData.contract.dev}}
-                <p>{{contractData.contract.dev}}</p>
-                {{/contractData.contract.dev}}
-                {{#contractData.contract.notice}}
-                <p>{{contractData.contract.notice}}</p>
-                {{/contractData.contract.notice}}
+                {{#contractData.contract.natspec.dev}}
+                <p>{{contractData.contract.natspec.dev}}</p>
+                {{/contractData.contract.natspec.dev}}
+                {{#contractData.contract.natspec.notice}}
+                <p>{{contractData.contract.natspec.notice}}</p>
+                {{/contractData.contract.natspec.notice}}
                 <br />
                 <small class="generated">Generated in {{currentDate}}</small>
             </div>

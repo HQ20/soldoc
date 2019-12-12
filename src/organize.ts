@@ -2,8 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import parser from 'solidity-parser-antlr';
 
-import { mapComments } from 'sol-comments-parser';
-
 
 function extendParamsAstWithNatspec(node: any) {
     if (node.parameters === null) {
@@ -46,10 +44,8 @@ function mergeInfoFile(solidityFile: string) {
     const ast = parser.parse(input);
     // filter for contract definition
     const astContract = ast.children.filter((child: any) => child.type === 'ContractDefinition');
-    // get filtered comments
-    const comments = mapComments(input);
     // get basic information
-    const rawContractData = { ast: astContract, comments };
+    const rawContractData = { ast: astContract };
     // create an array to save the ast and comments
     const contractDataWithComments = {
         constructor: null,
@@ -59,6 +55,9 @@ function mergeInfoFile(solidityFile: string) {
     };
     // visit all the methods and add the commands to it
     parser.visit(rawContractData.ast, {
+        ContractDefinition: (node: any) => {
+            contractDataWithComments.contract = node;
+        },
         EventDefinition: (node: any) => {
             contractDataWithComments.events.push({
                 ast: node,
@@ -82,11 +81,6 @@ function mergeInfoFile(solidityFile: string) {
             }
         },
     });
-    // add contract comments
-    if (rawContractData.comments.contract !== undefined) {
-        contractDataWithComments.contract = rawContractData
-            .comments.contract.get(path.parse(solidityFile).name);
-    }
     // return new info
     return [rawContractData.ast[0].name, contractDataWithComments];
 }

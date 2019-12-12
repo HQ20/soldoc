@@ -6,11 +6,11 @@ export function renderContracts(contractsPreparedData: any, outputFolder: any, l
         // transform the template
         let MDContent = `# ${contract.contractName}${lineBreak}`;
         if (contract.contractData.contract !== undefined) {
-            if (contract.contractData.contract.dev) {
-                MDContent += `*${contract.contractData.contract.dev}*${lineBreak}`;
+            if (contract.contractData.contract.natspec.dev) {
+                MDContent += `*${contract.contractData.contract.natspec.dev}*${lineBreak}`;
             }
-            if (contract.contractData.contract.notice) {
-                MDContent += `${contract.contractData.contract.notice}${lineBreak}`;
+            if (contract.contractData.contract.natspec.notice) {
+                MDContent += `${contract.contractData.contract.natspec.notice}${lineBreak}`;
             }
         }
         contract.contractData.functions.forEach((f: any) => {
