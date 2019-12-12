@@ -50,7 +50,7 @@ function main() {
     if (cli.flags.output === 'pdf') {
         terminalConsole.log('Wait...might take a moment! 🐼️ is doing is stuff...');
     }
-    let ignoreList = [];
+    let ignoreList: string[] = [];
     if (cli.flags.ignore && cli.flags.ignore.length > 0) {
         const commaPosition = cli.flags.ignore.indexOf(',');
         if (commaPosition >= -1) {
