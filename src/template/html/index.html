@@ -201,19 +201,7 @@
                 {{/hasLICENSE}}
             </ul>
             <div class="box">
-                <ul class="directory-list">
-                    <li class="folder">some-folder
-                        <ul>
-                            <li class="folder">contracts
-                                <ul>
-                                    {{#contracts}}
-                                    <li><a href="{{filename}}.html">{{name}}</a></li>
-                                    {{/contracts}}
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                <ul id="contracts-treeview" class="directory-list"></ul>
             </div>
         </aside>
 
@@ -408,6 +396,18 @@
             {{/contractStructure}}
         </aside>
     </div>
+    <script>
+        var cFolder = (c) => ('<li class="folder">' + c.name + '<ul>' + renderTreeView(c.content) + '</ul></li>');
+        var cFile = (c) => ('<li><a href="' + c.name + '.html">' + c.name + '</a></li>');
+        function renderTreeView(inputContent) {
+            return inputContent.map((content) => content.isDirectory ? cFolder(content) : cFile(content)).join('');
+        }
+        function load_home() {
+            var paths = {{{folderStructure}}};
+            document.getElementById("contracts-treeview").innerHTML = renderTreeView(paths);
+        }
+        load_home();
+    </script>
 </body>
 
 </html>

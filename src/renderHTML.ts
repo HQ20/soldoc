@@ -12,8 +12,8 @@ const md = require('markdown-it')({
             try {
                 return `<pre class="hljs"><code>${
                     highlight(lang, str, true).value
-                }</code></pre>`;
-            // tslint:disable-next-line: no-empty
+                    }</code></pre>`;
+                // tslint:disable-next-line: no-empty
             } catch (__) { }
         }
         return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
@@ -41,6 +41,32 @@ export function transformTemplate(
 ) {
     // read template into a string
     const templateContent = String(fs.readFileSync(templateFile));
+    const fakeFolderStructure = [
+        {
+            name: 'test',
+            isDirectory: true,
+            content: [
+                {
+                    name: 'contracts',
+                    isDirectory: true,
+                    content: [
+                        {
+                            name: 'ERC20',
+                            isDirectory: false,
+                        },
+                        {
+                            name: 'Plane',
+                            isDirectory: false,
+                        },
+                        {
+                            name: 'Tree',
+                            isDirectory: false,
+                        },
+                    ],
+                },
+            ],
+        },
+    ];
     // put all data together
     const view = {
         CONTRACT: true,
@@ -52,6 +78,7 @@ export function transformTemplate(
         contracts: contractsStructure,
         currentDate: new Date(),
         filePath: contractPath,
+        folderStructure: JSON.stringify(fakeFolderStructure),
         hasLICENSE,
     };
     // calls the render engine
