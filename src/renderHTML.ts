@@ -4,6 +4,7 @@ import path from 'path';
 import { getLanguage, highlight } from 'highlight.js';
 import mdemoji from 'markdown-it-emoji';
 import { render } from 'mustache';
+import { IFolderStructure } from '.';
 
 // tslint:disable-next-line: no-var-requires
 const md = require('markdown-it')({
@@ -37,36 +38,16 @@ md.renderer.rules.emoji = (token: any, idx: any) => `<i class="twa twa-${token[i
  * @param {string} contractPath Path to contract file
  */
 export function transformTemplate(
-    templateFile: any, contractName: any, contractData: any, contractPath: any, contractsStructure: any, hasLICENSE: any,
+    inputStructure: IFolderStructure[],
+    templateFile: any,
+    contractName: any,
+    contractData: any,
+    contractPath: any,
+    contractsStructure: any,
+    hasLICENSE: any,
 ) {
     // read template into a string
     const templateContent = String(fs.readFileSync(templateFile));
-    const fakeFolderStructure = [
-        {
-            name: 'test',
-            isDirectory: true,
-            content: [
-                {
-                    name: 'contracts',
-                    isDirectory: true,
-                    content: [
-                        {
-                            name: 'ERC20',
-                            isDirectory: false,
-                        },
-                        {
-                            name: 'Plane',
-                            isDirectory: false,
-                        },
-                        {
-                            name: 'Tree',
-                            isDirectory: false,
-                        },
-                    ],
-                },
-            ],
-        },
-    ];
     // put all data together
     const view = {
         CONTRACT: true,
@@ -78,7 +59,7 @@ export function transformTemplate(
         contracts: contractsStructure,
         currentDate: new Date(),
         filePath: contractPath,
-        folderStructure: JSON.stringify(fakeFolderStructure),
+        folderStructure: JSON.stringify(inputStructure),
         hasLICENSE,
     };
     // calls the render engine

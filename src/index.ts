@@ -10,12 +10,18 @@ import { generateDocumentation as generateDocumentationPDF } from './pdf';
 
 const terminalConsole = new Console(process.stdout, process.stderr);
 
+export interface IFolderStructure {
+    name: string;
+    isDirectory: boolean;
+    content?: IFolderStructure[];
+}
+
 /**
  * Get all files in folder, recursively.
  * @param {string} folder folder path
  * @param {array} ignoreFilesList an array of files to be ignored
  */
-function deepListFiles(folder: string, ignoreFilesList: string []): string[] {
+function deepListFiles(folder: string, ignoreFilesList: string[]): string[] {
     const files: string[] = [];
     // read dir
     const filesList = fs.readdirSync(folder);
@@ -76,10 +82,36 @@ export function generate(outputType: string, ignoreFilesList: string[], outputFo
     if (!fs.existsSync(destinationDocsFolderPath)) {
         fs.mkdirSync(destinationDocsFolderPath, { recursive: true });
     }
+    const inputStructure: IFolderStructure[] = [
+        {
+            name: 'test',
+            isDirectory: true,
+            content: [
+                {
+                    name: 'contracts',
+                    isDirectory: true,
+                    content: [
+                        {
+                            name: 'ERC20',
+                            isDirectory: false,
+                        },
+                        {
+                            name: 'Plane',
+                            isDirectory: false,
+                        },
+                        {
+                            name: 'Tree',
+                            isDirectory: false,
+                        },
+                    ],
+                },
+            ],
+        },
+    ];
     if (outputType === 'pdf') {
-        generateDocumentationPDF(prepared, outputFolder);
+        generateDocumentationPDF(inputStructure, prepared, outputFolder);
     } else if (outputType === 'html') {
-        generateDocumentationHTML(prepared, outputFolder);
+        generateDocumentationHTML(inputStructure, prepared, outputFolder);
     } else if (outputType === 'gitbook') {
         generateDocumentationGitbook(prepared, outputFolder);
     } else if (outputType === 'docsify') {

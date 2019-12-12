@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { emojify } from 'node-emoji';
+import { IFolderStructure } from '.';
 import {
     organizeContractsStructure,
 } from './organize';
@@ -18,13 +19,14 @@ const defaultTemplatePath = 'dist/template/html/index.html';
  * To write!
  * @param {object} contractsData Obect containing all contracts info
  */
-export function generateDocumentation(contractsPreparedData: any, outputFolder: any) {
+export function generateDocumentation(inputStructure: IFolderStructure[], contractsPreparedData: any, outputFolder: any) {
     // create a list of contracts and methods
     const contractsStructure = organizeContractsStructure(contractsPreparedData);
     const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
     contractsPreparedData.forEach((contract: any) => {
         // transform the template
         let HTMLContent = transformTemplate(
+            inputStructure,
             path.join(contract.currentFolder, defaultTemplatePath),
             contract.contractName,
             contract.contractData,
