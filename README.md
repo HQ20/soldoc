@@ -5,12 +5,13 @@
 [![npm](https://img.shields.io/npm/dm/soldoc.svg)](https://www.npmjs.com/package/soldoc)
 [![Build Status](https://travis-ci.org/HQ20/soldoc.svg?branch=master)](https://travis-ci.org/HQ20/soldoc)
 [![Coverage Status](https://coveralls.io/repos/github/HQ20/soldoc/badge.svg?branch=master)](https://coveralls.io/github/HQ20/soldoc?branch=master)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/084d2d9e-5f67-46c8-a8e7-22d73f2f707d/deploy-status)](https://app.netlify.com/sites/soldoc-demo/deploys)
 
-soldoc is a solidity documentation generator. This generator was created due to a need of giving documentation to developers and clients. Thinking about it, we first created this tool to generate an HTML self hosted page, but then we also decided to generate a PDF.
+> soldoc is a solidity documentation generator. This generator was created due to a need of giving documentation to developers and clients. Thinking about it, we first created this tool to generate an HTML self hosted page, but then we also decided to generate a PDF.
 
 See demo [here](https://soldoc-demo.netlify.com/).
 
-Please note that, there's also a pdf example in `./example` folder. This pdf is a first draft. We intend to have a better template soon and open the opportunity to get new templates.
+Please note that, there's also a pdf example in `./example` folder. This pdf is a first draft. We intend to have a better template and open the opportunity to get new templates.
 
 ## Features
 * Generates documentation with soft colors :eyes:
