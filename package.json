@@ -21,7 +21,7 @@
         "coverage": "jest --coverage --testTimeout=40000",
         "precoverage:ci": "yarn build",
         "coverage:ci": "jest --coverage --testTimeout=40000 --detectOpenHandles --forceExit && cat ./coverage/lcov.info | coveralls",
-        "docs": "jsdoc ./src/*.js -d ./docs"
+        "docs": "typedoc --out docs src"
     },
     "repository": {
         "type": "git",
@@ -48,30 +48,38 @@
         "url": "https://github.com/hq20/soldoc/issues"
     },
     "homepage": "https://github.com/hq20/soldoc#readme",
+    "peerDependencies": {
+        "highlight.js": "9.17.x",
+        "markdown-it": "10.0.x",
+        "markdown-it-emoji": "1.4.x",
+        "meow": "6.0.x",
+        "mustache": "3.1.x",
+        "node-emoji": "1.10.x",
+        "pdf-from-html": "0.1.x"
+    },
     "dependencies": {
-        "@types/highlight.js": "9.12.3",
-        "@types/meow": "5.0.0",
-        "@types/mustache": "0.8.32",
-        "@types/node": "12.12.17",
-        "@types/node-emoji": "1.8.1",
-        "highlight.js": "9.17.0",
+        "solidity-parser-antlr": "git://github.com/obernardovieira/solidity-parser-antlr.git#5fb4ceb"
+    },
+    "devDependencies": {
+        "highlight.js": "9.17.1",
         "markdown-it": "10.0.0",
         "markdown-it-emoji": "1.4.0",
         "meow": "6.0.0",
         "mustache": "3.1.0",
         "node-emoji": "1.10.0",
         "pdf-from-html": "0.1.1",
-        "solidity-parser-antlr": "git://github.com/obernardovieira/solidity-parser-antlr.git#5fb4ceb",
-        "typescript": "3.7.3"
-    },
-    "devDependencies": {
+        "@types/highlight.js": "9.12.3",
+        "@types/meow": "5.0.0",
+        "@types/mustache": "0.8.32",
+        "@types/node": "12.12.17",
+        "@types/node-emoji": "1.8.1",
+        "typescript": "3.7.3",
         "@types/jest": "24.0.23",
         "coveralls": "3.0.9",
         "directory-tree": "2.2.4",
         "expect.js": "0.3.1",
         "jest": "24.9.0",
         "jest-puppeteer": "4.3.0",
-        "jsdoc": "3.6.3",
         "pdf-to-text": "0.0.7",
         "puppeteer": "2.0.0",
         "tslint": "5.20.1",
