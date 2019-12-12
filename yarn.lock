@@ -1142,6 +1142,11 @@ diff@^4.0.1:
   resolved "https://registry.yarnpkg.com/diff/-/diff-4.0.1.tgz#0c667cb467ebbb5cea7f14f135cc2dba7780a8ff"
   integrity sha512-s2+XdvhPCOF01LRQBC8hf4vhbVmI2CGS5aZnxLJlT5FtdhPCDFq80q++zK2KlrVorVDdL5BOGZ/VfLrVtYNF+Q==
 
+directory-tree@2.2.4:
+  version "2.2.4"
+  resolved "https://registry.yarnpkg.com/directory-tree/-/directory-tree-2.2.4.tgz#6d5bd7d82e48378e256a1e87b678a43c50076e2e"
+  integrity sha512-2N43msQptKbi3WMfIs+U09yi6bfyKL+MWyj5VMj8t1F/Tx04bt1cn/EEIU3o1JBltlJk7NQnzOEuTNa/KQvbWA==
+
 domexception@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/domexception/-/domexception-1.0.1.tgz#937442644ca6a31261ef36e3ec677fe805582c90"

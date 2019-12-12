@@ -1,10 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 
+import { DirectoryTree } from 'directory-tree';
 import { getLanguage, highlight } from 'highlight.js';
 import mdemoji from 'markdown-it-emoji';
 import { render } from 'mustache';
-import { IFolderStructure } from '.';
 
 // tslint:disable-next-line: no-var-requires
 const md = require('markdown-it')({
@@ -38,7 +38,7 @@ md.renderer.rules.emoji = (token: any, idx: any) => `<i class="twa twa-${token[i
  * @param {string} contractPath Path to contract file
  */
 export function transformTemplate(
-    inputStructure: IFolderStructure[],
+    inputStructure: DirectoryTree,
     templateFile: any,
     contractName: any,
     contractData: any,

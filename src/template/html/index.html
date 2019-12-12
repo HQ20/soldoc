@@ -397,16 +397,16 @@
         </aside>
     </div>
     <script>
-        var cFolder = (c) => ('<li class="folder">' + c.name + '<ul>' + renderTreeView(c.content) + '</ul></li>');
-        var cFile = (c) => ('<li><a href="' + c.name + '.html">' + c.name + '</a></li>');
+        var cDirectory = (c) => ('<li class="folder">' + c.name + '<ul>' + renderTreeView(c.children) + '</ul></li>');
+        var cFile = (c) => ('<li><a href="' + c.name.replace('.sol', '') + '.html">' + c.name.replace('.sol', '') + '</a></li>');
         function renderTreeView(inputContent) {
-            return inputContent.map((content) => content.isDirectory ? cFolder(content) : cFile(content)).join('');
+            return inputContent.map((content) => content.type === 'directory' ? cDirectory(content) : cFile(content)).join('');
         }
-        function load_home() {
-            var paths = {{{folderStructure}}};
+        function loadDirectoryTreeView() {
+            var paths = [{{{folderStructure}}}];
             document.getElementById("contracts-treeview").innerHTML = renderTreeView(paths);
         }
-        load_home();
+        loadDirectoryTreeView();
     </script>
 </body>
 

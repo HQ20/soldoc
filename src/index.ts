@@ -2,6 +2,8 @@ import { Console } from 'console';
 import fs from 'fs';
 import path from 'path';
 
+import dirTree from 'directory-tree';
+
 import { generateDocumentation as generateDocumentationDocsify } from './docsify';
 import { generateDocumentation as generateDocumentationGitbook } from './gitbook';
 import { generateDocumentation as generateDocumentationHTML } from './html';
@@ -10,11 +12,6 @@ import { generateDocumentation as generateDocumentationPDF } from './pdf';
 
 const terminalConsole = new Console(process.stdout, process.stderr);
 
-export interface IFolderStructure {
-    name: string;
-    isDirectory: boolean;
-    content?: IFolderStructure[];
-}
 
 /**
  * Get all files in folder, recursively.
@@ -82,32 +79,7 @@ export function generate(outputType: string, ignoreFilesList: string[], outputFo
     if (!fs.existsSync(destinationDocsFolderPath)) {
         fs.mkdirSync(destinationDocsFolderPath, { recursive: true });
     }
-    const inputStructure: IFolderStructure[] = [
-        {
-            name: 'test',
-            isDirectory: true,
-            content: [
-                {
-                    name: 'contracts',
-                    isDirectory: true,
-                    content: [
-                        {
-                            name: 'ERC20',
-                            isDirectory: false,
-                        },
-                        {
-                            name: 'Plane',
-                            isDirectory: false,
-                        },
-                        {
-                            name: 'Tree',
-                            isDirectory: false,
-                        },
-                    ],
-                },
-            ],
-        },
-    ];
+    const inputStructure = dirTree(inputPath, { exclude: ignoreFilesList.map((i) => new RegExp(i)) });
     if (outputType === 'pdf') {
         generateDocumentationPDF(inputStructure, prepared, outputFolder);
     } else if (outputType === 'html') {
