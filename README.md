@@ -45,7 +45,7 @@ Your can also use soldoc within your project
 ```ts
 import { generate } from 'soldoc';
 
-generate(toPdf: boolean, outputFolder: string, filePathInput: string)
+generate(outputType: string, ignoreFilesList: string[], outputFolder: string, inputPath: string)
 ```
 
 ## Contributing
@@ -58,19 +58,9 @@ Credits to all external open/free material used.
 
 Thank you all.
 
-### Logo
-The sun
-* https://www.iconfinder.com/icons/2995005/giallo_sole_soleggiato_sun_sunny_weather_yellow_icon
-* https://creativecommons.org/licenses/by/3.0/
-
-### Font Family
-* https://www.dafont.com/pt/subscriber.font
+The [sun](https://www.iconfinder.com/icons/2995005/giallo_sole_soleggiato_sun_sunny_weather_yellow_icon), the [A Directory Tree List Style A PEN BY Alex Raven](https://codepen.io/asraven/pen/qbrQMX), the [Font Family](https://www.dafont.com/pt/subscriber.font). As well as [Connor](https://github.com/connorltodd), who drafted the initial HTML template, and [zlocate](https://github.com/zlocate)
 
 Thank you. Danke. Merci. Grazie. Gracias. Arigato. Obrigado.
-
-## Thanks to
-* [Connor](https://github.com/connorltodd), who drafted the initial HTML template.
-* [zlocate](https://github.com/zlocate)
 
 ## License
 [GPL-3.0](LICENSE)

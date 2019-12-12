@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
+import { DirectoryTree } from 'directory-tree';
 import { getLanguage, highlight } from 'highlight.js';
 import mdemoji from 'markdown-it-emoji';
 import { render } from 'mustache';
@@ -12,8 +13,8 @@ const md = require('markdown-it')({
             try {
                 return `<pre class="hljs"><code>${
                     highlight(lang, str, true).value
-                }</code></pre>`;
-            // tslint:disable-next-line: no-empty
+                    }</code></pre>`;
+                // tslint:disable-next-line: no-empty
             } catch (__) { }
         }
         return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
@@ -37,7 +38,13 @@ md.renderer.rules.emoji = (token: any, idx: any) => `<i class="twa twa-${token[i
  * @param {string} contractPath Path to contract file
  */
 export function transformTemplate(
-    templateFile: any, contractName: any, contractData: any, contractPath: any, contractsStructure: any, hasLICENSE: any,
+    inputStructure: DirectoryTree,
+    templateFile: any,
+    contractName: any,
+    contractData: any,
+    contractPath: any,
+    contractsStructure: any,
+    hasLICENSE: any,
 ) {
     // read template into a string
     const templateContent = String(fs.readFileSync(templateFile));
@@ -48,9 +55,11 @@ export function transformTemplate(
             name: contractName,
         },
         contractData,
-        contractsStructure,
+        contractStructure: contractsStructure.filter((c: any) => c.name === contractName)[0],
+        contracts: contractsStructure,
         currentDate: new Date(),
         filePath: contractPath,
+        folderStructure: JSON.stringify(inputStructure),
         hasLICENSE,
     };
     // calls the render engine

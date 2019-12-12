@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
+import { DirectoryTree } from 'directory-tree';
 import { emojify } from 'node-emoji';
 import toPdf from 'pdf-from-html';
 import {
@@ -16,13 +17,14 @@ const defaultTemplatePath = 'dist/template/pdf/index.html';
 /**
  * @param contractsPreparedData prepared data
  */
-export function generateDocumentation(contractsPreparedData: any, outputFolder: any) {
+export function generateDocumentation(inputStructure: DirectoryTree, contractsPreparedData: any, outputFolder: any) {
     // create a list of contracts and methods
     const contractsStructure = organizeContractsStructure(contractsPreparedData);
     const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
     contractsPreparedData.forEach(async (contract: any) => {
         // transform the template
         let HTMLContent = transformTemplate(
+            inputStructure,
             path.join(contract.currentFolder, defaultTemplatePath),
             contract.contractName,
             contract.contractData,

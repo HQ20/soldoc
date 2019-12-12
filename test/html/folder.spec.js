@@ -44,6 +44,24 @@ describe('Render HTML Page - Complete folder', () => {
     });
 
     /**
+     * All the files should be listed in the side menu
+     */
+    test('should have all files listed (side menu)', async (done) => {
+        const cardsNames = [
+            'HOME',
+            'LICENSE',
+        ];
+        await page.waitFor('aside#contracts li.list-group-item');
+        const cards = await page.$$('aside#contracts li.list-group-item');
+        for (let c = 0; c < cards.length; c += 1) {
+            // eslint-disable-next-line no-await-in-loop
+            const text = await page.evaluate((e) => e.textContent, cards[c]);
+            expect(cardsNames).toContain(text);
+        }
+        done();
+    });
+
+    /**
      * All the contracts should be listed in the side menu
      */
     test('should have all contracts listed (side menu)', async (done) => {
@@ -52,9 +70,10 @@ describe('Render HTML Page - Complete folder', () => {
             'IERC20',
             'Plane',
             'Tree',
+            'Example',
         ];
-        await page.waitFor('aside.menu p.menu-label');
-        const cards = await page.$$('aside.menu p.menu-label');
+        await page.waitFor('ul#contracts-treeview li a');
+        const cards = await page.$$('ul#contracts-treeview li a');
         for (let c = 0; c < cards.length; c += 1) {
             // eslint-disable-next-line no-await-in-loop
             const text = await page.evaluate((e) => e.textContent, cards[c]);
@@ -91,8 +110,8 @@ describe('Render HTML Page - Complete folder', () => {
             'age',
             'reverseAge',
         ];
-        await page.waitFor('aside.menu ul a');
-        const cards = await page.$$('aside.menu ul a');
+        await page.waitFor('aside#methods ul a');
+        const cards = await page.$$('aside#methods ul a');
         for (let c = 0; c < cards.length; c += 1) {
             // eslint-disable-next-line no-await-in-loop
             const text = await page.evaluate((e) => e.textContent, cards[c]);

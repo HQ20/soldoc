@@ -2,6 +2,8 @@ import { Console } from 'console';
 import fs from 'fs';
 import path from 'path';
 
+import dirTree from 'directory-tree';
+
 import { generateDocumentation as generateDocumentationDocsify } from './docsify';
 import { generateDocumentation as generateDocumentationGitbook } from './gitbook';
 import { generateDocumentation as generateDocumentationHTML } from './html';
@@ -10,12 +12,13 @@ import { generateDocumentation as generateDocumentationPDF } from './pdf';
 
 const terminalConsole = new Console(process.stdout, process.stderr);
 
+
 /**
  * Get all files in folder, recursively.
  * @param {string} folder folder path
  * @param {array} ignoreFilesList an array of files to be ignored
  */
-function deepListFiles(folder: string, ignoreFilesList: string []): string[] {
+function deepListFiles(folder: string, ignoreFilesList: string[]): string[] {
     const files: string[] = [];
     // read dir
     const filesList = fs.readdirSync(folder);
@@ -76,10 +79,11 @@ export function generate(outputType: string, ignoreFilesList: string[], outputFo
     if (!fs.existsSync(destinationDocsFolderPath)) {
         fs.mkdirSync(destinationDocsFolderPath, { recursive: true });
     }
+    const inputStructure = dirTree(inputPath, { exclude: ignoreFilesList.map((i) => new RegExp(i)) });
     if (outputType === 'pdf') {
-        generateDocumentationPDF(prepared, outputFolder);
+        generateDocumentationPDF(inputStructure, prepared, outputFolder);
     } else if (outputType === 'html') {
-        generateDocumentationHTML(prepared, outputFolder);
+        generateDocumentationHTML(inputStructure, prepared, outputFolder);
     } else if (outputType === 'gitbook') {
         generateDocumentationGitbook(prepared, outputFolder);
     } else if (outputType === 'docsify') {
