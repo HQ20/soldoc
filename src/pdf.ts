@@ -35,13 +35,13 @@ export function generateDocumentation(inputStructure: DirectoryTree, contractsPr
         // transform damn weird URLS into real liks
         const match = HTMLContent.match(/(?<!\[)https?:&#x2F;&#x2F;[a-zA-Z0-9.&#x2F;\-_]+/g);
         if (match !== null) {
-            let transform = match.map((url: any) => url.replace(/&#x2F;/g, '/'));
-            transform = transform.map((url: any) => `<a href="${url}">${url}</a>`);
+            let transform = match.map((url: string) => url.replace(/&#x2F;/g, '/'));
+            transform = transform.map((url: string) => `<a href="${url}">${url}</a>`);
             for (let i = 0; i < match.length; i += 1) {
                 HTMLContent = HTMLContent.replace(match[i], transform[i]);
             }
         }
-        const formatEmojify = (code: any, name: any) => `<i alt="${code}" class="twa twa-${name}"></i>`;
+        const formatEmojify = (code: string, name: string) => `<i alt="${code}" class="twa twa-${name}"></i>`;
         // generate
         await toPdf.generatePDF(
             outputFolder,

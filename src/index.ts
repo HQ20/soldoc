@@ -7,7 +7,7 @@ import dirTree from 'directory-tree';
 import { generateDocumentation as generateDocumentationDocsify } from './docsify';
 import { generateDocumentation as generateDocumentationGitbook } from './gitbook';
 import { generateDocumentation as generateDocumentationHTML } from './html';
-import { prepareForFile } from './organize';
+import { ISolDocAST, prepareForFile } from './organize';
 import { generateDocumentation as generateDocumentationPDF } from './pdf';
 
 const terminalConsole = new Console(process.stdout, process.stderr);

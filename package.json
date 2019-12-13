@@ -18,6 +18,8 @@
         "build": "tsc && cp -r src/template dist && chmod u+x dist/cli.js",
         "pretest": "yarn build",
         "test": "jest --testTimeout=40000",
+        "build:watch": "tsc -w && cp -r src/template dist && chmod u+x dist/cli.js",
+        "test:watch": "jest --testTimeout=40000 --watchAll",
         "coverage": "jest --coverage --testTimeout=40000",
         "precoverage:ci": "yarn build",
         "coverage:ci": "jest --coverage --testTimeout=40000 --detectOpenHandles --forceExit && cat ./coverage/lcov.info | coveralls",

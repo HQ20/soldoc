@@ -3,6 +3,13 @@ import path from 'path';
 import parser from 'solidity-parser-antlr';
 
 
+export interface ISolDocAST {
+    contract?: any;
+    constructor?: any;
+    events: any[];
+    functions: any[];
+}
+
 function extendParamsAstWithNatspec(node: any) {
     if (node.parameters === null) {
         return null;
@@ -33,57 +40,6 @@ function extendReturnParamsAstWithNatspec(node: any) {
             }
         ));
 }
-/**
- * Merges the contract ast and comments into an array.
- * @param {string} solidityFile the file's path to be parsed
- */
-function mergeInfoFile(solidityFile: string) {
-    // read file
-    const input = fs.readFileSync(solidityFile).toString();
-    // parse it using solidity-parser-antlr
-    const ast = parser.parse(input);
-    // filter for contract definition
-    const astContract = ast.children.filter((child: any) => child.type === 'ContractDefinition');
-    // get basic information
-    const rawContractData = { ast: astContract };
-    // create an array to save the ast and comments
-    const contractDataWithComments = {
-        constructor: null,
-        contract: undefined,
-        events: [] as any,
-        functions: [] as any,
-    };
-    // visit all the methods and add the commands to it
-    parser.visit(rawContractData.ast, {
-        ContractDefinition: (node: any) => {
-            contractDataWithComments.contract = node;
-        },
-        EventDefinition: (node: any) => {
-            contractDataWithComments.events.push({
-                ast: node,
-                parameters: extendParamsAstWithNatspec(node),
-                returnParameters: extendReturnParamsAstWithNatspec(node),
-            });
-        },
-        FunctionDefinition: (node: any) => {
-            if (node.isConstructor) {
-                contractDataWithComments.constructor = {
-                    ast: node,
-                    parameters: extendParamsAstWithNatspec(node),
-                    returnParameters: extendReturnParamsAstWithNatspec(node),
-                } as any;
-            } else {
-                contractDataWithComments.functions.push({
-                    ast: node,
-                    parameters: extendParamsAstWithNatspec(node),
-                    returnParameters: extendReturnParamsAstWithNatspec(node),
-                });
-            }
-        },
-    });
-    // return new info
-    return [rawContractData.ast[0].name, contractDataWithComments];
-}
 
 /**
  * Prepare for the given file.
@@ -92,8 +48,51 @@ function mergeInfoFile(solidityFile: string) {
 export function prepareForFile(solidityFilePath: string) {
     // get current path folder
     const currentFolder = path.join(__dirname, '../');
-    // get ast and comments
-    const [contractName, contractData] = mergeInfoFile(solidityFilePath);
+    // read file
+    const input = fs.readFileSync(solidityFilePath).toString();
+    // parse it using solidity-parser-antlr
+    const ast = parser.parse(input);
+    // create an array to save the ast and comments
+    let contractData: ISolDocAST = {
+        events: [] as any,
+        functions: [] as any,
+    };
+    // visit all the methods and add the commands to it
+    parser.visit(ast, {
+        ContractDefinition: (node: any) => {
+            contractData = {
+                contract: node,
+                ...contractData,
+            };
+        },
+        EventDefinition: (node: any) => {
+            contractData.events.push({
+                ast: node,
+                parameters: extendParamsAstWithNatspec(node),
+                returnParameters: extendReturnParamsAstWithNatspec(node),
+            });
+        },
+        FunctionDefinition: (node: any) => {
+            if (node.isConstructor) {
+                contractData = {
+                    constructor: {
+                        ast: node,
+                        parameters: extendParamsAstWithNatspec(node),
+                        returnParameters: extendReturnParamsAstWithNatspec(node),
+                    },
+                    ...contractData,
+                };
+            } else {
+                contractData.functions.push({
+                    ast: node,
+                    parameters: extendParamsAstWithNatspec(node),
+                    returnParameters: extendReturnParamsAstWithNatspec(node),
+                });
+            }
+        },
+    });
+    // return new info
+    const contractName = ast.children.filter((child: any) => child.type === 'ContractDefinition')[0].name;
     // get the filename
     const filename = path.parse(solidityFilePath).name;
     return {
