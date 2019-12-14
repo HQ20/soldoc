@@ -7,7 +7,7 @@ import {
     renderContracts,
     renderDocumentationIndex,
     renderReadme,
-} from './renderMD';
+} from './generate_renderMD';
 
 const lineBreak = '\r\n';
 

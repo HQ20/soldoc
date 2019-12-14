@@ -4,11 +4,10 @@ import path from 'path';
 
 import dirTree from 'directory-tree';
 
-import { generateDocumentation as generateDocumentationDocsify } from './docsify';
-import { generateDocumentation as generateDocumentationGitbook } from './gitbook';
-import { generateDocumentation as generateDocumentationHTML } from './html';
+import { Generate } from './generate';
+import { generateDocumentation as generateDocumentationDocsify } from './generate_docsify';
+import { generateDocumentation as generateDocumentationGitbook } from './generate_gitbook';
 import { ISolDocAST, prepareForFile } from './organize';
-import { generateDocumentation as generateDocumentationPDF } from './pdf';
 
 const terminalConsole = new Console(process.stdout, process.stderr);
 
@@ -80,10 +79,11 @@ export function generate(outputType: string, ignoreFilesList: string[], outputFo
         fs.mkdirSync(destinationDocsFolderPath, { recursive: true });
     }
     const inputStructure = dirTree(inputPath, { exclude: ignoreFilesList.map((i) => new RegExp(i)) });
+    const generateClass = new Generate();
     if (outputType === 'pdf') {
-        generateDocumentationPDF(inputStructure, prepared, outputFolder);
+        generateClass.pdf(inputStructure, prepared, outputFolder);
     } else if (outputType === 'html') {
-        generateDocumentationHTML(inputStructure, prepared, outputFolder);
+        generateClass.html(inputStructure, prepared, outputFolder);
     } else if (outputType === 'gitbook') {
         generateDocumentationGitbook(prepared, outputFolder);
     } else if (outputType === 'docsify') {
