@@ -76,9 +76,9 @@
     <div class="content">
         {{#CONTRACT}}
         <h1>{{contract.name}}</h1>
-        {{#contractData.contract.natspec.title}}
-            <p>{{contractData.contract.natspec.title}}</p>
-        {{/contractData.contract.natspec.title}}
+        {{#contract.data.contract.natspec.title}}
+            <p>{{contract.data.contract.natspec.title}}</p>
+        {{/contract.data.contract.natspec.title}}
 
         {{#contractsStructure}}
         <h4 style="text-align: center;">Contents</h4>
@@ -95,15 +95,15 @@
         {{/contractsStructure}}
 
         <h3>INTRO</h3>
-        {{#contractData.contract.natspec.dev}}
-            <p>{{contractData.contract.natspec.dev}}</p>
-        {{/contractData.contract.natspec.dev}}
-        {{#contractData.contract.natspec.notice}}
-            <p>{{contractData.contract.natspec.notice}}</p>
-        {{/contractData.contract.natspec.notice}}
+        {{#contract.data.contract.natspec.dev}}
+            <p>{{contract.data.contract.natspec.dev}}</p>
+        {{/contract.data.contract.natspec.dev}}
+        {{#contract.data.contract.natspec.notice}}
+            <p>{{contract.data.contract.natspec.notice}}</p>
+        {{/contract.data.contract.natspec.notice}}
 
         <h3>METHODS</h3>
-        {{#contractData.constructor}}
+        {{#contract.data.constructor}}
         <div class="box">
             <div><h4>constructor &rarr;</h4></div>
             <pre><code class="javascript">constructor(address owner, address spender);</code></pre>
@@ -134,8 +134,8 @@
                 </tbody>
             </table>
         </div>
-        {{/contractData.constructor}}
-        {{#contractData.events}}
+        {{/contract.data.constructor}}
+        {{#contract.data.events}}
         <div class="box">
             <div><h4>{{ast.name}} &rarr;</h4></div>
             <pre><code class="javascript">event example(address owner, address spender);</code></pre>
@@ -166,8 +166,8 @@
                 </tbody>
             </table>
         </div>
-        {{/contractData.events}}
-        {{#contractData.functions}}
+        {{/contract.data.events}}
+        {{#contract.data.functions}}
         <div class="box">
             <div><h4>{{ast.name}} &rarr;</h4></div>
             <pre><code class="javascript">function example(address owner, address spender) public view returns (uint256)</code></pre>
@@ -206,7 +206,7 @@
                 </tbody>
             </table>
         </div>
-        {{/contractData.functions}}
+        {{/contract.data.functions}}
         {{/CONTRACT}}
 
     </div>

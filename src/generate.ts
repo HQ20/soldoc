@@ -5,7 +5,7 @@ import { DirectoryTree } from 'directory-tree';
 import { emojify } from 'node-emoji';
 import toPdf from 'pdf-from-html';
 import {
-    organizeContractsStructure,
+    organizeContractsStructure, IObjectViewData,
 } from './organize';
 
 import { getLanguage, highlight } from 'highlight.js';
@@ -48,18 +48,17 @@ export class Generate {
     /**
      * TODO: to write!
      */
-    public html(inputStructure: DirectoryTree, contractsPreparedData: any, outputFolder: any) {
+    public html(inputStructure: DirectoryTree, contracts: IObjectViewData[], outputFolder: string) {
         // create a list of contracts and methods
-        const contractsStructure = organizeContractsStructure(contractsPreparedData);
+        const contractsStructure = organizeContractsStructure(contracts);
         const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
-        contractsPreparedData.forEach((contract: any) => {
+        contracts.forEach((contract) => {
             // transform the template
             let HTMLContent = this.transformTemplate(
                 inputStructure,
-                path.join(contract.currentFolder, this.htmlDefaultTemplatePath),
-                contract.contractName,
-                contract.contractData,
-                contract.solidityFilePath,
+                path.join(contract.folder, this.htmlDefaultTemplatePath),
+                contract,
+                contract.name,
                 contractsStructure,
                 hasLICENSE,
             );
@@ -83,7 +82,7 @@ export class Generate {
         if (fs.existsSync(path.join(process.cwd(), 'README.md'))) {
             // insert into index.html
             const templateContent = String(fs.readFileSync(
-                path.join(contractsPreparedData[0].currentFolder, this.htmlDefaultTemplatePath),
+                path.join(contracts[0].folder, this.htmlDefaultTemplatePath),
             ));
             const outputReadme = this.renderReadme(templateContent, contractsStructure, hasLICENSE);
             // write it to a file
@@ -114,7 +113,7 @@ export class Generate {
         if (hasLICENSE) {
             // insert into index.html
             const templateContent = String(fs.readFileSync(
-                path.join(contractsPreparedData[0].currentFolder, this.htmlDefaultTemplatePath),
+                path.join(contracts[0].folder, this.htmlDefaultTemplatePath),
             ));
             const outputLicense = this.renderLicense(templateContent, contractsStructure);
             // write it to a file
@@ -129,18 +128,17 @@ export class Generate {
     /**
      * TODO: to write!
      */
-    public pdf(inputStructure: DirectoryTree, contractsPreparedData: any, outputFolder: any) {
+    public pdf(inputStructure: DirectoryTree, contracts: IObjectViewData[], outputFolder: string) {
         // create a list of contracts and methods
-        const contractsStructure = organizeContractsStructure(contractsPreparedData);
+        const contractsStructure = organizeContractsStructure(contracts);
         const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
-        contractsPreparedData.forEach(async (contract: any) => {
+        contracts.forEach(async (contract) => {
             // transform the template
             let HTMLContent = this.transformTemplate(
                 inputStructure,
-                path.join(contract.currentFolder, this.pdfDefaultTemplatePath),
-                contract.contractName,
-                contract.contractData,
-                contract.solidityFilePath,
+                path.join(contract.folder, this.pdfDefaultTemplatePath),
+                contract,
+                contract.name,
                 contractsStructure,
                 hasLICENSE,
             );
@@ -168,15 +166,13 @@ export class Generate {
      * and renders the HTML page.
      * @param {string} templateFile Path for template file
      * @param {string} contractName Contract name
-     * @param {object} contractData Contract data, containing ast and comments to be rendered
      * @param {string} contractPath Path to contract file
      */
     private transformTemplate(
         inputStructure: DirectoryTree,
         templateFile: any,
+        contract: IObjectViewData,
         contractName: any,
-        contractData: any,
-        contractPath: any,
         contractsStructure: any,
         hasLICENSE: any,
     ) {
@@ -185,14 +181,10 @@ export class Generate {
         // put all data together
         const view = {
             CONTRACT: true,
-            contract: {
-                name: contractName,
-            },
-            contractData,
-            contractStructure: contractsStructure.filter((c: any) => c.name === contractName)[0],
+            contract,
+            contractStructure: contractsStructure.filter((c: any) => c.name === contract.name)[0],
             contracts: contractsStructure,
             currentDate: new Date(),
-            filePath: contractPath,
             folderStructure: JSON.stringify(inputStructure),
             hasLICENSE,
         };

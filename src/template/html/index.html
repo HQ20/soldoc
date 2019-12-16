@@ -225,25 +225,25 @@
         <div class="container">
             <div class="notification">
                 <h1 class="title is-1" id="contractName">{{contract.name}}</h1>
-                {{#contractData.contract.natspec.title}}
-                <h2 class="subtitle">{{contractData.contract.natspec.title}}
-                    {{#contractData.contract.natspec.author}}
-                    by <i id="author">@{{contractData.contract.natspec.author}}</i>
-                    {{/contractData.contract.natspec.author}}
+                {{#contract.data.contract.natspec.title}}
+                <h2 class="subtitle">{{contract.data.contract.natspec.title}}
+                    {{#contract.data.contract.natspec.author}}
+                    by <i id="author">@{{contract.data.contract.natspec.author}}</i>
+                    {{/contract.data.contract.natspec.author}}
                 </h2>
-                {{/contractData.contract.natspec.title}}
-                {{filePath}}
-                {{#contractData.contract.natspec.dev}}
-                <p>{{contractData.contract.natspec.dev}}</p>
-                {{/contractData.contract.natspec.dev}}
-                {{#contractData.contract.natspec.notice}}
-                <p>{{contractData.contract.natspec.notice}}</p>
-                {{/contractData.contract.natspec.notice}}
+                {{/contract.data.contract.natspec.title}}
+                {{contract.path}}
+                {{#contract.data.contract.natspec.dev}}
+                <p>{{contract.data.contract.natspec.dev}}</p>
+                {{/contract.data.contract.natspec.dev}}
+                {{#contract.data.contract.natspec.notice}}
+                <p>{{contract.data.contract.natspec.notice}}</p>
+                {{/contract.data.contract.natspec.notice}}
                 <br />
                 <small class="generated">Generated in {{currentDate}}</small>
             </div>
 
-            {{#contractData.constructor}}
+            {{#contract.data.constructor}}
             <div class="soldoc-box">
                 <p>
                     <a name="constructor">
@@ -283,9 +283,9 @@
                     </table>
                 </p>
             </div>
-            {{/contractData.constructor}}
+            {{/contract.data.constructor}}
 
-            {{#contractData.events}}
+            {{#contract.data.events}}
             <div class="soldoc-box">
                 <p>
                     <a name="{{ast.name}}">
@@ -325,9 +325,9 @@
                     </table>
                 </p>
             </div>
-            {{/contractData.events}}
+            {{/contract.data.events}}
 
-            {{#contractData.functions}}
+            {{#contract.data.functions}}
             <div class="soldoc-box">
                 <p>
                     <a name="{{ast.name}}">
@@ -384,7 +384,7 @@
                     </table>
                 </p>
             </div>
-            {{/contractData.functions}}
+            {{/contract.data.functions}}
         </div>
         {{/CONTRACT}}
         <aside id="methods">

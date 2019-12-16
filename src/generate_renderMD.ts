@@ -1,19 +1,20 @@
 import fs from 'fs';
 import path from 'path';
+import { IObjectViewData } from './organize';
 
-export function renderContracts(contractsPreparedData: any, outputFolder: any, lineBreak: any) {
-    contractsPreparedData.forEach((contract: any) => {
+export function renderContracts(contractsPreparedData: IObjectViewData[], outputFolder: any, lineBreak: any) {
+    contractsPreparedData.forEach((contract) => {
         // transform the template
-        let MDContent = `# ${contract.contractName}${lineBreak}`;
-        if (contract.contractData.contract !== undefined) {
-            if (contract.contractData.contract.natspec.dev) {
-                MDContent += `*${contract.contractData.contract.natspec.dev}*${lineBreak}`;
+        let MDContent = `# ${contract.name}${lineBreak}`;
+        if (contract.data.contract !== undefined) {
+            if (contract.data.contract.natspec.dev) {
+                MDContent += `*${contract.data.contract.natspec.dev}*${lineBreak}`;
             }
-            if (contract.contractData.contract.natspec.notice) {
-                MDContent += `${contract.contractData.contract.natspec.notice}${lineBreak}`;
+            if (contract.data.contract.natspec.notice) {
+                MDContent += `${contract.data.contract.natspec.notice}${lineBreak}`;
             }
         }
-        contract.contractData.functions.forEach((f: any) => {
+        contract.data.functions.forEach((f: any) => {
             MDContent += `## ${f.ast.name}${lineBreak}${lineBreak}`;
             if (f.ast.natspec === null) {
                 return;
