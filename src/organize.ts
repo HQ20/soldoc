@@ -53,13 +53,9 @@ function extendReturnParamsAstWithNatspec(node: any) {
  * @param {string} solidityFilePath the file's path to be parsed
  */
 export function prepareForFile(solidityFilePath: string): IObjectViewData {
-    // get current path folder
     const folder = path.join(__dirname, '../');
-    // read file
     const input = fs.readFileSync(solidityFilePath).toString();
-    // parse it using solidity-parser-antlr
     const ast = parser.parse(input);
-    // create an array to save the ast and comments
     let data: ISolDocAST = {
         events: [] as any,
         functions: [] as any,
@@ -98,9 +94,7 @@ export function prepareForFile(solidityFilePath: string): IObjectViewData {
             }
         },
     });
-    // return new info
     const name = ast.children.filter((child: any) => child.type === 'ContractDefinition')[0].name;
-    // get the filename
     const filename = path.parse(solidityFilePath).name;
     return {
         data,

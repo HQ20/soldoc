@@ -48,7 +48,7 @@ function main() {
 
     // pdf generation is a bit slower
     if (cli.flags.output === 'pdf') {
-        terminalConsole.log('Wait...might take a moment! 🐼️ is doing is stuff...');
+        terminalConsole.log('Wait...pdf, might take a moment! 🐼️ is working on it...');
     }
     let ignoreList: string[] = [];
     if (cli.flags.ignore && cli.flags.ignore.length > 0) {

@@ -32,9 +32,7 @@ const md = require('markdown-it')({
     typographer: true,
 });
 
-// use mdemoji plugin
 md.use(mdemoji);
-// set mdemoji rules
 md.renderer.rules.emoji = (token: any, idx: any) => `<i class="twa twa-${token[idx].markup}"></i>`;
 
 
@@ -56,10 +54,8 @@ export class Generate {
      * TODO: to write!
      */
     public html() {
-        // create a list of contracts and methods
         const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
         this.contracts.forEach((contract) => {
-            // transform the template
             let HTMLContent = this.transformTemplate(
                 path.join(contract.folder, this.htmlDefaultTemplatePath),
                 contract,
@@ -75,51 +71,39 @@ export class Generate {
                 }
             }
             const formatEmojify = (code: any, name: any) => `<i alt="${code}" class="twa twa-${name}"></i>`;
-            // write it to a file
             fs.writeFileSync(
                 path.join(process.cwd(), this.outputPath, `${contract.filename}.html`),
                 emojify(HTMLContent, null as any, formatEmojify),
             );
         });
-        // If there's a README...
         if (fs.existsSync(path.join(process.cwd(), 'README.md'))) {
-            // insert into index.html
             const templateContent = String(fs.readFileSync(
                 path.join(this.contracts[0].folder, this.htmlDefaultTemplatePath),
             ));
             const outputReadme = this.renderReadme(templateContent, hasLICENSE);
-            // write it to a file
             fs.writeFileSync(
                 path.join(process.cwd(), this.outputPath, 'index.html'),
                 outputReadme,
             );
-            // if there's an image reference in readme, copy it
             const files: any = [];
-            // read dir
             const filesList = fs.readdirSync(process.cwd());
-            // iterate over what was found
             filesList.forEach((file) => {
                 const stats = fs.lstatSync(path.join(process.cwd(), file));
-                // if not, push file to list, only if it is valid
                 if (stats.isFile() && path.extname(file) === '.png') {
                     files.push(file);
                 }
             });
-            // and if the file is n readme, copy it
             files.forEach((file: any) => {
                 if (outputReadme.includes(file)) {
                     fs.copyFileSync(path.join(process.cwd(), file), path.join(process.cwd(), this.outputPath, file));
                 }
             });
         }
-        // If there's a LICENSE
         if (hasLICENSE) {
-            // insert into index.html
             const templateContent = String(fs.readFileSync(
                 path.join(this.contracts[0].folder, this.htmlDefaultTemplatePath),
             ));
             const outputLicense = this.renderLicense(templateContent);
-            // write it to a file
             fs.writeFileSync(
                 path.join(process.cwd(), this.outputPath, 'license.html'),
                 outputLicense,
@@ -132,10 +116,8 @@ export class Generate {
      * TODO: to write!
      */
     public pdf() {
-        // create a list of contracts and methods
         const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
         this.contracts.forEach(async (contract) => {
-            // transform the template
             let HTMLContent = this.transformTemplate(
                 path.join(contract.folder, this.pdfDefaultTemplatePath),
                 contract,
@@ -151,7 +133,6 @@ export class Generate {
                 }
             }
             const formatEmojify = (code: string, name: string) => `<i alt="${code}" class="twa twa-${name}"></i>`;
-            // generate
             await toPdf.generatePDF(
                 this.outputPath,
                 contract.filename,
@@ -172,9 +153,7 @@ export class Generate {
         contract: IObjectViewData,
         hasLICENSE: boolean,
     ) {
-        // read template into a string
         const templateContent = String(fs.readFileSync(templateFile));
-        // put all data together
         const view = {
             CONTRACT: true,
             contract,
@@ -183,7 +162,6 @@ export class Generate {
             folderStructure: JSON.stringify(this.inputPathStructure),
             hasLICENSE,
         };
-        // calls the render engine
         const output = render(templateContent, view);
         return output;
     }
@@ -193,14 +171,12 @@ export class Generate {
     ) {
         const LICENSEText = String(fs.readFileSync(path.join(process.cwd(), 'LICENSE'))).trim();
         const LICENSE = LICENSEText.replace(/\n/g, '<br>');
-        // put all data together
         const view = {
             LICENSE,
             contractsStructure: this.contracts,
             folderStructure: JSON.stringify(this.inputPathStructure),
             hasLICENSE: true,
         };
-        // calls the render engine
         return render(templateContent, view);
     }
 
@@ -208,7 +184,6 @@ export class Generate {
         templateContent: string, hasLICENSE: boolean,
     ) {
         const READMEText = String(fs.readFileSync(path.join(process.cwd(), 'README.md'))).trim();
-        // render it, from markdown to html
         const READMEconverted = md.render(READMEText);
         const README = READMEconverted
             .replace(/<h1>/g, '<h1 class="title is-1">')
@@ -216,14 +191,12 @@ export class Generate {
             .replace(/<h3>/g, '<h3 class="title is-3">')
             .replace(/<h4>/g, '<h4 class="title is-4">')
             .replace(/<ul>/g, '<ul class="menu-list">');
-        // put all data together
         const view = {
             README,
             contractsStructure: this.contracts,
             folderStructure: JSON.stringify(this.inputPathStructure),
             hasLICENSE,
         };
-        // calls the render engine
         return render(templateContent, view);
     }
 }
