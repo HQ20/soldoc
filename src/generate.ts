@@ -16,7 +16,7 @@ import { render } from 'mustache';
 
 // tslint:disable-next-line: no-var-requires
 const md = require('markdown-it')({
-    highlight(str: any, lang: any) {
+    highlight(str: string, lang: string) {
         if (lang && getLanguage(lang)) {
             try {
                 return `<pre class="hljs"><code>${
@@ -33,7 +33,7 @@ const md = require('markdown-it')({
 });
 
 md.use(mdemoji);
-md.renderer.rules.emoji = (token: any, idx: any) => `<i class="twa twa-${token[idx].markup}"></i>`;
+md.renderer.rules.emoji = (token: Array<{ markup: string }>, idx: number) => `<i class="twa twa-${token[idx].markup}"></i>`;
 
 
 
