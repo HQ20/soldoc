@@ -388,6 +388,12 @@
         </div>
         <aside id="methods">
             {{#contract}}
+            <span style="color: #777777;">INHERITANCE</span>
+            <ul style="padding-left: 25px;" class="list-group side-list">
+                {{#data.inheritance}}
+                <li class="list-group-item"><a href="{{namePath}}.html">{{namePath}}</a></li>
+                {{/data.inheritance}}
+            </ul>
             <p style="color: #777777;">FUNCTIONS</p>
             <ul style="padding-left: 25px;" class="list-group side-list">
                 {{#data.functions}}
