@@ -48,6 +48,23 @@ function extendReturnParamsAstWithNatspec(node: any) {
         ));
 }
 
+function extendsVisibility(node: any) {
+    return {
+        external: node.visibility === 'external',
+        internal: node.visibility === 'internal',
+        private: node.visibility === 'private',
+        public: node.visibility === 'public',
+    };
+}
+
+function extendsStateMutability(node: any) {
+    return {
+        payable: node.stateMutability === 'payable',
+        pure: node.stateMutability === 'pure',
+        view: node.stateMutability === 'view',
+    };
+}
+
 /**
  * Prepare for the given file.
  * @param {string} solidityFilePath the file's path to be parsed
@@ -90,6 +107,8 @@ export function prepareForFile(solidityFilePath: string): IObjectViewData {
                     ast: node,
                     parameters: extendParamsAstWithNatspec(node),
                     returnParameters: extendReturnParamsAstWithNatspec(node),
+                    stateMutability: extendsStateMutability(node),
+                    visibility: extendsVisibility(node),
                 });
             }
         },
