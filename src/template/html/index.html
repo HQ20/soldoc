@@ -406,10 +406,10 @@
             </div>
             {{/contract.data.functions}}
         </div>
-        <aside id="methods">
+        <aside>
             {{#contract}}
             <span style="color: #777777;">EVENTS</span>
-            <ul style="padding-left: 25px;" class="list-group side-list">
+            <ul id="events" style="padding-left: 25px;" class="list-group side-list">
                 {{#data.events}}
                 <li class="list-group-item"><a href="{{filename}}.html#{{ast.name}}">{{ast.name}}</a></li>
                 {{/data.events}}
@@ -417,7 +417,7 @@
             <br/>
             <br/>
             <span style="color: #777777;">FUNCTIONS</span>
-            <ul style="padding-left: 25px;" class="list-group side-list">
+            <ul id="functions" style="padding-left: 25px;" class="list-group side-list">
                 {{#data.functions}}
                 <li class="list-group-item"><a href="{{filename}}.html#{{ast.name}}">{{ast.name}}</a></li>
                 {{/data.functions}}
