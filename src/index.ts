@@ -6,7 +6,7 @@ import path from 'path';
 import { Generate } from './generate';
 import { generateDocumentation as generateDocumentationDocsify } from './generate_docsify';
 import { generateDocumentation as generateDocumentationGitbook } from './generate_gitbook';
-import { ISolDocAST, prepareForFile, IObjectViewData } from './organize';
+import { IObjectViewData, prepareForFile } from './organize';
 
 const terminalConsole = new Console(process.stdout, process.stderr);
 
