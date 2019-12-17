@@ -2,12 +2,11 @@ import { Console } from 'console';
 import fs from 'fs';
 import path from 'path';
 
-import dirTree from 'directory-tree';
 
 import { Generate } from './generate';
 import { generateDocumentation as generateDocumentationDocsify } from './generate_docsify';
 import { generateDocumentation as generateDocumentationGitbook } from './generate_gitbook';
-import { ISolDocAST, prepareForFile } from './organize';
+import { ISolDocAST, prepareForFile, IObjectViewData } from './organize';
 
 const terminalConsole = new Console(process.stdout, process.stderr);
 
@@ -61,7 +60,7 @@ export function generate(outputType: string, ignoreFilesList: string[], outputFo
         return 1;
     }
 
-    let files = [];
+    let files: string[] = [];
     // verify if the input is a directory, file or array of files
     if (stats.isDirectory()) {
         // if it's a folder, get all files recursively
@@ -71,19 +70,18 @@ export function generate(outputType: string, ignoreFilesList: string[], outputFo
         files.push(inputPath);
     }
     // iterate over files to generate HTML
-    const prepared: any[] = [];
+    const prepared: IObjectViewData[] = [];
     files.forEach((file) => prepared.push(prepareForFile(file)));
     // verify if the docs/ folder exist and creates it if not
     const destinationDocsFolderPath = path.join(process.cwd(), outputFolder);
     if (!fs.existsSync(destinationDocsFolderPath)) {
         fs.mkdirSync(destinationDocsFolderPath, { recursive: true });
     }
-    const inputStructure = dirTree(inputPath, { exclude: ignoreFilesList.map((i) => new RegExp(i)) });
-    const generateClass = new Generate();
+    const generateClass = new Generate(files, ignoreFilesList, inputPath, outputFolder);
     if (outputType === 'pdf') {
-        generateClass.pdf(inputStructure, prepared, outputFolder);
+        generateClass.pdf();
     } else if (outputType === 'html') {
-        generateClass.html(inputStructure, prepared, outputFolder);
+        generateClass.html();
     } else if (outputType === 'gitbook') {
         generateDocumentationGitbook(prepared, outputFolder);
     } else if (outputType === 'docsify') {

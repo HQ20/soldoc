@@ -386,17 +386,17 @@
             </div>
             {{/contract.data.functions}}
         </div>
-        {{/CONTRACT}}
         <aside id="methods">
-            {{#contractStructure}}
+            {{#contract}}
             <p style="color: #777777;">FUNCTIONS</p>
             <ul style="padding-left: 25px;" class="list-group side-list">
-                {{#functions}}
-                <li class="list-group-item"><a href="{{filename}}.html#{{name}}">{{name}}</a></li>
-                {{/functions}}
+                {{#data.functions}}
+                <li class="list-group-item"><a href="{{filename}}.html#{{ast.name}}">{{ast.name}}</a></li>
+                {{/data.functions}}
             </ul>
-            {{/contractStructure}}
+            {{/contract}}
         </aside>
+        {{/CONTRACT}}
     </div>
     <script>
         var cDirectory = (c) => ('<li class="folder">' + c.name + '<ul>' + renderTreeView(c.children) + '</ul></li>');
@@ -406,7 +406,7 @@
         }
         function loadDirectoryTreeView() {
             var paths = [{{{ folderStructure }}}];
-        document.getElementById("contracts-treeview").innerHTML = renderTreeView(paths);
+            document.getElementById("contracts-treeview").innerHTML = renderTreeView(paths);
         }
         loadDirectoryTreeView();
     </script>
