@@ -43,49 +43,47 @@ export class Generate {
     private contracts: IObjectViewData[] = [];
     private inputPathStructure: DirectoryTree;
     private outputPath: string;
+    private hasLICENSE: boolean;
 
     constructor(files: string[], exclude: string[], inputPath: string, outputPath: string) {
         files.forEach((file) => this.contracts.push(prepareForFile(file)));
         this.outputPath = outputPath;
         this.inputPathStructure = dirTree(inputPath, { exclude: exclude.map((i) => new RegExp(i)) });
+        this.hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
     }
 
     /**
      * TODO: to write!
      */
     public html() {
-        const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
         this.contracts.forEach((contract) => {
-            let HTMLContent = this.transformTemplate(
+            let HTMLContent = this.mustacheRender(
                 path.join(contract.folder, this.htmlDefaultTemplatePath),
                 contract,
-                hasLICENSE,
             );
-            // transform damn weird URLS into real liks
-            const match = HTMLContent.match(/(?<!\[)https?:&#x2F;&#x2F;[a-zA-Z0-9.&#x2F;\-_]+/g);
-            if (match !== null) {
-                let transform = match.map((url: string) => url.replace(/&#x2F;/g, '/'));
-                transform = transform.map((url: string) => `<a href="${url}">${url}</a>`);
-                for (let i = 0; i < match.length; i += 1) {
-                    HTMLContent = HTMLContent.replace(match[i], transform[i]);
-                }
-            }
-            const formatEmojify = (code: any, name: any) => `<i alt="${code}" class="twa twa-${name}"></i>`;
+            HTMLContent = this.fixUrls(HTMLContent);
             fs.writeFileSync(
                 path.join(process.cwd(), this.outputPath, `${contract.filename}.html`),
-                emojify(HTMLContent, null as any, formatEmojify),
+                this.applyEmojify(HTMLContent),
             );
         });
         if (fs.existsSync(path.join(process.cwd(), 'README.md'))) {
             const templateContent = String(fs.readFileSync(
                 path.join(this.contracts[0].folder, this.htmlDefaultTemplatePath),
             ));
-            const outputReadme = this.renderReadme(templateContent, hasLICENSE);
+            const pureREADME = String(fs.readFileSync(path.join(process.cwd(), 'README.md'))).trim();
+            const view = {
+                README: md.render(pureREADME),
+                contractsStructure: this.contracts,
+                folderStructure: JSON.stringify(this.inputPathStructure),
+                hasLICENSE: this.hasLICENSE,
+            };
+            const outputReadme = render(templateContent, view);
             fs.writeFileSync(
                 path.join(process.cwd(), this.outputPath, 'index.html'),
                 outputReadme,
             );
-            const files: any = [];
+            const files: string[] = [];
             const filesList = fs.readdirSync(process.cwd());
             filesList.forEach((file) => {
                 const stats = fs.lstatSync(path.join(process.cwd(), file));
@@ -93,17 +91,25 @@ export class Generate {
                     files.push(file);
                 }
             });
-            files.forEach((file: any) => {
+            files.forEach((file) => {
                 if (outputReadme.includes(file)) {
                     fs.copyFileSync(path.join(process.cwd(), file), path.join(process.cwd(), this.outputPath, file));
                 }
             });
         }
-        if (hasLICENSE) {
+        if (this.hasLICENSE) {
             const templateContent = String(fs.readFileSync(
                 path.join(this.contracts[0].folder, this.htmlDefaultTemplatePath),
             ));
-            const outputLicense = this.renderLicense(templateContent);
+            const LICENSEText = String(fs.readFileSync(path.join(process.cwd(), 'LICENSE'))).trim();
+            const LICENSE = LICENSEText.replace(/\n/g, '<br>');
+            const view = {
+                LICENSE,
+                contractsStructure: this.contracts,
+                folderStructure: JSON.stringify(this.inputPathStructure),
+                hasLICENSE: true,
+            };
+            const outputLicense =  render(templateContent, view);
             fs.writeFileSync(
                 path.join(process.cwd(), this.outputPath, 'license.html'),
                 outputLicense,
@@ -116,27 +122,16 @@ export class Generate {
      * TODO: to write!
      */
     public pdf() {
-        const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
         this.contracts.forEach(async (contract) => {
-            let HTMLContent = this.transformTemplate(
+            let HTMLContent = this.mustacheRender(
                 path.join(contract.folder, this.pdfDefaultTemplatePath),
                 contract,
-                hasLICENSE,
             );
-            // transform damn weird URLS into real liks
-            const match = HTMLContent.match(/(?<!\[)https?:&#x2F;&#x2F;[a-zA-Z0-9.&#x2F;\-_]+/g);
-            if (match !== null) {
-                let transform = match.map((url: string) => url.replace(/&#x2F;/g, '/'));
-                transform = transform.map((url: string) => `<a href="${url}">${url}</a>`);
-                for (let i = 0; i < match.length; i += 1) {
-                    HTMLContent = HTMLContent.replace(match[i], transform[i]);
-                }
-            }
-            const formatEmojify = (code: string, name: string) => `<i alt="${code}" class="twa twa-${name}"></i>`;
+            HTMLContent = this.fixUrls(HTMLContent);
             await toPdf.generatePDF(
                 this.outputPath,
                 contract.filename,
-                emojify(HTMLContent, null as any, formatEmojify),
+                this.applyEmojify(HTMLContent),
             );
         });
     }
@@ -144,59 +139,39 @@ export class Generate {
     /**
      * Using the given parameters, calls the Mustache engine
      * and renders the HTML page.
-     * @param {string} templateFile Path for template file
-     * @param {string} contractName Contract name
-     * @param {string} contractPath Path to contract file
+     * @param {string} templateFilePath Path for template file
+     * @param {string} contract contract object
      */
-    private transformTemplate(
-        templateFile: string,
+    private mustacheRender(
+        templateFilePath: string,
         contract: IObjectViewData,
-        hasLICENSE: boolean,
     ) {
-        const templateContent = String(fs.readFileSync(templateFile));
+        const templateContent = String(fs.readFileSync(templateFilePath));
         const view = {
-            CONTRACT: true,
             contract,
             contracts: this.contracts,
             currentDate: new Date(),
             folderStructure: JSON.stringify(this.inputPathStructure),
-            hasLICENSE,
+            hasLICENSE: this.hasLICENSE,
         };
         const output = render(templateContent, view);
         return output;
     }
 
-    private renderLicense(
-        templateContent: string,
-    ) {
-        const LICENSEText = String(fs.readFileSync(path.join(process.cwd(), 'LICENSE'))).trim();
-        const LICENSE = LICENSEText.replace(/\n/g, '<br>');
-        const view = {
-            LICENSE,
-            contractsStructure: this.contracts,
-            folderStructure: JSON.stringify(this.inputPathStructure),
-            hasLICENSE: true,
-        };
-        return render(templateContent, view);
+    private fixUrls = (content: string) => {
+        const match = content.match(/(?<!\[)https?:&#x2F;&#x2F;[a-zA-Z0-9.&#x2F;\-_]+/g);
+        if (match !== null) {
+            let transform = match.map((url: string) => url.replace(/&#x2F;/g, '/'));
+            transform = transform.map((url: string) => `<a href="${url}">${url}</a>`);
+            for (let i = 0; i < match.length; i += 1) {
+                content = content.replace(match[i], transform[i]);
+            }
+        }
+        return content;
     }
 
-    private renderReadme(
-        templateContent: string, hasLICENSE: boolean,
-    ) {
-        const READMEText = String(fs.readFileSync(path.join(process.cwd(), 'README.md'))).trim();
-        const READMEconverted = md.render(READMEText);
-        const README = READMEconverted
-            .replace(/<h1>/g, '<h1 class="title is-1">')
-            .replace(/<h2>/g, '<h2 class="title is-2">')
-            .replace(/<h3>/g, '<h3 class="title is-3">')
-            .replace(/<h4>/g, '<h4 class="title is-4">')
-            .replace(/<ul>/g, '<ul class="menu-list">');
-        const view = {
-            README,
-            contractsStructure: this.contracts,
-            folderStructure: JSON.stringify(this.inputPathStructure),
-            hasLICENSE,
-        };
-        return render(templateContent, view);
+    private applyEmojify = (content: string) => {
+        const formatEmojify = (code: string, name: string) => `<i alt="${code}" class="twa twa-${name}"></i>`;
+        return emojify(content, null as any, formatEmojify);
     }
 }

@@ -221,7 +221,7 @@
             </div>
         </div>
         {{/LICENSE}}
-        {{#CONTRACT}}
+        {{#contract}}
         <div class="container">
             <div class="notification">
                 <h1 class="title is-1" id="contractName">{{contract.name}}</h1>
@@ -396,7 +396,7 @@
             </ul>
             {{/contract}}
         </aside>
-        {{/CONTRACT}}
+        {{/contract}}
     </div>
     <script>
         var cDirectory = (c) => ('<li class="folder">' + c.name + '<ul>' + renderTreeView(c.children) + '</ul></li>');
