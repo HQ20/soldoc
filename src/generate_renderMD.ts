@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { IObjectViewData } from './organize';
 
-export function renderContracts(contractsPreparedData: IObjectViewData[], outputFolder: any, lineBreak: any) {
+export function renderContracts(contractsPreparedData: IObjectViewData[], outputFolder: string, lineBreak: string) {
     contractsPreparedData.forEach((contract) => {
         // transform the template
         let MDContent = `# ${contract.name}${lineBreak}`;
@@ -14,7 +14,7 @@ export function renderContracts(contractsPreparedData: IObjectViewData[], output
                 MDContent += `${contract.data.contract.natspec.notice}${lineBreak}`;
             }
         }
-        contract.data.functions.forEach((f: any) => {
+        contract.data.functions.forEach((f) => {
             MDContent += `## ${f.ast.name}${lineBreak}${lineBreak}`;
             if (f.ast.natspec === null) {
                 return;
@@ -54,14 +54,14 @@ export function renderContracts(contractsPreparedData: IObjectViewData[], output
     });
 }
 
-export function renderReadme(outputFolder: any) {
-    let outputReadme: any;
+export function renderReadme(outputFolder: string) {
+    let outputReadme: string;
     if (fs.existsSync(path.join(process.cwd(), 'README.md'))) {
         fs.copyFileSync(
             path.join(process.cwd(), 'README.md'),
             path.join(process.cwd(), outputFolder, 'README.md'),
         );
-        outputReadme = fs.readFileSync(path.join(process.cwd(), 'README.md'));
+        outputReadme = fs.readFileSync(path.join(process.cwd(), 'README.md')).toString();
     } else {
         fs.writeFileSync(
             path.join(process.cwd(), outputFolder, 'README.md'),
@@ -70,7 +70,7 @@ export function renderReadme(outputFolder: any) {
         outputReadme = '# Hello';
     }
     // if there's an image reference in readme, copy it
-    const files: any = [];
+    const files: string[] = [];
     // read dir
     const filesList = fs.readdirSync(process.cwd());
     // iterate over what was found
@@ -82,7 +82,7 @@ export function renderReadme(outputFolder: any) {
         }
     });
     // and if the file is n readme, copy it
-    files.forEach((file: any) => {
+    files.forEach((file) => {
         if (outputReadme.includes(file)) {
             fs.copyFileSync(path.join(process.cwd(), file), path.join(process.cwd(), outputFolder, file));
         }
@@ -90,11 +90,11 @@ export function renderReadme(outputFolder: any) {
 }
 
 export function renderDocumentationIndex(
-    content: any,
-    outputFolder: any,
-    contractsStructure: any,
-    hasLICENSE: any,
-    lineBreak: any,
+    content: string,
+    outputFolder: string,
+    contractsStructure: IObjectViewData[],
+    hasLICENSE: boolean,
+    lineBreak: string,
 ) {
     let documentationIndexContent = content;
     if (hasLICENSE) {
@@ -105,7 +105,7 @@ export function renderDocumentationIndex(
         );
     }
     documentationIndexContent += `* CONTRACTS${lineBreak}`;
-    contractsStructure.forEach((s: any) => {
+    contractsStructure.forEach((s) => {
         documentationIndexContent += `\t* [${s.name}](${s.name}.md)${lineBreak}`;
     });
     return documentationIndexContent;

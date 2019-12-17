@@ -110,22 +110,3 @@ export function prepareForFile(solidityFilePath: string): IObjectViewData {
         path: solidityFilePath,
     };
 }
-
-export function organizeContractsStructure(
-    contractsPreparedData: IObjectViewData[],
-) {
-    const contractsStructure: any = [];
-    contractsPreparedData.forEach((contract) => {
-        const contractInfo: any = {};
-        // add name
-        contractInfo.name = contract.name;
-        contractInfo.filename = contract.filename;
-        contractInfo.functions = [];
-        // add functions name
-        contract.data.functions.forEach((func: any) => {
-            contractInfo.functions.push({ name: func.ast.name });
-        });
-        contractsStructure.push(contractInfo);
-    });
-    return contractsStructure;
-}
