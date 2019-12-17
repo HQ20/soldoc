@@ -1,28 +1,25 @@
 import fs from 'fs';
 import path from 'path';
 import {
-    organizeContractsStructure,
-} from './organize';
-import {
     renderContracts,
     renderDocumentationIndex,
     renderReadme,
-} from './renderMD';
+} from './generate_renderMD';
+import { IObjectViewData } from './organize';
 
 const lineBreak = '\r\n';
 
 /**
  * @param contractsPreparedData prepared data
  */
-export function generateDocumentation(contractsPreparedData: any, outputFolder: any) {
+export function generateDocumentation(contractsPreparedData: IObjectViewData[], outputFolder: any) {
     // create a list of contracts and methods
-    const contractsStructure = organizeContractsStructure(contractsPreparedData);
     const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
     renderContracts(contractsPreparedData, outputFolder, lineBreak);
     // generate summary file (essential in gitbook)
     let SUMMARYContent = `# Summary\r\n* WELCOME${lineBreak}`;
     SUMMARYContent = renderDocumentationIndex(
-        SUMMARYContent, outputFolder, contractsStructure, hasLICENSE, lineBreak,
+        SUMMARYContent, outputFolder, contractsPreparedData, hasLICENSE, lineBreak,
     );
     // create summary file
     fs.writeFileSync(

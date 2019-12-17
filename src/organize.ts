@@ -3,6 +3,20 @@ import path from 'path';
 import parser from 'solidity-parser-antlr';
 
 
+export interface ISolDocAST {
+    contract?: any;
+    constructor?: any;
+    events: any[];
+    functions: any[];
+}
+export interface IObjectViewData {
+    data: ISolDocAST;
+    filename: string;
+    folder: string;
+    name: string;
+    path: string;
+}
+
 function extendParamsAstWithNatspec(node: any) {
     if (node.parameters === null) {
         return null;
@@ -33,33 +47,29 @@ function extendReturnParamsAstWithNatspec(node: any) {
             }
         ));
 }
+
 /**
- * Merges the contract ast and comments into an array.
- * @param {string} solidityFile the file's path to be parsed
+ * Prepare for the given file.
+ * @param {string} solidityFilePath the file's path to be parsed
  */
-function mergeInfoFile(solidityFile: string) {
-    // read file
-    const input = fs.readFileSync(solidityFile).toString();
-    // parse it using solidity-parser-antlr
+export function prepareForFile(solidityFilePath: string): IObjectViewData {
+    const folder = path.join(__dirname, '../');
+    const input = fs.readFileSync(solidityFilePath).toString();
     const ast = parser.parse(input);
-    // filter for contract definition
-    const astContract = ast.children.filter((child: any) => child.type === 'ContractDefinition');
-    // get basic information
-    const rawContractData = { ast: astContract };
-    // create an array to save the ast and comments
-    const contractDataWithComments = {
-        constructor: null,
-        contract: undefined,
+    let data: ISolDocAST = {
         events: [] as any,
         functions: [] as any,
     };
     // visit all the methods and add the commands to it
-    parser.visit(rawContractData.ast, {
+    parser.visit(ast, {
         ContractDefinition: (node: any) => {
-            contractDataWithComments.contract = node;
+            data = {
+                contract: node,
+                ...data,
+            };
         },
         EventDefinition: (node: any) => {
-            contractDataWithComments.events.push({
+            data.events.push({
                 ast: node,
                 parameters: extendParamsAstWithNatspec(node),
                 returnParameters: extendReturnParamsAstWithNatspec(node),
@@ -67,13 +77,16 @@ function mergeInfoFile(solidityFile: string) {
         },
         FunctionDefinition: (node: any) => {
             if (node.isConstructor) {
-                contractDataWithComments.constructor = {
-                    ast: node,
-                    parameters: extendParamsAstWithNatspec(node),
-                    returnParameters: extendReturnParamsAstWithNatspec(node),
-                } as any;
+                data = {
+                    constructor: {
+                        ast: node,
+                        parameters: extendParamsAstWithNatspec(node),
+                        returnParameters: extendReturnParamsAstWithNatspec(node),
+                    },
+                    ...data,
+                };
             } else {
-                contractDataWithComments.functions.push({
+                data.functions.push({
                     ast: node,
                     parameters: extendParamsAstWithNatspec(node),
                     returnParameters: extendReturnParamsAstWithNatspec(node),
@@ -81,45 +94,13 @@ function mergeInfoFile(solidityFile: string) {
             }
         },
     });
-    // return new info
-    return [rawContractData.ast[0].name, contractDataWithComments];
-}
-
-/**
- * Prepare for the given file.
- * @param {string} solidityFilePath the file's path to be parsed
- */
-export function prepareForFile(solidityFilePath: string) {
-    // get current path folder
-    const currentFolder = path.join(__dirname, '../');
-    // get ast and comments
-    const [contractName, contractData] = mergeInfoFile(solidityFilePath);
-    // get the filename
+    const name = ast.children.filter((child: any) => child.type === 'ContractDefinition')[0].name;
     const filename = path.parse(solidityFilePath).name;
     return {
-        contractData,
-        contractName,
-        currentFolder,
+        data,
         filename,
-        solidityFilePath,
+        folder,
+        name,
+        path: solidityFilePath,
     };
-}
-
-export function organizeContractsStructure(
-    contractsPreparedData: any,
-) {
-    const contractsStructure: any = [];
-    contractsPreparedData.forEach((contract: any) => {
-        const contractInfo: any = {};
-        // add name
-        contractInfo.name = contract.contractName;
-        contractInfo.filename = contract.filename;
-        contractInfo.functions = [];
-        // add functions name
-        contract.contractData.functions.forEach((func: any) => {
-            contractInfo.functions.push({ name: func.ast.name });
-        });
-        contractsStructure.push(contractInfo);
-    });
-    return contractsStructure;
 }

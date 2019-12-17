@@ -1,28 +1,25 @@
 import fs from 'fs';
 import path from 'path';
 import {
-    organizeContractsStructure,
-} from './organize';
-import {
     renderContracts,
     renderDocumentationIndex,
     renderReadme,
-} from './renderMD';
+} from './generate_renderMD';
+import { IObjectViewData } from './organize';
 
 const lineBreak = '\r\n';
 
 /**
  * @param contractsPreparedData prepared data
  */
-export function generateDocumentation(contractsPreparedData: any, outputFolder: any) {
+export function generateDocumentation(contractsPreparedData: IObjectViewData[], outputFolder: any) {
     // create a list of contracts and methods
-    const contractsStructure = organizeContractsStructure(contractsPreparedData);
     const hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
     renderContracts(contractsPreparedData, outputFolder, lineBreak);
     // generate _sidebar file (essential in docsify, to have a custom sidebar)
     let SIDEBARContent = `* WELCOME${lineBreak}\t* [Home](/)${lineBreak}`;
     SIDEBARContent = renderDocumentationIndex(
-        SIDEBARContent, outputFolder, contractsStructure, hasLICENSE, lineBreak,
+        SIDEBARContent, outputFolder, contractsPreparedData, hasLICENSE, lineBreak,
     );
     // create _sidebar file
     fs.writeFileSync(

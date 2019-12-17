@@ -2,13 +2,11 @@ import { Console } from 'console';
 import fs from 'fs';
 import path from 'path';
 
-import dirTree from 'directory-tree';
 
-import { generateDocumentation as generateDocumentationDocsify } from './docsify';
-import { generateDocumentation as generateDocumentationGitbook } from './gitbook';
-import { generateDocumentation as generateDocumentationHTML } from './html';
-import { prepareForFile } from './organize';
-import { generateDocumentation as generateDocumentationPDF } from './pdf';
+import { Generate } from './generate';
+import { generateDocumentation as generateDocumentationDocsify } from './generate_docsify';
+import { generateDocumentation as generateDocumentationGitbook } from './generate_gitbook';
+import { IObjectViewData, prepareForFile } from './organize';
 
 const terminalConsole = new Console(process.stdout, process.stderr);
 
@@ -20,23 +18,17 @@ const terminalConsole = new Console(process.stdout, process.stderr);
  */
 function deepListFiles(folder: string, ignoreFilesList: string[]): string[] {
     const files: string[] = [];
-    // read dir
     const filesList = fs.readdirSync(folder);
-    // iterate over what was found
     filesList.forEach((file) => {
         if (ignoreFilesList.includes(file)) {
             return;
         }
         const stats = fs.lstatSync(path.join(folder, file));
-        // lets see if it is a directory
         if (stats.isDirectory()) {
-            // if so, navigate
             const result = deepListFiles(path.join(folder, file), ignoreFilesList);
-            // push them all
             result.forEach((r) => files.push(r));
             return;
         }
-        // if not, push file to list, only if it is valid
         if (path.extname(file) === '.sol') {
             files.push(path.join(folder, file));
         }
@@ -52,38 +44,32 @@ function deepListFiles(folder: string, ignoreFilesList: string[]): string[] {
  * @param {string} inputPath the path to file or folder to be analized
  */
 export function generate(outputType: string, ignoreFilesList: string[], outputFolder: string, inputPath: string): number {
-    // verify the type of the given input
     let stats;
     try {
         stats = fs.lstatSync(inputPath);
     } catch (e) {
-        // Handle error
         terminalConsole.log(`The file you are looking for (${inputPath}) doesn't exist!`);
         return 1;
     }
 
-    let files = [];
+    let files: string[] = [];
     // verify if the input is a directory, file or array of files
     if (stats.isDirectory()) {
-        // if it's a folder, get all files recursively
         files = deepListFiles(inputPath, ignoreFilesList);
     } else if (stats.isFile() && !ignoreFilesList.includes(inputPath)) {
-        // if it's a file, just get the file
         files.push(inputPath);
     }
-    // iterate over files to generate HTML
-    const prepared: any[] = [];
+    const prepared: IObjectViewData[] = [];
     files.forEach((file) => prepared.push(prepareForFile(file)));
-    // verify if the docs/ folder exist and creates it if not
     const destinationDocsFolderPath = path.join(process.cwd(), outputFolder);
     if (!fs.existsSync(destinationDocsFolderPath)) {
         fs.mkdirSync(destinationDocsFolderPath, { recursive: true });
     }
-    const inputStructure = dirTree(inputPath, { exclude: ignoreFilesList.map((i) => new RegExp(i)) });
+    const generateClass = new Generate(files, ignoreFilesList, inputPath, outputFolder);
     if (outputType === 'pdf') {
-        generateDocumentationPDF(inputStructure, prepared, outputFolder);
+        generateClass.pdf();
     } else if (outputType === 'html') {
-        generateDocumentationHTML(inputStructure, prepared, outputFolder);
+        generateClass.html();
     } else if (outputType === 'gitbook') {
         generateDocumentationGitbook(prepared, outputFolder);
     } else if (outputType === 'docsify') {
