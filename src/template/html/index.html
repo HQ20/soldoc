@@ -337,7 +337,27 @@
                                     <h2 style="float: left;">{{ast.name}}</h2>
                                 </div>
                                 <div class="p-2 bd-highlight">
-                                    <span style="float: right;">internal</span>
+                                    {{#visibility.public}}
+                                    <span class="badge badge-primary">public</span>
+                                    {{/visibility.public}}
+                                    {{#visibility.private}}
+                                    <span class="badge badge-secondary">private</span>
+                                    {{/visibility.private}}
+                                    {{#visibility.internal}}
+                                    <span class="badge badge-success">internal</span>
+                                    {{/visibility.internal}}
+                                    {{#visibility.external}}
+                                    <span class="badge badge-danger">external</span>
+                                    {{/visibility.external}}
+                                    {{#stateMutability.pure}}
+                                    <span class="badge badge-warning">pure</span>
+                                    {{/stateMutability.pure}}
+                                    {{#stateMutability.view}}
+                                    <span class="badge badge-info">view</span>
+                                    {{/stateMutability.view}}
+                                    {{#stateMutability.payable}}
+                                    <span class="badge badge-light">payable</span>
+                                    {{/stateMutability.payable}}
                                 </div>
                             </div>
                         </div>
@@ -386,10 +406,18 @@
             </div>
             {{/contract.data.functions}}
         </div>
-        <aside id="methods">
+        <aside>
             {{#contract}}
-            <p style="color: #777777;">FUNCTIONS</p>
-            <ul style="padding-left: 25px;" class="list-group side-list">
+            <span style="color: #777777;">EVENTS</span>
+            <ul id="events" style="padding-left: 25px;" class="list-group side-list">
+                {{#data.events}}
+                <li class="list-group-item"><a href="{{filename}}.html#{{ast.name}}">{{ast.name}}</a></li>
+                {{/data.events}}
+            </ul>
+            <br/>
+            <br/>
+            <span style="color: #777777;">FUNCTIONS</span>
+            <ul id="functions" style="padding-left: 25px;" class="list-group side-list">
                 {{#data.functions}}
                 <li class="list-group-item"><a href="{{filename}}.html#{{ast.name}}">{{ast.name}}</a></li>
                 {{/data.functions}}
@@ -406,7 +434,7 @@
         }
         function loadDirectoryTreeView() {
             var paths = [{{{ folderStructure }}}];
-            document.getElementById("contracts-treeview").innerHTML = renderTreeView(paths);
+        document.getElementById("contracts-treeview").innerHTML = renderTreeView(paths);
         }
         loadDirectoryTreeView();
     </script>

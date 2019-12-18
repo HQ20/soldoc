@@ -62,8 +62,8 @@ describe('Render HTML Page - ERC20', () => {
             '_approve',
             '_burnFrom',
         ];
-        await page.waitFor('aside#methods li a');
-        const cards = await page.$$('aside#methods li a');
+        await page.waitFor('aside ul#functions li a');
+        const cards = await page.$$('aside ul#functions li a');
         for (let c = 0; c < cards.length; c += 1) {
             // eslint-disable-next-line no-await-in-loop
             const text = await page.evaluate((e) => e.textContent, cards[c]);
