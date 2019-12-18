@@ -51,6 +51,7 @@
     },
     "homepage": "https://github.com/hq20/soldoc#readme",
     "peerDependencies": {
+        "directory-tree": "2.2.x",
         "highlight.js": "9.17.x",
         "markdown-it": "10.0.x",
         "markdown-it-emoji": "1.4.x",
