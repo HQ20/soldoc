@@ -408,14 +408,22 @@
         </div>
         <aside>
             {{#contract}}
+            <span style="color: #777777;">INHERITANCE</span>
+            <ul id="inheritance" style="padding-left: 25px;" class="list-group side-list">
+                {{#data.inheritance}}
+                <li class="list-group-item"><a href="{{namePath}}.html">{{namePath}}</a></li>
+                {{/data.inheritance}}
+            </ul>
+            <br />
+            <br />
             <span style="color: #777777;">EVENTS</span>
             <ul id="events" style="padding-left: 25px;" class="list-group side-list">
                 {{#data.events}}
                 <li class="list-group-item"><a href="{{filename}}.html#{{ast.name}}">{{ast.name}}</a></li>
                 {{/data.events}}
             </ul>
-            <br/>
-            <br/>
+            <br />
+            <br />
             <span style="color: #777777;">FUNCTIONS</span>
             <ul id="functions" style="padding-left: 25px;" class="list-group side-list">
                 {{#data.functions}}

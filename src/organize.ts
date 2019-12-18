@@ -4,6 +4,7 @@ import parser from 'solidity-parser-antlr';
 
 
 export interface ISolDocAST {
+    inheritance?: any;
     contract?: any;
     constructor?: any;
     events: any[];
@@ -111,6 +112,12 @@ export function prepareForFile(solidityFilePath: string): IObjectViewData {
                     visibility: extendsVisibility(node),
                 });
             }
+        },
+        InheritanceSpecifier: (node: any) => {
+            data = {
+                inheritance: node.baseName,
+                ...data,
+            };
         },
     });
     const name = ast.children.filter((child: any) => child.type === 'ContractDefinition')[0].name;
