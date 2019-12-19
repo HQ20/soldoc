@@ -77,7 +77,7 @@
         "@types/node": "12.12.21",
         "@types/node-emoji": "1.8.1",
         "typescript": "3.7.3",
-        "@types/jest": "24.0.23",
+        "@types/jest": "24.0.24",
         "coveralls": "3.0.9",
         "directory-tree": "2.2.4",
         "expect.js": "0.3.1",
