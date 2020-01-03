@@ -16,7 +16,6 @@ Contributors guide: ./CONTRIBUTING.md
 - [ ] new tests
 - [ ] keep or improve the tests coverage
 - [ ] documentation is changed or added
-- [ ] commit message follows [commit guidelines](./doc/guides/contributing/pull-requests.md#commit-message-guidelines)
 
 <!-- _NOTE: these things are not required to open a PR and can be done afterwards / while the PR is open._ -->
 
