@@ -23,14 +23,17 @@ Please note that, there's also a pdf example in `./example` folder. This pdf is 
 ## Installation and Usage
 
 ```bash
-# Move to your project folder.
+# Go to your project folder.
 cd project-folder/
 
 # Install soldoc.
 npm install --save-dev soldoc
 
+# Install soldoc's peerDependencies (in case you don't have them yet).
+npm install --save-dev directory-tree highlight.js markdown-it markdown-it-emoji meow mustache node-emoji pdf-from-html
+
 # Run soldoc.
-soldoc docs/ Sample.sol
+npx soldoc docs/ Sample.sol
 
 # View documentation
 open ./docs/Sample.html
