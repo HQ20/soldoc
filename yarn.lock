@@ -3882,9 +3882,9 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
-"solidity-parser-antlr@git://github.com/obernardovieira/solidity-parser-antlr.git#5fb4ceb":
+"solidity-parser-antlr@git://github.com/obernardovieira/solidity-parser-antlr.git#80086a4":
   version "0.4.11"
-  resolved "git://github.com/obernardovieira/solidity-parser-antlr.git#5fb4ceb17418285ef5549b5ce3482fd3c928a227"
+  resolved "git://github.com/obernardovieira/solidity-parser-antlr.git#80086a48e8a61cbdfdaf01c6d8c8493dd509c704"
 
 source-map-resolve@^0.5.0:
   version "0.5.2"

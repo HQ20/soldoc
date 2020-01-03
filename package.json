@@ -41,10 +41,7 @@
         "pdf",
         "pdf-generation"
     ],
-    "author": {
-        "name": "Bernardo Vieira",
-        "github": "obernardovieira"
-    },
+    "author": "HQ20",
     "license": "GPL-3.0-only",
     "bugs": {
         "url": "https://github.com/hq20/soldoc/issues"
@@ -61,7 +58,7 @@
         "pdf-from-html": "0.1.x"
     },
     "dependencies": {
-        "solidity-parser-antlr": "git://github.com/obernardovieira/solidity-parser-antlr.git#5fb4ceb"
+        "solidity-parser-antlr": "git://github.com/obernardovieira/solidity-parser-antlr.git#80086a4"
     },
     "devDependencies": {
         "highlight.js": "9.17.1",
