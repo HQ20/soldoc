@@ -94,23 +94,26 @@ export function prepareForFile(solidityFilePath: string): IObjectViewData {
             });
         },
         FunctionDefinition: (node: any) => {
-            if (node.isConstructor) {
-                data = {
-                    constructor: {
+            if ((node.natspec !== null && node.natspec.dev !== 'soldoc-ignore' ||
+                node.natspec === null)) {
+                if (node.isConstructor) {
+                    data = {
+                        constructor: {
+                            ast: node,
+                            parameters: extendParamsAstWithNatspec(node),
+                            returnParameters: extendReturnParamsAstWithNatspec(node),
+                        },
+                        ...data,
+                    };
+                } else {
+                    data.functions.push({
                         ast: node,
                         parameters: extendParamsAstWithNatspec(node),
                         returnParameters: extendReturnParamsAstWithNatspec(node),
-                    },
-                    ...data,
-                };
-            } else {
-                data.functions.push({
-                    ast: node,
-                    parameters: extendParamsAstWithNatspec(node),
-                    returnParameters: extendReturnParamsAstWithNatspec(node),
-                    stateMutability: extendsStateMutability(node),
-                    visibility: extendsVisibility(node),
-                });
+                        stateMutability: extendsStateMutability(node),
+                        visibility: extendsVisibility(node),
+                    });
+                }
             }
         },
         InheritanceSpecifier: (node: any) => {
