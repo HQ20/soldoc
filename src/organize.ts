@@ -9,6 +9,8 @@ export interface ISolDocAST {
     constructor?: any;
     events: any[];
     functions: any[];
+    structs: any[];
+    variables: any[];
 }
 export interface IObjectViewData {
     data: ISolDocAST;
@@ -77,6 +79,8 @@ export function prepareForFile(solidityFilePath: string): IObjectViewData {
     let data: ISolDocAST = {
         events: [] as any,
         functions: [] as any,
+        structs: [] as any,
+        variables: [] as any,
     };
     // visit all the methods and add the commands to it
     parser.visit(ast, {
@@ -118,6 +122,15 @@ export function prepareForFile(solidityFilePath: string): IObjectViewData {
                 inheritance: node.baseName,
                 ...data,
             };
+        },
+        StateVariableDeclaration: (node: any) => {
+            data.variables.push({
+                ast: {
+                    ...node,
+                    variable: node.variables[0],
+                },
+                visibility: extendsVisibility(node),
+            });
         },
     });
     const name = ast.children.filter((child: any) => child.type === 'ContractDefinition')[0].name;

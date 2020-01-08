@@ -243,6 +243,19 @@
                 <small class="generated">Generated in {{currentDate}}</small>
             </div>
 
+            <h3>Variables</h3>
+            {{#contract.data.variables}}
+            <p>
+                <strong class="variable">{{ast.variable.name}}</strong>
+                {{#ast.natspec.dev}}
+                <p><i>{{ast.natspec.dev}}</i></p>
+                {{/ast.natspec.dev}}
+                {{#ast.natspec.notice}}
+                <p>{{ast.natspec.notice}}</p>
+                {{/ast.natspec.notice}}
+            </p>
+            {{/contract.data.variables}}
+
             {{#contract.data.constructor}}
             <div class="soldoc-box">
                 <p>

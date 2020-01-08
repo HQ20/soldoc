@@ -61,6 +61,22 @@ describe('Render HTML Page - Plane', () => {
         }
         done();
     });
+    /**
+     * All the variables should be listed in the main body
+     */
+    test('should have all variables listed (main body)', async (done) => {
+        const cardsNames = [
+            'name',
+        ];
+        await page.waitFor('strong.variable');
+        const cards = await page.$$('strong.variable');
+        for (let c = 0; c < cards.length; c += 1) {
+            // eslint-disable-next-line no-await-in-loop
+            const text = await page.evaluate((e) => e.textContent, cards[c]);
+            expect(cardsNames).toContain(text);
+        }
+        done();
+    });
 
     /**
      * The title comment
