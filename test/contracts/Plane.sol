@@ -5,6 +5,8 @@ pragma solidity ^0.5.8;
  * @author Wilbur & Orville
  */
 contract Plane {
+
+    /// @notice name of the plane.
     bytes32 private name;
 
     /**
