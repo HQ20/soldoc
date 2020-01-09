@@ -71,6 +71,11 @@ describe('Render HTML Page - Complete folder', () => {
             'Plane',
             'Tree',
             'Example',
+            'Ignore',
+            'Animal',
+            'Mammal',
+            'Dog',
+            'Yorkshire',
         ];
         await page.waitFor('ul#contracts-treeview li a');
         const cards = await page.$$('ul#contracts-treeview li a');
