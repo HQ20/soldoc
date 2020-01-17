@@ -73,7 +73,7 @@
         "@types/mustache": "3.2.0",
         "@types/node": "13.1.7",
         "@types/node-emoji": "1.8.1",
-        "typescript": "3.7.4",
+        "typescript": "3.7.5",
         "@types/jest": "24.9.0",
         "coveralls": "3.0.9",
         "directory-tree": "2.2.4",
