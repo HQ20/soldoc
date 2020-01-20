@@ -91,6 +91,7 @@ describe('Render HTML Page - Complete folder', () => {
      * All the contracts methods should be listed in the side menu
      */
     test('should have all contracts methods listed (side menu)', async (done) => {
+        // should also, not list the ignored ones!
         const cardsNames = [
             'totalSupply',
             'balanceOf',
