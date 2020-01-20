@@ -71,7 +71,7 @@
         "@types/highlight.js": "9.12.3",
         "@types/meow": "5.0.0",
         "@types/mustache": "3.2.0",
-        "@types/node": "13.1.7",
+        "@types/node": "13.1.8",
         "@types/node-emoji": "1.8.1",
         "typescript": "3.7.5",
         "@types/jest": "24.9.0",
