@@ -19,9 +19,7 @@ contract Tree {
         return rings + 1;
     }
 
-    /**
-     * @dev The Alexandr N. Tetearing algorithm could increase precision
-     */
+    /// @dev The Alexandr N. Tetearing algorithm could increase precision
     function reverseAge(uint256 rings) external pure returns (uint256) {
         return rings - 1;
     }
