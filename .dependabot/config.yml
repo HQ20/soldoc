@@ -8,8 +8,7 @@ update_configs:
       - "obernardovieira"
     ignored_updates:
       - match:
-          dependency_name: "jest"
-          dependency_name: "web3"
+          dependency_name: "tslint"
     automerged_updates:
       - match:
           dependency_type: "development"

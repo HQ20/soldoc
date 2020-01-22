@@ -2,3 +2,5 @@ dist
 node_modules
 coverage
 docs
+test
+src/generate_*.ts
