@@ -22,8 +22,6 @@ categories:
       - 'bugfix'
       - 'regression'
    # Default label used by Dependabot
-  - title: '📦 Dependency updates'
-    label: 'dependencies'
   - title: '📝 Documentation updates'
     label: 'documentation'
   - title: '👻 Maintenance'
@@ -37,6 +35,7 @@ categories:
 
 exclude-labels:
   - 'reverted'
+  - 'dependencies'
   - 'no-changelog'
   - 'skip-changelog'
   - 'invalid'
