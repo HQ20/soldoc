@@ -1,19 +1,18 @@
 dist: xenial
 language: node_js
 node_js:
-  - lts/dubnium
+- lts/dubnium
 install:
-  - sudo apt-get install -y poppler-utils
-  - npm install
+- sudo apt-get install -y poppler-utils
+- npm install
 script:
-  - npm run coverage:ci
-  - npm run lint
+- npm run coverage:ci
+- npm run lint
 deploy:
   provider: npm
-  email: bernardo5@live.com.pt
+  email: admin@techhq.io
   api_key:
-    secure: KZF9IUUJj5Fse+iBXQ3QK2p76nAYZeL3+zuHUIQDFzqeSZZYK0Fgwp27JPn7aVDMVycgMNpRfvJRild8ERX+k8iSyX5lJWDjjU0I4LFoI0V/qe7+B/lNdcK0doQbhin7ga1MNDKO0lln62ld8zPDYHxW6ErPMlF9mmD6amOM7FrFeDJH/OyPDVCuIBf/VKFJvqjWTlf2oIcvGndGGAAdAPdcpo69JtqQs2NSEzTwaVJMbDNFbd1waUydiN08OlqbZv07LfsA2Ek3dGWuI+baW1enCEZ75aXJHuLTjcXUiqosv1GK1LANwioep/J/7nbw0HcGj6JDKUAC2sI/lQcfj86yXxEoVGMiH5ZwI8KN+PhJkRNvkUUoe2UM0kfeJzHemPVF75RIw8SD5y89htMkY83ubweibByn5ay3ye3DsqsS/O49+f/eX5SyIbzCFe9sGZiXtCAvaoeLmRnL2Md044coLt0+kSzKhPj3TLCkKC/5oiRqVNjTnTpCNPErrHM3r7SQireZCferv9GTqZmMIExAcE2k7n6DfY6tHOWwHZoV9JhloHn6roLqIsj8mtcLudpyrPQainw7kjz7wfz8c0Lnsraz+LtvQxw2bId2G1euNRX3epKcG8BL8Zsd5S4ilc2sRBZ6JIQUPh48ShtXQAa6PNfy5YSOj9AHctPks/Q=
+    secure: HbgI28QlzE8TQNk/uSJzLlTgCO4qoYEi/ek72avzRRjavkb3NsyRr6SYhQ5f8tL/bCgBoLuvM0vLnPeegVSYVeZ/oXMJvtXicWYemXI1+eM4hyPyAru0WGZiCKHBEl74OcWe2HXC6xrYSZifcJs9377BeK4PXShTISc4HBdAlbJyHE2Mi6gYzMyVqiRamQEtvaEljfBqYyqe8l6RB9HSG4UX4DR7YDr+lsMaYWaP4sDkkysNBGNJEs+B4XbQs9jwDrjp9jQj5vTrJnJ8f2xI4FDFv0Qib/GCp0HQtEJUrdjO+xcjEfFpylmN+07DE1HJ9Oi5Ms3gvXgtvyd7O7ErtqFrhBztFL63xPrMYQE3m7nEmIpWq6wonX99KtEYxHOeTek/1wWVEO03ZuvxsqpM3FTXYqOh+YIxJShG3pJTLkVWmu9qPnWnbOzn9g7XuKhfq5hnbZrif5zQejbo+9HLiNx39vbE738KswEvyawUqUZZ1CykjkCy6neddq//sShCb1RBQPwreiLp11jynvDmCTx4EUTId8mBv2Pe0Kzr4nOvivR7QZqQCutshDCkWCqeGysJpUGbgCeCF4x9xwM1Ka4frrgfCuJb5Tg4S4pwVTiZScGW6MF2KN6s/MYcZRbod1OfYIk58ENDi5FrjZi7UttLEokKFVBgtLmTM8H2R+w=
   on:
-    branch: master
     tags: true
     repo: HQ20/soldoc

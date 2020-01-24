@@ -1,6 +1,6 @@
 {
     "name": "soldoc",
-    "version": "0.1.2",
+    "version": "0.1.2-beta.7",
     "description": "An html page and pdf solidity documentation generator, based in NatSpec format.",
     "main": "dist/index.js",
     "bin": {
@@ -58,14 +58,14 @@
         "pdf-from-html": "^0.1.0"
     },
     "dependencies": {
-        "solidity-parser-antlr": "git://github.com/obernardovieira/solidity-parser-antlr.git#80086a4"
+        "solidity-parser-antlr": "hq20/solidity-parser-antlr#0c5d6e1"
     },
     "devDependencies": {
         "@types/highlight.js": "9.12.3",
-        "@types/jest": "24.9.0",
+        "@types/jest": "24.9.1",
         "@types/meow": "5.0.0",
         "@types/mustache": "4.0.0",
-        "@types/node": "13.1.8",
+        "@types/node": "13.5.0",
         "@types/node-emoji": "1.8.1",
         "@typescript-eslint/eslint-plugin": "2.17.0",
         "@typescript-eslint/eslint-plugin-tslint": "2.17.0",

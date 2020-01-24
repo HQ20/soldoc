@@ -1,3 +1,49 @@
+# Thanks to https://raw.githubusercontent.com/jenkinsci/.github/master/.github/release-drafter.yml
+name-template: 'v$NEXT_PATCH_VERSION 🌈'
+tag-template: 'v$NEXT_PATCH_VERSION'
+
+# Emoji reference: https://gitmoji.carloscuesta.me/
+categories:
+  - title: ':boom: Breaking changes'
+    labels:
+      - 'breaking'
+  - title: '🚨 Removed'
+    label: 'removed'
+  - title: '⚠️ Deprecated'
+    label: 'deprecated'
+  - title: '🚀 New features and improvements'
+    labels:
+      - 'enhancement'
+      - 'feature'
+  - title: '🐛 Bug Fixes'
+    labels:
+      - 'bug'
+      - 'fix'
+      - 'bugfix'
+      - 'regression'
+   # Default label used by Dependabot
+  - title: '📝 Documentation updates'
+    label: 'documentation'
+  - title: '👻 Maintenance'
+    labels:
+      - 'chore'
+      - 'internal'
+  - title: '🚦 Tests'
+    labels:
+      - 'test'
+      - 'tests'
+
+exclude-labels:
+  - 'reverted'
+  - 'dependencies'
+  - 'no-changelog'
+  - 'skip-changelog'
+  - 'invalid'
+
+replacers:
+  - search: '@dependabot-preview'
+    replace: '@dependabot'
+
 template: |
   ## What’s Changed
 

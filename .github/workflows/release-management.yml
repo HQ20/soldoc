@@ -1,10 +1,10 @@
-name: Release Drafter
+# Configuration for Release Drafter: https://github.com/toolmantim/release-drafter
 
 on:
   push:
     # branches to consider in the event; optional, defaults to all
     branches:
-      - master
+      - dev
 
 jobs:
   update_release_draft:
