@@ -1,7 +1,7 @@
 {
     "name": "soldoc",
-    "version": "0.1.2-beta.7",
-    "description": "An html page and pdf solidity documentation generator, based in NatSpec format.",
+    "version": "0.1.2-beta.6",
+    "description": "An solidity documentation generator, based in NatSpec format.",
     "main": "dist/index.js",
     "bin": {
         "soldoc": "dist/cli.js"
