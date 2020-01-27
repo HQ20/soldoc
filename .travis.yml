@@ -1,13 +1,17 @@
-dist: xenial
+dist: bionic
 language: node_js
+cache: yarn
 node_js:
-- lts/dubnium
+  - lts/erbium
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.21.1
+  - export PATH="$HOME/.yarn/bin:$PATH"
+  - sudo apt-get install -y poppler-utils
 install:
-- sudo apt-get install -y poppler-utils
-- npm install
+  - yarn
 script:
-- npm run coverage:ci
-- npm run lint
+  - yarn coverage:ci
+  - yarn lint
 deploy:
   provider: npm
   email: admin@techhq.io
