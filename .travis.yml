@@ -1,9 +1,13 @@
-dist: xenial
+dist: bionic
 language: node_js
+cache: yarn
 node_js:
-  - lts/dubnium
-install:
+  - lts/erbium
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.21.1
+  - export PATH="$HOME/.yarn/bin:$PATH"
   - sudo apt-get install -y poppler-utils
+install:
   - yarn
 script:
   - yarn coverage:ci
