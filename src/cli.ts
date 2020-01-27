@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 import { Console } from 'console';
 import meow from 'meow';
 
@@ -37,7 +35,7 @@ const cli = meow(helpMessage, {
 });
 const terminalConsole = new Console(process.stdout, process.stderr);
 
-function main() {
+const main = (): number => {
     if (cli.input.length !== 2) {
         terminalConsole.error(
             'You must be doing something wrong. There\'s a 🐼️ available to help you, '
@@ -58,6 +56,6 @@ function main() {
         }
     }
     return generate(cli.flags.output, ignoreList, String(cli.input[0]), String(cli.input[1]));
-}
+};
 
 main();

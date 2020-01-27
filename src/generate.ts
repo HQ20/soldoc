@@ -14,15 +14,15 @@ import { getLanguage, highlight } from 'highlight.js';
 import mdemoji from 'markdown-it-emoji';
 import { render } from 'mustache';
 
-// tslint:disable-next-line: no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const md = require('markdown-it')({
     highlight(str: string, lang: string) {
         if (lang && getLanguage(lang)) {
             try {
                 return `<pre class="hljs"><code>${
                     highlight(lang, str, true).value
-                    }</code></pre>`;
-                // tslint:disable-next-line: no-empty
+                }</code></pre>`;
+            // eslint-disable-next-line no-empty
             } catch (__) { }
         }
         return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
@@ -33,7 +33,7 @@ const md = require('markdown-it')({
 });
 
 md.use(mdemoji);
-md.renderer.rules.emoji = (token: Array<{ markup: string }>, idx: number) => `<i class="twa twa-${token[idx].markup}"></i>`;
+md.renderer.rules.emoji = (token: [{ markup: string }], idx: number): string => `<i class="twa twa-${token[idx].markup}"></i>`;
 
 
 
@@ -45,7 +45,7 @@ export class Generate {
     private outputPath: string;
     private hasLICENSE: boolean;
 
-    constructor(files: string[], exclude: string[], inputPath: string, outputPath: string) {
+    public constructor(files: string[], exclude: string[], inputPath: string, outputPath: string) {
         files.forEach((file) => this.contracts.push(prepareForFile(file)));
         this.outputPath = outputPath;
         this.inputPathStructure = dirTree(inputPath, { exclude: exclude.map((i) => new RegExp(i)) });
@@ -55,7 +55,7 @@ export class Generate {
     /**
      * TODO: to write!
      */
-    public html() {
+    public html(): number {
         this.contracts.forEach((contract) => {
             let HTMLContent = this.mustacheRender(
                 path.join(contract.folder, this.htmlDefaultTemplatePath),
@@ -121,19 +121,20 @@ export class Generate {
     /**
      * TODO: to write!
      */
-    public pdf() {
-        this.contracts.forEach(async (contract) => {
+    public async pdf(): Promise<void> {
+        const totalContracts = this.contracts.length;
+        for (let c = 0; c < totalContracts; c += 1) {
             let HTMLContent = this.mustacheRender(
-                path.join(contract.folder, this.pdfDefaultTemplatePath),
-                contract,
+                path.join(this.contracts[c].folder, this.pdfDefaultTemplatePath),
+                this.contracts[c],
             );
             HTMLContent = this.fixUrls(HTMLContent);
             await toPdf.generatePDF(
                 this.outputPath,
-                contract.filename,
+                this.contracts[c].filename,
                 this.applyEmojify(HTMLContent),
             );
-        });
+        }
     }
 
     /**
@@ -145,7 +146,7 @@ export class Generate {
     private mustacheRender(
         templateFilePath: string,
         contract: IObjectViewData,
-    ) {
+    ): string {
         const templateContent = String(fs.readFileSync(templateFilePath));
         const view = {
             contract,
@@ -158,7 +159,7 @@ export class Generate {
         return output;
     }
 
-    private fixUrls = (content: string) => {
+    private fixUrls(content: string): string {
         const match = content.match(/(?<!\[)https?:&#x2F;&#x2F;[a-zA-Z0-9.&#x2F;\-_]+/g);
         if (match !== null) {
             let transform = match.map((url: string) => url.replace(/&#x2F;/g, '/'));
@@ -168,10 +169,10 @@ export class Generate {
             }
         }
         return content;
-    }
+    };
 
-    private applyEmojify = (content: string) => {
-        const formatEmojify = (code: string, name: string) => `<i alt="${code}" class="twa twa-${name}"></i>`;
+    private applyEmojify(content: string): string {
+        const formatEmojify = (code: string, name: string): string => `<i alt="${code}" class="twa twa-${name}"></i>`;
         return emojify(content, null as any, formatEmojify);
-    }
+    };
 }
