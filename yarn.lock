@@ -183,6 +183,11 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
+"@hq20/solidity-parser-antlr@0.4.12-alpha.0":
+  version "0.4.12-alpha.0"
+  resolved "https://registry.yarnpkg.com/@hq20/solidity-parser-antlr/-/solidity-parser-antlr-0.4.12-alpha.0.tgz#4def513caf8c5e76870ad0cd51d301faf0fb7747"
+  integrity sha512-LHyLMFgAJi5U4eakqqUvtpxxIv3AA4QDJbv6//xYgiRqQsTY8BoUayqU82f8dHcZJ44Y6H+yzml/vszEPUOe4g==
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.0.0.tgz#10602de5570baea82f8afbfa2630b24e7a8cfe5b"
@@ -3912,10 +3917,6 @@ snapdragon@^0.8.1:
     source-map "^0.5.6"
     source-map-resolve "^0.5.0"
     use "^3.1.0"
-
-"solidity-parser-antlr@git://github.com/hq20/solidity-parser-antlr.git#036d102":
-  version "0.4.11"
-  resolved "git://github.com/hq20/solidity-parser-antlr.git#036d102cbc577d253c26117ea2f4284119a93253"
 
 source-map-resolve@^0.5.0:
   version "0.5.3"

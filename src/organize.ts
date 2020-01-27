@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import parser from 'solidity-parser-antlr';
+import parser from '@hq20/solidity-parser-antlr';
 
 
 export interface ISolDocAST {

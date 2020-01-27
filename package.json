@@ -58,7 +58,7 @@
         "pdf-from-html": "0.1.x"
     },
     "dependencies": {
-        "solidity-parser-antlr": "git://github.com/hq20/solidity-parser-antlr.git#036d102"
+        "@hq20/solidity-parser-antlr": "0.4.12-alpha.0"
     },
     "devDependencies": {
         "highlight.js": "9.18.0",
