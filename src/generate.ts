@@ -20,9 +20,8 @@ const md = require('markdown-it')({
         if (lang && getLanguage(lang)) {
             try {
                 return `<pre class="hljs"><code>${
-                    highlight(lang, str, true).value
-                }</code></pre>`;
-            // eslint-disable-next-line no-empty
+                    highlight(lang, str, true).value}</code></pre>`;
+                // eslint-disable-next-line no-empty
             } catch (__) { }
         }
         return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
@@ -37,19 +36,73 @@ md.renderer.rules.emoji = (token: [{ markup: string }], idx: number): string => 
 
 
 
+/**
+ * TODO: to write!
+ */
 export class Generate {
+    private lineBreak = '\r\n';
     private htmlDefaultTemplatePath = 'dist/template/html/index.html';
     private pdfDefaultTemplatePath = 'dist/template/pdf/index.html';
+    private docsifyDefaultHTMLTemplatePath = 'template/docsify/index.html';
     private contracts: IObjectViewData[] = [];
     private inputPathStructure: DirectoryTree;
     private outputPath: string;
     private hasLICENSE: boolean;
 
+    /**
+     * TODO: to write!
+     */
     public constructor(files: string[], exclude: string[], inputPath: string, outputPath: string) {
         files.forEach((file) => this.contracts.push(prepareForFile(file)));
         this.outputPath = outputPath;
         this.inputPathStructure = dirTree(inputPath, { exclude: exclude.map((i) => new RegExp(i)) });
         this.hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
+    }
+
+    /**
+     * TODO: to write!
+     */
+    public gitbook(): void {
+        this.renderContracts();
+        // generate summary file (essential in gitbook)
+        let SUMMARYContent = `# Summary\r\n* WELCOME${this.lineBreak}`;
+        SUMMARYContent = this.renderDocumentationIndex(
+            SUMMARYContent,
+        );
+        // create summary file
+        fs.writeFileSync(
+            path.join(process.cwd(), this.outputPath, 'SUMMARY.md'),
+            SUMMARYContent,
+        );
+        this.renderReadme(true);
+    }
+
+    /**
+     * TODO: to write!
+     */
+    public docsify(): void {
+        this.renderContracts();
+        // generate _sidebar file (essential in docsify, to have a custom sidebar)
+        let SIDEBARContent = `* WELCOME${this.lineBreak}\t* [Home](/)${this.lineBreak}`;
+        SIDEBARContent = this.renderDocumentationIndex(
+            SIDEBARContent,
+        );
+        // create _sidebar file
+        fs.writeFileSync(
+            path.join(process.cwd(), this.outputPath, '_sidebar.md'),
+            SIDEBARContent,
+        );
+        this.renderReadme(true);
+        // copy html base
+        fs.copyFileSync(
+            path.join(__dirname, this.docsifyDefaultHTMLTemplatePath),
+            path.join(process.cwd(), this.outputPath, 'index.html'),
+        );
+        // write nojekill
+        fs.writeFileSync(
+            path.join(process.cwd(), this.outputPath, '.nojekill'),
+            ' ',
+        );
     }
 
     /**
@@ -67,36 +120,8 @@ export class Generate {
                 this.applyEmojify(HTMLContent),
             );
         });
-        if (fs.existsSync(path.join(process.cwd(), 'README.md'))) {
-            const templateContent = String(fs.readFileSync(
-                path.join(this.contracts[0].folder, this.htmlDefaultTemplatePath),
-            ));
-            const pureREADME = String(fs.readFileSync(path.join(process.cwd(), 'README.md'))).trim();
-            const view = {
-                README: md.render(pureREADME),
-                contractsStructure: this.contracts,
-                folderStructure: JSON.stringify(this.inputPathStructure),
-                hasLICENSE: this.hasLICENSE,
-            };
-            const outputReadme = render(templateContent, view);
-            fs.writeFileSync(
-                path.join(process.cwd(), this.outputPath, 'index.html'),
-                outputReadme,
-            );
-            const files: string[] = [];
-            const filesList = fs.readdirSync(process.cwd());
-            filesList.forEach((file) => {
-                const stats = fs.lstatSync(path.join(process.cwd(), file));
-                if (stats.isFile() && path.extname(file) === '.png') {
-                    files.push(file);
-                }
-            });
-            files.forEach((file) => {
-                if (outputReadme.includes(file)) {
-                    fs.copyFileSync(path.join(process.cwd(), file), path.join(process.cwd(), this.outputPath, file));
-                }
-            });
-        }
+        this.renderReadme(false);
+        // if there's a LICENSE
         if (this.hasLICENSE) {
             const templateContent = String(fs.readFileSync(
                 path.join(this.contracts[0].folder, this.htmlDefaultTemplatePath),
@@ -109,7 +134,7 @@ export class Generate {
                 folderStructure: JSON.stringify(this.inputPathStructure),
                 hasLICENSE: true,
             };
-            const outputLicense =  render(templateContent, view);
+            const outputLicense = render(templateContent, view);
             fs.writeFileSync(
                 path.join(process.cwd(), this.outputPath, 'license.html'),
                 outputLicense,
@@ -135,6 +160,129 @@ export class Generate {
                 this.applyEmojify(HTMLContent),
             );
         }
+    }
+
+    /**
+     * TODO: to write!
+     */
+    private renderContracts(): void {
+        this.contracts.forEach((contract) => {
+            // transform the template
+            let MDContent = `# ${contract.name}${this.lineBreak}`;
+            if (contract.data.contract !== undefined) {
+                if (contract.data.contract.natspec.dev) {
+                    MDContent += `*${contract.data.contract.natspec.dev}*${this.lineBreak}`;
+                }
+                if (contract.data.contract.natspec.notice) {
+                    MDContent += `${contract.data.contract.natspec.notice}${this.lineBreak}`;
+                }
+            }
+            contract.data.functions.forEach((f) => {
+                MDContent += `## ${f.ast.name}${this.lineBreak}${this.lineBreak}`;
+                if (f.ast.natspec === null) {
+                    return;
+                }
+                if (f.ast.natspec.dev) {
+                    MDContent += `*${f.ast.natspec.dev}*${this.lineBreak}${this.lineBreak}`;
+                }
+                if (f.ast.natspec.notice) {
+                    MDContent += `${f.ast.natspec.notice}${this.lineBreak}${this.lineBreak}`;
+                }
+                let table = false;
+                if (f.parameters.length > 0) {
+                    table = true;
+                    MDContent += `${this.lineBreak}|Input/Output|Data Type|Variable Name|Comment|${this.lineBreak}`
+                        + `|----------|----------|----------|----------|${this.lineBreak}`;
+                    f.parameters.forEach((p: any) => {
+                        MDContent += `|input|${p.typeName.name}|${p.name}|${p.natspec}|${this.lineBreak}`;
+                    });
+                }
+                if (f.returnParameters !== null && f.returnParameters.length > 0) {
+                    if (!table) {
+                        MDContent += `${this.lineBreak}|Input/Output|Data Type|Variable Name|Comment|${this.lineBreak}`
+                            + `|----------|----------|----------|----------|${this.lineBreak}`;
+                    }
+                    f.returnParameters.forEach((p: any) => {
+                        MDContent += `|output|${p.typeName.name}|${(p.name === null) ? ('N/A') : (p.name)}|`
+                            + `${(p.natspec === undefined) ? ('N/A') : (p.natspec)}|${this.lineBreak}`;
+                    });
+                }
+                MDContent += this.lineBreak;
+            });
+            // write it to a file
+            fs.writeFileSync(
+                path.join(process.cwd(), this.outputPath, `${contract.filename}.md`),
+                MDContent,
+            );
+        });
+    }
+
+    /**
+     * TODO: to write!
+     */
+    private renderReadme(original: boolean): void {
+        let outputReadme = '# Hello';
+        if (fs.existsSync(path.join(process.cwd(), 'README.md'))) {
+            outputReadme = fs.readFileSync(path.join(process.cwd(), 'README.md')).toString();
+        }
+        if (original) {
+            fs.writeFileSync(
+                path.join(process.cwd(), this.outputPath, 'README.md'),
+                outputReadme,
+            );
+        } else {
+            const templateContent = String(fs.readFileSync(
+                path.join(this.contracts[0].folder, this.htmlDefaultTemplatePath),
+            ));
+            const pureREADME = String(fs.readFileSync(path.join(process.cwd(), 'README.md'))).trim();
+            const view = {
+                README: md.render(pureREADME),
+                contractsStructure: this.contracts,
+                folderStructure: JSON.stringify(this.inputPathStructure),
+                hasLICENSE: this.hasLICENSE,
+            };
+            outputReadme = render(templateContent, view);
+            fs.writeFileSync(
+                path.join(process.cwd(), this.outputPath, 'index.html'),
+                outputReadme,
+            );
+        }
+        // if there's an image reference in readme, copy it
+        const files: string[] = [];
+        const filesList = fs.readdirSync(process.cwd());
+        filesList.forEach((file) => {
+            const stats = fs.lstatSync(path.join(process.cwd(), file));
+            if (stats.isFile() && (path.extname(file) === '.png' || path.extname(file) === '.jpg')) {
+                files.push(file);
+            }
+        });
+        // and if the file is a readme, copy it
+        files.forEach((file) => {
+            if (outputReadme.includes(file)) {
+                fs.copyFileSync(path.join(process.cwd(), file), path.join(process.cwd(), this.outputPath, file));
+            }
+        });
+    }
+
+    /**
+     * TODO: to write!
+     */
+    private renderDocumentationIndex(
+        content: string,
+    ): string {
+        let documentationIndexContent = content;
+        if (this.hasLICENSE) {
+            documentationIndexContent += `\t* [LICENSE](LICENSE.md)${this.lineBreak}`;
+            fs.copyFileSync(
+                path.join(process.cwd(), 'LICENSE'),
+                path.join(process.cwd(), this.outputPath, 'LICENSE.md'),
+            );
+        }
+        documentationIndexContent += `* CONTRACTS${this.lineBreak}`;
+        this.contracts.forEach((s) => {
+            documentationIndexContent += `\t* [${s.name}](${s.name}.md)${this.lineBreak}`;
+        });
+        return documentationIndexContent;
     }
 
     /**
