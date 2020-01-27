@@ -1,0 +1,22 @@
+dist: bionic
+language: node_js
+cache: yarn
+node_js:
+  - lts/erbium
+before_install:
+  - curl -o- -L https://yarnpkg.com/install.sh | bash -s -- --version 1.21.1
+  - export PATH="$HOME/.yarn/bin:$PATH"
+  - sudo apt-get install -y poppler-utils
+install:
+  - yarn
+script:
+  - yarn coverage:ci
+  - yarn lint
+deploy:
+  provider: npm
+  email: admin@techhq.io
+  api_key:
+    secure: HbgI28QlzE8TQNk/uSJzLlTgCO4qoYEi/ek72avzRRjavkb3NsyRr6SYhQ5f8tL/bCgBoLuvM0vLnPeegVSYVeZ/oXMJvtXicWYemXI1+eM4hyPyAru0WGZiCKHBEl74OcWe2HXC6xrYSZifcJs9377BeK4PXShTISc4HBdAlbJyHE2Mi6gYzMyVqiRamQEtvaEljfBqYyqe8l6RB9HSG4UX4DR7YDr+lsMaYWaP4sDkkysNBGNJEs+B4XbQs9jwDrjp9jQj5vTrJnJ8f2xI4FDFv0Qib/GCp0HQtEJUrdjO+xcjEfFpylmN+07DE1HJ9Oi5Ms3gvXgtvyd7O7ErtqFrhBztFL63xPrMYQE3m7nEmIpWq6wonX99KtEYxHOeTek/1wWVEO03ZuvxsqpM3FTXYqOh+YIxJShG3pJTLkVWmu9qPnWnbOzn9g7XuKhfq5hnbZrif5zQejbo+9HLiNx39vbE738KswEvyawUqUZZ1CykjkCy6neddq//sShCb1RBQPwreiLp11jynvDmCTx4EUTId8mBv2Pe0Kzr4nOvivR7QZqQCutshDCkWCqeGysJpUGbgCeCF4x9xwM1Ka4frrgfCuJb5Tg4S4pwVTiZScGW6MF2KN6s/MYcZRbod1OfYIk58ENDi5FrjZi7UttLEokKFVBgtLmTM8H2R+w=
+  on:
+    tags: true
+    repo: HQ20/soldoc
