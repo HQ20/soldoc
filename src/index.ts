@@ -4,9 +4,6 @@ import path from 'path';
 
 
 import { Generate } from './generate';
-import { generateDocumentation as generateDocumentationDocsify } from './generate_docsify';
-import { generateDocumentation as generateDocumentationGitbook } from './generate_gitbook';
-import { IObjectViewData, prepareForFile } from './organize';
 
 const terminalConsole = new Console(process.stdout, process.stderr);
 
@@ -59,8 +56,6 @@ export function generate(outputType: string, ignoreFilesList: string[], outputFo
     } else if (stats.isFile() && !ignoreFilesList.includes(inputPath)) {
         files.push(inputPath);
     }
-    const prepared: IObjectViewData[] = [];
-    files.forEach((file) => prepared.push(prepareForFile(file)));
     const destinationDocsFolderPath = path.join(process.cwd(), outputFolder);
     if (!fs.existsSync(destinationDocsFolderPath)) {
         fs.mkdirSync(destinationDocsFolderPath, { recursive: true });
@@ -71,9 +66,9 @@ export function generate(outputType: string, ignoreFilesList: string[], outputFo
     } else if (outputType === 'html') {
         generateClass.html();
     } else if (outputType === 'gitbook') {
-        generateDocumentationGitbook(prepared, outputFolder);
+        generateClass.gitbook();
     } else if (outputType === 'docsify') {
-        generateDocumentationDocsify(prepared, outputFolder);
+        generateClass.docsify();
     } else {
         terminalConsole.error('Invalid output type! Try --help for more info.');
         return 1;
