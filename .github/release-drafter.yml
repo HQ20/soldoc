@@ -13,7 +13,7 @@ categories:
     label: 'deprecated'
   - title: '🚀 New features and improvements'
     labels:
-      - 'enhancement'
+      - 'enhancement :muscle:'
       - 'feature'
   - title: '🐛 Bug Fixes'
     labels:
@@ -35,14 +35,10 @@ categories:
 
 exclude-labels:
   - 'reverted'
-  - 'dependencies'
+  - 'dependencies :arrow_up:'
   - 'no-changelog'
   - 'skip-changelog'
   - 'invalid'
-
-replacers:
-  - search: '@dependabot-preview'
-    replace: '@dependabot'
 
 template: |
   ## What’s Changed
