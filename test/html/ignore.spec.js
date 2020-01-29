@@ -9,7 +9,7 @@ describe('Render HTML Page - Ignore', () => {
     beforeAll(async () => {
         jest.setTimeout(20000);
         // first render
-        generate('html', [], './docs/test-html-ignore', './test/contracts/ignore/Ignore.sol');
+        generate('html', [], './docs/test-html-ignore', './test/contracts/ignore/Ignore.sol', './test', 'xyz');
         // now let's test the result
         // open the browser
         browser = await puppeteer.launch();

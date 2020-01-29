@@ -9,7 +9,7 @@ describe('Render MD - ERC20', () => {
         jest.setTimeout(20000);
         // first render
         // can be docsify or gitbook, they generate the same result
-        generate('docsify', [], './docs/test-rendermd', './test/contracts/ERC20.sol');
+        generate('docsify', [], './docs/test-rendermd', './test/contracts/ERC20.sol', './test', 'xyz');
         // now let's test the result
         mdResultFile = (fs.readFileSync(path.join(process.cwd(), '/docs/test-rendermd/ERC20.md'))).toString();
     });

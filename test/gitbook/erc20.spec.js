@@ -6,7 +6,7 @@ describe('Render Gitbook - ERC20', () => {
     beforeAll(async () => {
         jest.setTimeout(20000);
         // first render
-        generate('gitbook', [], './docs/gitbook-test', './test/contracts/ERC20.sol');
+        generate('gitbook', [], './docs/gitbook-test', './test/contracts/ERC20.sol', './test', 'xyz');
     });
 
     /**
