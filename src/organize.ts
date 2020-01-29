@@ -72,7 +72,7 @@ function extendsStateMutability(node: any): { payable: boolean; pure: boolean; v
  * Prepare for the given file.
  * @param {string} solidityFilePath the file's path to be parsed
  */
-export function prepareForFile(solidityFilePath: string): IObjectViewData {
+export function parseSingleSolidityFile(solidityFilePath: string): IObjectViewData {
     const folder = path.join(__dirname, '../');
     const input = fs.readFileSync(solidityFilePath).toString();
     const ast = parser.parse(input);

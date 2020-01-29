@@ -7,7 +7,7 @@ import { DirectoryTree } from 'directory-tree';
 import { emojify } from 'node-emoji';
 import toPdf from 'pdf-from-html';
 import {
-    IObjectViewData, prepareForFile,
+    IObjectViewData, parseSingleSolidityFile,
 } from './organize';
 
 import { getLanguage, highlight } from 'highlight.js';
@@ -53,7 +53,7 @@ export class Generate {
      * TODO: to write!
      */
     public constructor(files: string[], exclude: string[], inputPath: string, outputPath: string) {
-        files.forEach((file) => this.contracts.push(prepareForFile(file)));
+        files.forEach((file) => this.contracts.push(parseSingleSolidityFile(file)));
         this.outputPath = outputPath;
         this.inputPathStructure = dirTree(inputPath, { exclude: exclude.map((i) => new RegExp(i)) });
         this.hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
