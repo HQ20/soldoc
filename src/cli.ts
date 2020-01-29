@@ -13,10 +13,13 @@ Options
     --help, -h  To get help
     --output -o The output type [html/pdf/gitbook/docsify] default: html
     --ignore -i An array of files to ignore
+    --tests -t Path to the tests folder. Default: ./test
+    --testsExtension -te Regex to filter test files. Default: \.(spec|test)\.[jt]s
 
 Examples
     $ soldoc docs/ contracts/Sample.sol
     $ soldoc docs/ contracts/
+    $ soldoc --tests ./mytests docs/ Sample.sol
     $ soldoc --output pdf docs/ Sample.sol
     $ soldoc --output gitbook --ignore Migrations.sol docs/ Sample.sol
 `;
@@ -29,6 +32,16 @@ const cli = meow(helpMessage, {
         output: {
             alias: 'o',
             default: 'html',
+            type: 'string',
+        },
+        tests: {
+            alias: 't',
+            default: 'test',
+            type: 'string',
+        },
+        testsExtension: {
+            alias: 'te',
+            default: '\.(spec|test)\.[jt]s',
             type: 'string',
         },
     },
@@ -55,7 +68,14 @@ const main = (): number => {
             ignoreList = cli.flags.ignore.split(',');
         }
     }
-    return generate(cli.flags.output, ignoreList, String(cli.input[0]), String(cli.input[1]));
+    return generate(
+        cli.flags.output,
+        ignoreList,
+        String(cli.input[0]),
+        String(cli.input[1]),
+        cli.flags.tests,
+        cli.flags.testsExtension
+    );
 };
 
 main();

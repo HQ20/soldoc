@@ -13,6 +13,7 @@ import {
 import { getLanguage, highlight } from 'highlight.js';
 import mdemoji from 'markdown-it-emoji';
 import { render } from 'mustache';
+import { parseTestsComments } from './tests';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const md = require('markdown-it')({
@@ -52,7 +53,15 @@ export class Generate {
     /**
      * TODO: to write!
      */
-    public constructor(files: string[], exclude: string[], inputPath: string, outputPath: string) {
+    public constructor(
+        files: string[],
+        exclude: string[],
+        inputPath: string,
+        outputPath: string,
+        testsPath: string,
+        testsExtension: string
+    ) {
+        parseTestsComments(testsPath, testsExtension);
         files.forEach((file) => this.contracts.push(parseSingleSolidityFile(file)));
         this.outputPath = outputPath;
         this.inputPathStructure = dirTree(inputPath, { exclude: exclude.map((i) => new RegExp(i)) });
