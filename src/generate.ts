@@ -8,7 +8,7 @@ import { emojify } from 'node-emoji';
 import toPdf from 'pdf-from-html';
 import {
     IObjectViewData, parseSingleSolidityFile,
-} from './organize';
+} from './solidity';
 
 import { getLanguage, highlight } from 'highlight.js';
 import mdemoji from 'markdown-it-emoji';
