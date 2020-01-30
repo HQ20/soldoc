@@ -375,6 +375,12 @@
                             </div>
                         </div>
                     </a>
+                    {{#hasTests}}
+                    <h4>Tests</h4>
+                    {{/hasTests}}
+                    {{#tests}}
+                    <a href="file://{{filePath}}">Here</a>&emsp;
+                    {{/tests}}
                     <div class="box-info">
                         {{#ast.natspec.author}}
                         by <small id="author">@{{ast.natspec.author}}</small>
