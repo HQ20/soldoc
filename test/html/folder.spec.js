@@ -76,6 +76,7 @@ describe('Render HTML Page - Complete folder', () => {
             'Mammal',
             'IMammal',
             'Lion',
+            'BarbaryLion',
             'Quadruped',
             'WildLife',
         ];
