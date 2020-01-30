@@ -76,6 +76,7 @@ describe('Render HTML Page - Complete folder', () => {
             'Mammal',
             'Dog',
             'Yorkshire',
+            'SimpleStorage',
         ];
         await page.waitFor('ul#contracts-treeview li a');
         const cards = await page.$$('ul#contracts-treeview li a');
