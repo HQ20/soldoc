@@ -122,7 +122,7 @@ export function parseSingleSolidityFile(
                     const tests = testComments.get(currentContractName)?.filter(
                         (commentsTestNode) => commentsTestNode.name === node.name
                     ).map((commentsTestNode) => commentsTestNode = {
-                        ...commentsTestNode, filePath: path.join(folder, commentsTestNode.filePath)
+                        ...commentsTestNode, filePath: path.join(folder, commentsTestNode.filePath),
                     });
                     data.functions.push({
                         ast: node,
