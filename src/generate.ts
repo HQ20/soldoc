@@ -61,8 +61,8 @@ export class Generate {
         testsPath: string,
         testsExtension: string
     ) {
-        parseTestsComments(testsPath, testsExtension);
-        files.forEach((file) => this.contracts.push(parseSingleSolidityFile(file)));
+        const testComments = parseTestsComments(testsPath, testsExtension);
+        files.forEach((file) => this.contracts.push(parseSingleSolidityFile(file, testComments)));
         this.outputPath = outputPath;
         this.inputPathStructure = dirTree(inputPath, { exclude: exclude.map((i) => new RegExp(i)) });
         this.hasLICENSE = fs.existsSync(path.join(process.cwd(), 'LICENSE'));
