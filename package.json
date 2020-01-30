@@ -86,6 +86,7 @@
         "pdf-from-html": "0.1.1",
         "pdf-to-text": "0.0.7",
         "puppeteer": "2.1.0",
+        "tslint": "^5.0.0",
         "typedoc": "0.16.9",
         "typescript": "3.7.5"
     },
