@@ -484,12 +484,12 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@typescript-eslint/eslint-plugin-tslint@2.18.0":
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin-tslint/-/eslint-plugin-tslint-2.18.0.tgz#add2360e87a2f4c56484c8a19c3dbb34f73ff0de"
-  integrity sha512-nEaE1WZ/dU50TjaPLTNb/Hl4Irae0fMdMvh72XLhyPZj3WQyYbNn3XMs3Hv2Q8036CHSYZ/M7lPcPEPSf9b6Hg==
+"@typescript-eslint/eslint-plugin-tslint@2.19.0":
+  version "2.19.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin-tslint/-/eslint-plugin-tslint-2.19.0.tgz#94e1f105bea47660d6d439b9ed9e5b07e97a8a3e"
+  integrity sha512-a/0i6Q+GHojT2I+UccTrlBMnH7Y+evy7+Wg95Jiue4t+G+nITXV5hY5nI9tmY/L7P+SCdri9KDXj2lyn5O2F1g==
   dependencies:
-    "@typescript-eslint/experimental-utils" "2.18.0"
+    "@typescript-eslint/experimental-utils" "2.19.0"
     lodash "^4.17.15"
 
 "@typescript-eslint/eslint-plugin@2.19.0":
