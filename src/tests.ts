@@ -19,11 +19,14 @@ export interface IMethodTestComment {
 /**
  * TODO:
  */
-export function parseTestsComments(testsPath: string, testsExtension: string): Map<string, IMethodTestComment[]> {
+export function parseTestsComments(
+    testsPath: string,
+    testsExtension: string
+): Map<string, IMethodTestComment[]> {
     const testFiles = getFilesFromPath(testsPath, testsExtension);
     const result = new Map<string, IMethodTestComment[]>();
     testFiles.forEach((file) => {
-        const filePath = path.join(testsPath, file);
+        const filePath = path.join(process.cwd(), testsPath, file);
         const code = fs.readFileSync(filePath).toString();
         const ast = parse(code, {
             comment: true,
@@ -43,13 +46,13 @@ export function parseTestsComments(testsPath: string, testsExtension: string): M
                     }
                     if (contentHashtag > 0) {
                         commentMap.push({
-                            filePath,
+                            filePath: path.join(testsPath, file),
                             loc: comment.loc,
                             name: content.substr(contentHashtag + 1, content.length),
                         });
                     } else {
                         commentMap.push({
-                            filePath,
+                            filePath: path.join(testsPath, file),
                             loc: comment.loc,
                             name: '#',
                         });

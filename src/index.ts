@@ -41,6 +41,7 @@ function deepListFiles(folder: string, ignoreFilesList: string[]): string[] {
  * @param {string} inputPath the path to file or folder to be analized
  * @param {string} testsPath the path to the tests location
  * @param {string} testsExtension the test files extension
+ * @param {string} baseLocation the project's base location
  */
 export function generate(
     outputType: string,
@@ -49,6 +50,7 @@ export function generate(
     inputPath: string,
     testsPath: string,
     testsExtension: string,
+    baseLocation: string,
 ): number {
     let stats;
     try {
@@ -76,6 +78,7 @@ export function generate(
         outputFolder,
         testsPath,
         testsExtension,
+        baseLocation,
     );
     if (outputType === 'pdf') {
         generateClass.pdf();

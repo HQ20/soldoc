@@ -77,6 +77,7 @@ function extendsStateMutability(node: any): { payable: boolean; pure: boolean; v
 export function parseSingleSolidityFile(
     solidityFilePath: string,
     testComments: Map<string, IMethodTestComment[]>,
+    baseLocation: string
 ): IObjectViewData {
     const folder = path.join(__dirname, '../');
     const input = fs.readFileSync(solidityFilePath).toString();
@@ -122,7 +123,7 @@ export function parseSingleSolidityFile(
                     const tests = testComments.get(currentContractName)?.filter(
                         (commentsTestNode) => commentsTestNode.name === node.name
                     ).map((commentsTestNode) => commentsTestNode = {
-                        ...commentsTestNode, filePath: path.join(folder, commentsTestNode.filePath),
+                        ...commentsTestNode, filePath: path.join(baseLocation, commentsTestNode.filePath),
                     });
                     data.functions.push({
                         ast: node,

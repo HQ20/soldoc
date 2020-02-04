@@ -1,5 +1,9 @@
+#!/usr/bin/env node
+
 import { Console } from 'console';
 import meow from 'meow';
+import fs from 'fs';
+import path from 'path';
 
 import { generate } from './index';
 
@@ -15,6 +19,7 @@ Options
     --ignore -i An array of files to ignore
     --tests -t Path to the tests folder. Default: ./test
     --testsExtension -te Regex to filter test files. Default: \.(spec|test)\.[jt]s
+    --baseLocation -bl Base location, used to render test files link. Default: repository url
 
 Examples
     $ soldoc docs/ contracts/Sample.sol
@@ -23,8 +28,15 @@ Examples
     $ soldoc --output pdf docs/ Sample.sol
     $ soldoc --output gitbook --ignore Migrations.sol docs/ Sample.sol
 `;
+const defaultBaseLocation = JSON.parse(fs.readFileSync(
+    path.join(process.cwd(), 'package.json')).toString()).repository?.url.replace('git+', '');
 const cli = meow(helpMessage, {
     flags: {
+        baseLocation: {
+            alias: 'bl',
+            default: defaultBaseLocation,
+            type: 'string',
+        },
         ignore: {
             alias: 'i',
             type: 'string',
@@ -74,7 +86,8 @@ const main = (): number => {
         String(cli.input[0]),
         String(cli.input[1]),
         cli.flags.tests,
-        cli.flags.testsExtension
+        cli.flags.testsExtension,
+        cli.flags.baseLocation
     );
 };
 
