@@ -7,7 +7,7 @@ import { SourceLocation } from '@typescript-eslint/typescript-estree/dist/ts-est
 // thanks to Netsi1964 @ https://stackoverflow.com/a/52024318/3348623
 function getFilesFromPath(folderPath: string, extension: string): string[] {
     const dir = fs.readdirSync(folderPath);
-    const re = new RegExp(extension, 'ig');
+    const re = new RegExp(extension);
     return dir.filter((elm) => re.exec(elm));
 }
 
