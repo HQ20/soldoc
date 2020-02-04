@@ -9,7 +9,7 @@ describe('Render HTML Page - SimpleStorage', () => {
     beforeAll(async () => {
         jest.setTimeout(20000);
         // first render
-        generate('html', [], './docs/test-html-simpleStorage', './test/contracts/SimpleStorage.sol', './test/example_test_contracts', '\.(spec|test)\.js.txt');
+        generate('html', [], './docs/test-html-simpleStorage', './test/contracts/SimpleStorage.sol', './test/example_test_contracts', '\.(spec|test)\.[tj]s\.txt', '/my/base/fs');
         // now let's test the result
         // open the browser
         browser = await puppeteer.launch();
@@ -40,6 +40,26 @@ describe('Render HTML Page - SimpleStorage', () => {
         const element = await page.$('h1#contractName');
         const text = await page.evaluate((e) => e.textContent, element);
         expect(text).toBe('SimpleStorage');
+        done();
+    });
+
+    /**
+     * The main contract being shown should be named "SimpleStorage"
+     */
+    test('should find all the links to tests', async (done) => {
+        const cardsNames = [
+            'file:///my/base/fs/test/example_test_contracts/some.test.js.txt',
+            'file:///my/base/fs/test/example_test_contracts/some.test.js.txt',
+            'file:///my/base/fs/test/example_test_contracts/some.test.js.txt',
+            'file:///my/base/fs/test/example_test_contracts/some.test.ts.txt',
+        ];
+        await page.waitFor('div#test-links a');
+        const cards = await page.$$('div#test-links a');
+        for (let c = 0; c < cards.length; c += 1) {
+            // eslint-disable-next-line no-await-in-loop
+            const text = await page.evaluate((e) => e.href, cards[c]);
+            expect(cardsNames).toContain(text);
+        }
         done();
     });
 });

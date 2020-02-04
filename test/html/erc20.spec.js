@@ -9,7 +9,7 @@ describe('Render HTML Page - ERC20', () => {
     beforeAll(async () => {
         jest.setTimeout(20000);
         // first render
-        generate('html', [], './docs/test-html-erc20', './test/contracts/ERC20.sol', './test', 'xyz');
+        generate('html', [], './docs/test-html-erc20', './test/contracts/ERC20.sol', './test', 'xyz', process.cwd());
         // now let's test the result
         // open the browser
         browser = await puppeteer.launch();

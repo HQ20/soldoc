@@ -8,7 +8,7 @@ describe('Render File - Plane', () => {
     beforeAll(() => {
         jest.setTimeout(20000);
         // first render
-        generate('pdf', [], './docs/test-pdf-plane', './test/contracts/Plane.sol', './test', 'xyz');
+        generate('pdf', [], './docs/test-pdf-plane', './test/contracts/Plane.sol', './test', 'xyz', process.cwd());
         // now let's test the result
     });
 
