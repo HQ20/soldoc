@@ -9,7 +9,7 @@ describe('Render HTML Page - Plane', () => {
     beforeAll(async () => {
         jest.setTimeout(20000);
         // first render
-        generate('html', [], './docs/test-html-plane', './test/contracts/Plane.sol');
+        generate('html', [], './docs/test-html-plane', './test/contracts/Plane.sol', './test', 'xyz', process.cwd());
         // now let's test the result
         // open the browser
         browser = await puppeteer.launch();

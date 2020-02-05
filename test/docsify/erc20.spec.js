@@ -6,7 +6,7 @@ describe('Render Docssify - ERC20', () => {
     beforeAll(async () => {
         jest.setTimeout(20000);
         // first render
-        generate('docsify', [], './docs/docsify-test', './test/contracts/ERC20.sol');
+        generate('docsify', [], './docs/docsify-test', './test/contracts/ERC20.sol', './test', 'xyz');
     });
 
     /**
