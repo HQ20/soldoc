@@ -95,6 +95,7 @@ describe('Render HTML Page - Inheritance (Lion)', () => {
         // should also, not list the ignored ones!
         const cardsNames = [
             'Quadruped',
+            'WildLife',
         ];
         await page.waitFor('aside ul#inheritance li a');
         const cards = await page.$$('aside ul#inheritance li a');

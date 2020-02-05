@@ -121,8 +121,14 @@ export function prepareForFile(solidityFilePath: string): IObjectViewData {
             }
         },
         InheritanceSpecifier: (node: any) => {
+            let currentInheritance = data.inheritance;
+            if (currentInheritance !== undefined) {
+                currentInheritance.push(node.baseName);
+            } else {
+                currentInheritance = [node.baseName];
+            }
             data = {
-                inheritance: node.baseName,
+                inheritance: currentInheritance,
                 ...data,
             };
         },
