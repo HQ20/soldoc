@@ -9,7 +9,7 @@ describe('Render HTML Page - Inheritance (Barbary Lion)', () => {
     beforeAll(async () => {
         jest.setTimeout(20000);
         // first render
-        generate('html', [], './docs/test-html-inheritance', './test/contracts/inheritance/BarbaryLion.sol');
+        generate('html', [], './docs/test-html-inheritance', './test/contracts/inheritance/BarbaryLion.sol', './test', 'xyz', process.cwd());
         // now let's test the result
         // open the browser
         browser = await puppeteer.launch();
@@ -62,7 +62,7 @@ describe('Render HTML Page - Inheritance (Lion)', () => {
     beforeAll(async () => {
         jest.setTimeout(20000);
         // first render
-        generate('html', [], './docs/test-html-inheritance', './test/contracts/inheritance/Lion.sol');
+        generate('html', [], './docs/test-html-inheritance', './test/contracts/inheritance/Lion.sol', './test', 'xyz', process.cwd());
         // now let's test the result
         // open the browser
         browser = await puppeteer.launch();
