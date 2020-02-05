@@ -39,8 +39,19 @@ function deepListFiles(folder: string, ignoreFilesList: string[]): string[] {
  * @param {string} ignoreFilesList an array of files to be ignored
  * @param {string} outputFolder directory to output the result, either pdf or html
  * @param {string} inputPath the path to file or folder to be analized
+ * @param {string} testsPath the path to the tests location
+ * @param {string} testsExtension the test files extension
+ * @param {string} baseLocation the project's base location
  */
-export function generate(outputType: string, ignoreFilesList: string[], outputFolder: string, inputPath: string): number {
+export function generate(
+    outputType: string,
+    ignoreFilesList: string[],
+    outputFolder: string,
+    inputPath: string,
+    testsPath: string,
+    testsExtension: string,
+    baseLocation: string,
+): number {
     let stats;
     try {
         stats = fs.lstatSync(inputPath);
@@ -60,7 +71,15 @@ export function generate(outputType: string, ignoreFilesList: string[], outputFo
     if (!fs.existsSync(destinationDocsFolderPath)) {
         fs.mkdirSync(destinationDocsFolderPath, { recursive: true });
     }
-    const generateClass = new Generate(files, ignoreFilesList, inputPath, outputFolder);
+    const generateClass = new Generate(
+        files,
+        ignoreFilesList,
+        inputPath,
+        outputFolder,
+        testsPath,
+        testsExtension,
+        baseLocation,
+    );
     if (outputType === 'pdf') {
         generateClass.pdf();
     } else if (outputType === 'html') {

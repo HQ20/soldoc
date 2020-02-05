@@ -1,12 +1,14 @@
 import fs from 'fs';
 import path from 'path';
 import parser from '@hq20/solidity-parser-antlr';
+import { IMethodTestComment } from './tests';
 
 
 export interface ISolDocAST {
     inheritance?: any;
     contract?: any;
     constructor?: any;
+    testFile?: any[];
     events: any[];
     functions: any[];
     structs: any[];
@@ -72,7 +74,11 @@ function extendsStateMutability(node: any): { payable: boolean; pure: boolean; v
  * Prepare for the given file.
  * @param {string} solidityFilePath the file's path to be parsed
  */
-export function prepareForFile(solidityFilePath: string): IObjectViewData {
+export function parseSingleSolidityFile(
+    solidityFilePath: string,
+    testComments: Map<string, IMethodTestComment[]>,
+    baseLocation: string
+): IObjectViewData {
     const folder = path.join(__dirname, '../');
     const input = fs.readFileSync(solidityFilePath).toString();
     const ast = parser.parse(input);
@@ -82,13 +88,17 @@ export function prepareForFile(solidityFilePath: string): IObjectViewData {
         structs: [] as any,
         variables: [] as any,
     };
+    // we can safely do this, because the contract definition always happenes before methods!
+    let currentContractName: string;
     // visit all the methods and add the commands to it
     parser.visit(ast, {
         ContractDefinition: (node: any) => {
             data = {
                 contract: node,
+                testFile: testComments.get(node.name)?.filter((commentsTestNode) => commentsTestNode.name === '#'),
                 ...data,
             };
+            currentContractName = node.name;
         },
         EventDefinition: (node: any) => {
             data.events.push({
@@ -110,11 +120,18 @@ export function prepareForFile(solidityFilePath: string): IObjectViewData {
                         ...data,
                     };
                 } else {
+                    const tests = testComments.get(currentContractName)?.filter(
+                        (commentsTestNode) => commentsTestNode.name === node.name
+                    ).map((commentsTestNode) => commentsTestNode = {
+                        ...commentsTestNode, filePath: path.join(baseLocation, commentsTestNode.filePath),
+                    });
                     data.functions.push({
                         ast: node,
+                        hasTests: tests !== undefined,
                         parameters: extendParamsAstWithNatspec(node),
                         returnParameters: extendReturnParamsAstWithNatspec(node),
                         stateMutability: extendsStateMutability(node),
+                        tests,
                         visibility: extendsVisibility(node),
                     });
                 }

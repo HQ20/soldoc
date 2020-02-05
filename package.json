@@ -58,7 +58,8 @@
         "pdf-from-html": "^0.1.0"
     },
     "dependencies": {
-        "@hq20/solidity-parser-antlr": "0.4.12-alpha.0"
+        "@hq20/solidity-parser-antlr": "0.4.12-alpha.0",
+        "@typescript-eslint/typescript-estree": "2.18.0"
     },
     "devDependencies": {
         "@types/highlight.js": "9.12.3",
