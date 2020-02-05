@@ -74,8 +74,11 @@ describe('Render HTML Page - Complete folder', () => {
             'Ignore',
             'Animal',
             'Mammal',
-            'Dog',
-            'Yorkshire',
+            'IMammal',
+            'Lion',
+            'BarbaryLion',
+            'Quadruped',
+            'WildLife',
             'SimpleStorage',
         ];
         await page.waitFor('ul#contracts-treeview li a');
