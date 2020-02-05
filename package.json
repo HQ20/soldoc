@@ -11,6 +11,7 @@
         "/dist/**/*.html"
     ],
     "scripts": {
+        "preversion": "yarn",
         "predemo:html": "yarn build",
         "demo:html": "./dist/cli.js --ignore Ignore.sol,IERC20.sol docs/ test/contracts",
         "demo:pdf": "./dist/cli.js --output pdf docs/ test/contracts/Plane.sol",
