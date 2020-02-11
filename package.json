@@ -69,7 +69,7 @@
         "@types/mustache": "4.0.0",
         "@types/node": "13.7.0",
         "@types/node-emoji": "1.8.1",
-        "@typescript-eslint/eslint-plugin": "2.19.0",
+        "@typescript-eslint/eslint-plugin": "2.19.2",
         "@typescript-eslint/eslint-plugin-tslint": "2.19.2",
         "@typescript-eslint/parser": "2.19.2",
         "coveralls": "3.0.9",
