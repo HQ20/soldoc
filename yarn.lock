@@ -484,12 +484,12 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@typescript-eslint/eslint-plugin-tslint@2.20.0":
-  version "2.20.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin-tslint/-/eslint-plugin-tslint-2.20.0.tgz#5e0a2cabec226081b615067be5d4a1477ba1b4c8"
-  integrity sha512-nvQqHXNtTg56eeLgl8BbTqw0+PILjgtthB2MEJ279NqfSMjTzUr7dkt/JIuGbxi9netT7u3iQaTE4nuGbGTTpQ==
+"@typescript-eslint/eslint-plugin-tslint@2.21.0":
+  version "2.21.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin-tslint/-/eslint-plugin-tslint-2.21.0.tgz#45fe3fb418d383a222c00918b643b2b299b8be54"
+  integrity sha512-wjNoZmAuJU1zmUJHnbxLfT82qabMeFxN+UMIulpBrL/lD8gR84cl0nKh+7f3zDxA5VViCazP1BuEl/fpj5dWAA==
   dependencies:
-    "@typescript-eslint/experimental-utils" "2.20.0"
+    "@typescript-eslint/experimental-utils" "2.21.0"
     lodash "^4.17.15"
 
 "@typescript-eslint/eslint-plugin@2.21.0":
@@ -502,15 +502,6 @@
     functional-red-black-tree "^1.0.1"
     regexpp "^3.0.0"
     tsutils "^3.17.1"
-
-"@typescript-eslint/experimental-utils@2.20.0":
-  version "2.20.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/experimental-utils/-/experimental-utils-2.20.0.tgz#3b6fa5a6b8885f126d5a4280e0d44f0f41e73e32"
-  integrity sha512-fEBy9xYrwG9hfBLFEwGW2lKwDRTmYzH3DwTmYbT+SMycmxAoPl0eGretnBFj/s+NfYBG63w/5c3lsvqqz5mYag==
-  dependencies:
-    "@types/json-schema" "^7.0.3"
-    "@typescript-eslint/typescript-estree" "2.20.0"
-    eslint-scope "^5.0.0"
 
 "@typescript-eslint/experimental-utils@2.21.0":
   version "2.21.0"
