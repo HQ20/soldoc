@@ -88,7 +88,7 @@
         "pdf-to-text": "0.0.7",
         "puppeteer": "2.1.1",
         "tslint": "^5.0.0",
-        "typedoc": "0.17.0",
+        "typedoc": "0.17.1",
         "typescript": "3.8.3"
     },
     "jest": {
