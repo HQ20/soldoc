@@ -75,7 +75,7 @@
         "coveralls": "3.0.11",
         "directory-tree": "2.2.4",
         "eslint": "6.8.0",
-        "eslint-plugin-import": "2.20.1",
+        "eslint-plugin-import": "2.20.2",
         "expect.js": "0.3.1",
         "highlight.js": "9.18.1",
         "jest": "25.2.3",
