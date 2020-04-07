@@ -70,7 +70,7 @@
         "@types/node": "13.9.8",
         "@types/node-emoji": "1.8.1",
         "@typescript-eslint/eslint-plugin": "2.26.0",
-        "@typescript-eslint/eslint-plugin-tslint": "2.26.0",
+        "@typescript-eslint/eslint-plugin-tslint": "2.27.0",
         "@typescript-eslint/parser": "2.25.0",
         "coveralls": "3.0.11",
         "directory-tree": "2.2.4",
