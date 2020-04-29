@@ -86,7 +86,7 @@
         "node-emoji": "1.10.0",
         "pdf-from-html": "0.1.1",
         "pdf-to-text": "0.0.7",
-        "puppeteer": "3.0.1",
+        "puppeteer": "3.0.2",
         "tslint": "^6.1.1",
         "typedoc": "0.17.6",
         "typescript": "3.8.3"
