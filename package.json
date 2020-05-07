@@ -50,13 +50,13 @@
     "homepage": "https://github.com/hq20/soldoc#readme",
     "peerDependencies": {
         "directory-tree": "^2.2.0",
-        "highlight.js": "^9.18.0",
+        "highlight.js": "^10.0.0",
         "markdown-it": "^10.0.0",
         "markdown-it-emoji": "^1.4.0",
-        "meow": "^6.0.0",
+        "meow": "^7.0.0",
         "mustache": "^4.0.0",
         "node-emoji": "^1.10.0",
-        "pdf-from-html": "^0.1.0"
+        "pdf-from-html": "^0.1.2-beta.0"
     },
     "dependencies": {
         "@hq20/solidity-parser-antlr": "0.4.12-alpha.0",
@@ -84,10 +84,9 @@
         "meow": "7.0.0",
         "mustache": "4.0.1",
         "node-emoji": "1.10.0",
-        "pdf-from-html": "0.1.1",
+        "pdf-from-html": "0.1.2-beta.3",
         "pdf-to-text": "0.0.7",
         "puppeteer": "3.0.3",
-        "tslint": "^6.1.1",
         "typedoc": "0.17.6",
         "typescript": "3.8.3"
     },
