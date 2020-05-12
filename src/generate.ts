@@ -138,11 +138,13 @@ export class Generate {
             ));
             const LICENSEText = String(fs.readFileSync(path.join(process.cwd(), 'LICENSE'))).trim();
             const LICENSE = LICENSEText.replace(/\n/g, '<br>');
+            const projectName = JSON.parse(String(fs.readFileSync(path.join(process.cwd(), 'package.json')))).name as string;
             const view = {
                 LICENSE,
                 contractsStructure: this.contracts,
                 folderStructure: JSON.stringify(this.inputPathStructure),
                 hasLICENSE: true,
+                projectName,
             };
             const outputLicense = render(templateContent, view);
             fs.writeFileSync(
@@ -245,11 +247,13 @@ export class Generate {
                 path.join(this.contracts[0].folder, this.htmlDefaultTemplatePath),
             ));
             const pureREADME = String(fs.readFileSync(path.join(process.cwd(), 'README.md'))).trim();
+            const projectName = JSON.parse(String(fs.readFileSync(path.join(process.cwd(), 'package.json')))).name as string;
             const view = {
                 README: md.render(pureREADME),
                 contractsStructure: this.contracts,
                 folderStructure: JSON.stringify(this.inputPathStructure),
                 hasLICENSE: this.hasLICENSE,
+                projectName,
             };
             outputReadme = render(templateContent, view);
             fs.writeFileSync(
@@ -306,12 +310,14 @@ export class Generate {
         contract: IObjectViewData,
     ): string {
         const templateContent = String(fs.readFileSync(templateFilePath));
+        const projectName = JSON.parse(String(fs.readFileSync(path.join(process.cwd(), 'package.json')))).name as string;
         const view = {
             contract,
             contracts: this.contracts,
-            currentDate: new Date(),
+            currentDate: new Date().getTime(),
             folderStructure: JSON.stringify(this.inputPathStructure),
             hasLICENSE: this.hasLICENSE,
+            projectName,
         };
         const output = render(templateContent, view);
         return output;
