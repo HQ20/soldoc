@@ -17,6 +17,16 @@
     <link
         href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAJ6TrAFy+8QCC0vgA7+/vAC6n7ACE0/gAS2RuAKbU5QDAwMAAv+3+ACek6gApoeYAAAAAAAAAAAAAAAAARERERERERABEREREREREAEREREREREQAREREeIRERABJmZSohUREAERERKolVEQAREREozUVRABJmZRDNlFUAEREREQzZRUAREREREM2W1BJmZmZRDNlxUREREREQzZVREREREREMzVJmZmZmURDM0REREREREQzRERERERERAMAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAwAAAAMAAAADAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAA"
         rel="icon" type="image/x-icon" />
+
+    <!-- Material Design for Bootstrap fonts and icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+
+    <!-- Material Design for Bootstrap CSS -->
+    <link rel="stylesheet"
+        href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
+        integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.25.3/moment.min.js"
+        integrity="sha256-C66CaAImteEKZPYvgng9j10J/45e9sAuZyfPYCwp4gE=" crossorigin="anonymous"></script>
     <style>
         aside {
             width: 200px;
@@ -74,9 +84,8 @@
         }
 
         .method-name-title {
-            padding: .75rem 1.25rem;
-            margin-bottom: 0;
-            border-bottom: 1px solid rgba(0, 0, 0, .125);
+            border: 1px solid rgba(0, 0, 0, .125);
+            border-radius: 5px 5px 0px 0px;
         }
 
         /*readme*/
@@ -173,13 +182,13 @@
             background-size: 75% auto;
         }
     </style>
-    <title>soldoc</title>
+    <title>{{projectName}} | soldoc</title>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div style="width: 90%; max-width: 1300px; margin: auto;">
-            <a class="navbar-brand" href="#">Navbar</a>
+            <a class="navbar-brand" href="#">{{projectName}}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -232,7 +241,11 @@
                     {{/contract.data.contract.natspec.author}}
                 </h2>
                 {{/contract.data.contract.natspec.title}}
-                {{contract.path}}
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">{{contract.path}}</li>
+                    </ol>
+                </nav>
                 {{#contract.data.contract.natspec.dev}}
                 <p>{{contract.data.contract.natspec.dev}}</p>
                 {{/contract.data.contract.natspec.dev}}
@@ -240,16 +253,13 @@
                 <p>{{contract.data.contract.natspec.notice}}</p>
                 {{/contract.data.contract.natspec.notice}}
                 <br />
-                <small class="generated">Generated in {{currentDate}}</small>
+                <small class="generated">Generated <script>document.write(moment({{currentDate}}).fromNow())</script></small>
             </div>
 
             <h3>Variables</h3>
             {{#contract.data.variables}}
             <p>
-                <strong class="variable">{{ast.variable.name}}</strong>
-                {{#ast.natspec.dev}}
-                <p><i>{{ast.natspec.dev}}</i></p>
-                {{/ast.natspec.dev}}
+                <strong class="variable">{{ast.variable.name}}</strong>{{#ast.natspec.dev}} -> <i>{{ast.natspec.dev}}</i>{{/ast.natspec.dev}}
                 {{#ast.natspec.notice}}
                 <p>{{ast.natspec.notice}}</p>
                 {{/ast.natspec.notice}}
@@ -260,7 +270,14 @@
             <div class="soldoc-box">
                 <p>
                     <a name="constructor">
-                        <strong class="method">constructor</strong>
+                        <div class="method-name-title">
+                            <div class="p-2 flex-grow-1 bd-highlight">
+                                constructor (
+                                    {{#parameters}}
+                                        <b data-toggle="tooltip" data-placement="top" title="{{natspec}}">{{name}}</b> {{typeName.name}},
+                                    {{/parameters}})
+                            </div>
+                        </div>
                     </a>
                     <div class="box-info">
                         {{#ast.natspec.author}}
@@ -274,26 +291,6 @@
                         <p>{{ast.natspec.notice}}</p>
                         {{/ast.natspec.notice}}
                     </div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Type</th>
-                                <th>Name</th>
-                                <th>Natspec</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#parameters}}
-                            <tr>
-                                <td>input</td>
-                                <td>{{typeName.name}}</td>
-                                <td>{{name}}</td>
-                                <td>{{natspec}}</td>
-                            </tr>
-                            {{/parameters}}
-                        </tbody>
-                    </table>
                 </p>
             </div>
             {{/contract.data.constructor}}
@@ -302,7 +299,14 @@
             <div class="soldoc-box">
                 <p>
                     <a name="{{ast.name}}">
-                        <strong class="method">{{ast.name}}</strong>
+                        <div class="method-name-title">
+                            <div class="p-2 flex-grow-1 bd-highlight">
+                                {{ast.name}} (
+                                    {{#parameters}}
+                                        <b data-toggle="tooltip" data-placement="top" title="{{natspec}}">{{name}}</b> {{typeName.name}},
+                                    {{/parameters}})
+                            </div>
+                        </div>
                     </a>
                     <div class="box-info">
                         {{#ast.natspec.author}}
@@ -316,114 +320,69 @@
                         <p>{{ast.natspec.notice}}</p>
                         {{/ast.natspec.notice}}
                     </div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Type</th>
-                                <th>Name</th>
-                                <th>Natspec</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#parameters}}
-                            <tr>
-                                <td>input</td>
-                                <td>{{typeName.name}}</td>
-                                <td>{{name}}</td>
-                                <td>{{natspec}}</td>
-                            </tr>
-                            {{/parameters}}
-                        </tbody>
-                    </table>
                 </p>
             </div>
             {{/contract.data.events}}
 
             {{#contract.data.functions}}
             <div class="soldoc-box">
-                <p>
-                    <a name="{{ast.name}}">
-                        <div class="method-name-title">
-                            <div class="d-flex bd-highlight">
-                                <div class="p-2 flex-grow-1 bd-highlight">
-                                    <h2 style="float: left;">{{ast.name}}</h2>
-                                </div>
-                                <div class="p-2 bd-highlight">
-                                    {{#visibility.public}}
-                                    <span class="badge badge-primary">public</span>
-                                    {{/visibility.public}}
-                                    {{#visibility.private}}
-                                    <span class="badge badge-secondary">private</span>
-                                    {{/visibility.private}}
-                                    {{#visibility.internal}}
-                                    <span class="badge badge-success">internal</span>
-                                    {{/visibility.internal}}
-                                    {{#visibility.external}}
-                                    <span class="badge badge-danger">external</span>
-                                    {{/visibility.external}}
-                                    {{#stateMutability.pure}}
-                                    <span class="badge badge-warning">pure</span>
-                                    {{/stateMutability.pure}}
-                                    {{#stateMutability.view}}
-                                    <span class="badge badge-info">view</span>
-                                    {{/stateMutability.view}}
-                                    {{#stateMutability.payable}}
-                                    <span class="badge badge-light">payable</span>
-                                    {{/stateMutability.payable}}
-                                </div>
+                <a name="{{ast.name}}">
+                    <div class="method-name-title">
+                        <div class="d-flex bd-highlight">
+                            <div class="p-2 flex-grow-1 bd-highlight">
+                                {{ast.name}} (
+                                    {{#parameters}}
+                                        <b data-toggle="tooltip" data-placement="top" title="{{natspec}}">{{name}}</b> {{typeName.name}},
+                                    {{/parameters}}) ->
+                                    {{#returnParameters}}
+                                        {{typeName.name}}
+                                    {{/returnParameters}}
+                            </div>
+                            <div class="p-2 bd-highlight">
+                                {{#visibility.public}}
+                                <span class="badge badge-primary">public</span>
+                                {{/visibility.public}}
+                                {{#visibility.private}}
+                                <span class="badge badge-secondary">private</span>
+                                {{/visibility.private}}
+                                {{#visibility.internal}}
+                                <span class="badge badge-success">internal</span>
+                                {{/visibility.internal}}
+                                {{#visibility.external}}
+                                <span class="badge badge-danger">external</span>
+                                {{/visibility.external}}
+                                {{#stateMutability.pure}}
+                                <span class="badge badge-warning">pure</span>
+                                {{/stateMutability.pure}}
+                                {{#stateMutability.view}}
+                                <span class="badge badge-info">view</span>
+                                {{/stateMutability.view}}
+                                {{#stateMutability.payable}}
+                                <span class="badge badge-light">payable</span>
+                                {{/stateMutability.payable}}
                             </div>
                         </div>
-                    </a>
-                    <div id="test-links">
-                        {{#hasTests}}
-                        <h4>Tests</h4>
-                        {{/hasTests}}
-                        {{#tests}}
-                        <a href="file://{{filePath}}">Here</a>&emsp;
-                        {{/tests}}
                     </div>
-                    <div class="box-info">
-                        {{#ast.natspec.author}}
-                        by <small id="author">@{{ast.natspec.author}}</small>
-                        {{/ast.natspec.author}}
-                        <br />
-                        {{#ast.natspec.dev}}
-                        <p><i style="white-space: pre;">{{ast.natspec.dev}}</i></p>
-                        {{/ast.natspec.dev}}
-                        {{#ast.natspec.notice}}
-                        <p>{{ast.natspec.notice}}</p>
-                        {{/ast.natspec.notice}}
-                    </div>
-                    <table class="table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col"></th>
-                                <th scope="col">Type</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Natspec</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {{#parameters}}
-                            <tr>
-                                <td>input</td>
-                                <td>{{typeName.name}}</td>
-                                <td>{{name}}</td>
-                                <td>{{natspec}}</td>
-                            </tr>
-                            {{/parameters}}
-                            {{#returnParameters}}
-                            <tr>
-                                <td>output</td>
-                                <td>{{typeName.name}}</td>
-                                <td>{{name}}</td>
-                                <td>{{natspec}}</td>
-                            </tr>
-                            {{/returnParameters}}
-                        </tbody>
-                    </table>
-                </p>
+                </a>
+                <div id="test-links">
+                    {{#hasTests}}
+                    <h4>Tests</h4>
+                    {{/hasTests}}
+                    {{#tests}}
+                    <a href="file://{{filePath}}">Here</a>&emsp;
+                    {{/tests}}
+                </div>
+                <div class="box-info">
+                    {{#ast.natspec.author}}
+                    by <small id="author">@{{ast.natspec.author}}</small>
+                    {{/ast.natspec.author}}
+                    {{#ast.natspec.dev}}
+                    <p><i>{{ast.natspec.dev}}</i></p>
+                    {{/ast.natspec.dev}}
+                    {{#ast.natspec.notice}}
+                    <p>{{ast.natspec.notice}}</p>
+                    {{/ast.natspec.notice}}
+                </div>
             </div>
             {{/contract.data.functions}}
         </div>
@@ -467,6 +426,21 @@
         }
         loadDirectoryTreeView();
     </script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
+        integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
+        integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
+        crossorigin="anonymous"></script>
+    <script>$(document).ready(function () { $('body').bootstrapMaterialDesign(); });</script>
+    <script>$(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })</script>
 </body>
 
 </html>

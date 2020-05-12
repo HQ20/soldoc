@@ -6,7 +6,7 @@ pragma solidity ^0.5.8;
  */
 contract Plane {
 
-    /// @notice name of the plane.
+    /// @dev name of the plane.
     bytes32 private name;
 
     /**
