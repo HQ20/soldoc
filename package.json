@@ -89,7 +89,7 @@
         "puppeteer": "3.0.4",
         "tslint": "^6.0.0",
         "typedoc": "0.17.6",
-        "typescript": "3.8.3"
+        "typescript": "3.9.2"
     },
     "jest": {
         "collectCoverage": true,
