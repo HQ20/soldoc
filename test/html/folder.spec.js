@@ -28,7 +28,7 @@ describe('Render HTML Page - Complete folder', () => {
      * Title page must be "soldoc"
      */
     test('should be titled "soldoc"', async (done) => {
-        await expect(page.title()).resolves.toBe('soldoc');
+        await expect(page.title()).resolves.toBe('soldoc | soldoc');
         done();
     });
 
