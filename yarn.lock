@@ -631,12 +631,12 @@
   dependencies:
     "@types/node" "*"
 
-"@typescript-eslint/eslint-plugin-tslint@2.32.0":
-  version "2.32.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin-tslint/-/eslint-plugin-tslint-2.32.0.tgz#b94b1d99896329b86352b51cce55d8753c7bd36d"
-  integrity sha512-gT4KjPusMs6x68d7VcBVXDDf5JURakfhqx7aHAq2nlQ6/VdN9ivxQjP6u7J/TsebHWzyheEGXQ75HIYZOBYQPA==
+"@typescript-eslint/eslint-plugin-tslint@2.33.0":
+  version "2.33.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/eslint-plugin-tslint/-/eslint-plugin-tslint-2.33.0.tgz#9f36e7827c6ab058b2c4f67802b8bc422445a902"
+  integrity sha512-DXy14tWbs4NVMv/1ADDLfh9jy8ZloZHTuIKEE1Ufs7OGvAu6Ft5Rw7G1RsgfykEENSqy32Mycj5Q6jxN7AXmNA==
   dependencies:
-    "@typescript-eslint/experimental-utils" "2.32.0"
+    "@typescript-eslint/experimental-utils" "2.33.0"
     lodash "^4.17.15"
 
 "@typescript-eslint/eslint-plugin@2.32.0":
