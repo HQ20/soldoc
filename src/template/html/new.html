@@ -86,64 +86,113 @@
                     fermentum semper tellus.
                 </div>
                 <div class="col">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce velit nisi, pretium a est ac,
-                    ultrices ultricies tellus. Ut aliquet nisi erat, luctus ullamcorper felis ultricies nec. Mauris
-                    porta turpis a odio porttitor, a sagittis mi pharetra. In tincidunt risus nec faucibus condimentum.
-                    In consequat mauris justo, ac sagittis dui cursus quis. Maecenas ac neque at sapien placerat
-                    interdum. Praesent neque orci, pulvinar et dui eget, blandit luctus diam.
-
-                    Praesent tempus massa sit amet tortor scelerisque feugiat. Morbi gravida mattis nisl, eu vestibulum
-                    justo pretium vel. Suspendisse non ligula quis felis blandit laoreet ac nec justo. Etiam interdum
-                    maximus sollicitudin. Praesent quis erat ac lectus tempus hendrerit. Donec accumsan nec sem ut
-                    pellentesque. Pellentesque ornare pulvinar magna, ut pretium elit aliquam sit amet. Morbi ornare
-                    nibh in dui cursus laoreet. Phasellus quis ex quis justo porttitor placerat vitae vestibulum ante.
-                    Mauris efficitur pellentesque molestie. Aliquam venenatis a enim eu finibus. Praesent accumsan mi
-                    dui, sed pretium diam elementum non.
-
-                    Aliquam sem mauris, convallis eget elit eu, volutpat bibendum lorem. Suspendisse lorem lectus,
-                    dictum at vestibulum sit amet, accumsan et nunc. Sed sodales neque purus, sed viverra dolor
-                    malesuada ut. Mauris quis justo condimentum, fermentum neque mollis, fermentum augue. Ut ultricies
-                    est in mi porttitor blandit. Aliquam erat volutpat. Donec quam ex, aliquam lobortis leo at,
-                    fermentum semper tellus.
+                    <div id="contract-content-treeview"></div>
                 </div>
             </div>
         </div>
     </div>
     <script type="text/babel">
-        class Tree extends React.Component {
-            render() {
-                let renderTreeView;
+        function DirectoryTree() {
+            let renderTreeView;
 
-                const cDirectory = (c) => (
-                    <li key={c.name} className="folder">
-                        {c.name}
-                        <ul>
-                            {renderTreeView(c.children)}
-                        </ul>
-                    </li>
-                );
-                const cFile = (c) => (
-                    <li key={c.name}>
-                        <a href={c.name.replace('.sol', '.html')}>
-                            {c.name.replace('.sol', '')}
-                        </a>
-                    </li>
-                );
-
-                renderTreeView = (inputContent) => inputContent.map((content) => content.type === 'directory' ? cDirectory(content) : cFile(content));
-
-                const paths = [{ "path": "test/contracts", "name": "contracts", "children": [{ "path": "test/contracts/ERC20.sol", "name": "ERC20.sol", "size": 7617, "extension": ".sol", "type": "file" }, { "path": "test/contracts/Plane.sol", "name": "Plane.sol", "size": 695, "extension": ".sol", "type": "file" }, { "path": "test/contracts/SimpleStorage.sol", "name": "SimpleStorage.sol", "size": 798, "extension": ".sol", "type": "file" }, { "path": "test/contracts/Tree.sol", "name": "Tree.sol", "size": 858, "extension": ".sol", "type": "file" }, { "path": "test/contracts/ignore", "name": "ignore", "children": [], "size": 0, "type": "directory" }, { "path": "test/contracts/inheritance", "name": "inheritance", "children": [{ "path": "test/contracts/inheritance/Animal.sol", "name": "Animal.sol", "size": 89, "extension": ".sol", "type": "file" }, { "path": "test/contracts/inheritance/BarbaryLion.sol", "name": "BarbaryLion.sol", "size": 262, "extension": ".sol", "type": "file" }, { "path": "test/contracts/inheritance/IMammal.sol", "name": "IMammal.sol", "size": 99, "extension": ".sol", "type": "file" }, { "path": "test/contracts/inheritance/Lion.sol", "name": "Lion.sol", "size": 162, "extension": ".sol", "type": "file" }, { "path": "test/contracts/inheritance/Mammal.sol", "name": "Mammal.sol", "size": 156, "extension": ".sol", "type": "file" }, { "path": "test/contracts/inheritance/Quadruped.sol", "name": "Quadruped.sol", "size": 126, "extension": ".sol", "type": "file" }, { "path": "test/contracts/inheritance/WildLife.sol", "name": "WildLife.sol", "size": 92, "extension": ".sol", "type": "file" }], "size": 986, "type": "directory" }, { "path": "test/contracts/testTree", "name": "testTree", "children": [{ "path": "test/contracts/testTree/Example.sol", "name": "Example.sol", "size": 200, "extension": ".sol", "type": "file" }], "size": 200, "type": "directory" }], "size": 11154, "type": "directory" }];
-
-                return (
-                    <ul className="directory-list">
-                        {renderTreeView(paths)}
+            const cDirectory = (c) => (
+                <li key={c.name} className="folder">
+                    {c.name}
+                    <ul>
+                        {renderTreeView(c.children)}
                     </ul>
-                );
-            }
+                </li>
+            );
+            const cFile = (c) => (
+                <li key={c.name}>
+                    <a href={c.name.replace('.sol', '.html')}>
+                        {c.name.replace('.sol', '')}
+                    </a>
+                </li>
+            );
+
+            renderTreeView = (inputContent) => inputContent.map((content) => content.type === 'directory' ? cDirectory(content) : cFile(content));
+
+            const paths = [{ "path": "test/contracts", "name": "contracts", "children": [{ "path": "test/contracts/ERC20.sol", "name": "ERC20.sol", "size": 7617, "extension": ".sol", "type": "file" }, { "path": "test/contracts/Plane.sol", "name": "Plane.sol", "size": 695, "extension": ".sol", "type": "file" }, { "path": "test/contracts/SimpleStorage.sol", "name": "SimpleStorage.sol", "size": 798, "extension": ".sol", "type": "file" }, { "path": "test/contracts/Tree.sol", "name": "Tree.sol", "size": 858, "extension": ".sol", "type": "file" }, { "path": "test/contracts/ignore", "name": "ignore", "children": [], "size": 0, "type": "directory" }, { "path": "test/contracts/inheritance", "name": "inheritance", "children": [{ "path": "test/contracts/inheritance/Animal.sol", "name": "Animal.sol", "size": 89, "extension": ".sol", "type": "file" }, { "path": "test/contracts/inheritance/BarbaryLion.sol", "name": "BarbaryLion.sol", "size": 262, "extension": ".sol", "type": "file" }, { "path": "test/contracts/inheritance/IMammal.sol", "name": "IMammal.sol", "size": 99, "extension": ".sol", "type": "file" }, { "path": "test/contracts/inheritance/Lion.sol", "name": "Lion.sol", "size": 162, "extension": ".sol", "type": "file" }, { "path": "test/contracts/inheritance/Mammal.sol", "name": "Mammal.sol", "size": 156, "extension": ".sol", "type": "file" }, { "path": "test/contracts/inheritance/Quadruped.sol", "name": "Quadruped.sol", "size": 126, "extension": ".sol", "type": "file" }, { "path": "test/contracts/inheritance/WildLife.sol", "name": "WildLife.sol", "size": 92, "extension": ".sol", "type": "file" }], "size": 986, "type": "directory" }, { "path": "test/contracts/testTree", "name": "testTree", "children": [{ "path": "test/contracts/testTree/Example.sol", "name": "Example.sol", "size": 200, "extension": ".sol", "type": "file" }], "size": 200, "type": "directory" }], "size": 11154, "type": "directory" }];
+
+            return (
+                <ul className="directory-list">
+                    {renderTreeView(paths)}
+                </ul>
+            );
         }
         ReactDOM.render(
-            <Tree />,
+            <DirectoryTree />,
             document.getElementById('contracts-treeview')
+        );
+    </script>
+    <script type="text/babel">
+        function ContractContentTree() {
+            const renderInheritance = (item) => (
+                <li key={item.namePath} className="list-group-item">
+                    <a href={`${item.namePath}.html`}>
+                        {item.namePath}
+                    </a>
+                </li>
+            );
+            const renderItem = (item) => (
+                <li key={item.ast.name} className="list-group-item">
+                    <a href={`${item.filename}.html#${item.ast.name}`}>
+                        {item.ast.name}
+                    </a>
+                </li>
+            );
+
+            const inheritance = [{ namePath: 'IERC20' }];
+            const events = [];
+            const functions = [
+                { filename: 'ERC20', ast: { name: 'totalSupply' } },
+                { filename: 'ERC20', ast: { name: 'balanceOf' } },
+                { filename: 'ERC20', ast: { name: 'allowance' } },
+                { filename: 'ERC20', ast: { name: 'transfer' } },
+                { filename: 'ERC20', ast: { name: 'approve' } },
+                { filename: 'ERC20', ast: { name: 'transferFrom' } },
+                { filename: 'ERC20', ast: { name: 'increaseAllowance' } },
+            ];
+
+            return (
+                <div>
+                    {inheritance.length > 0 && (
+                        <div>
+                            <span style={{ color: '#777777' }}>INHERITANCE</span>
+                            <ul id="inheritance" style={{ paddingLeft: '25px' }} className="list-group side-list">
+                                {inheritance.map((i) => renderInheritance(i))}
+                            </ul>
+                            <br />
+                            <br />
+                        </div>
+                    )}
+                    {events.length > 0 && (
+                        <div>
+                            <span style={{ color: '#777777' }}>EVENTS</span>
+                            <ul id="events" style={{ paddingLeft: '25px' }} className="list-group side-list">
+                                {events.map((i) => renderItem(i))}
+                            </ul>
+                            <br />
+                            <br />
+                        </div>
+                    )}
+                    {functions.length > 0 && (
+                        <div>
+                            <span style={{ color: '#777777' }}>FUNCTIONS</span>
+                            <ul id="functions" style={{ paddingLeft: '25px' }} className="list-group side-list">
+                                {functions.map((i) => renderItem(i))}
+                            </ul>
+                            <br />
+                            <br />
+                        </div>
+                    )}
+                </div>
+            )
+        }
+        ReactDOM.render(
+            <ContractContentTree />,
+            document.getElementById('contract-content-treeview')
         );
     </script>
     <!-- <script type="text/babel">
