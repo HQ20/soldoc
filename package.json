@@ -64,7 +64,7 @@
         "@typescript-eslint/typescript-estree": "2.33.0"
     },
     "devDependencies": {
-        "@types/highlight.js": "9.12.3",
+        "@types/highlight.js": "9.12.4",
         "@types/jest": "25.2.2",
         "@types/meow": "5.0.0",
         "@types/mustache": "4.0.1",
