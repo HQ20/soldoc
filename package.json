@@ -85,7 +85,7 @@
         "meow": "7.0.1",
         "mustache": "4.0.1",
         "node-emoji": "1.10.0",
-        "pdf-from-html": "0.1.2-beta.3",
+        "pdf-from-html": "0.1.2",
         "pdf-to-text": "0.0.7",
         "puppeteer": "3.2.0",
         "tslint": "^6.0.0",

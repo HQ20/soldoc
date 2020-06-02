@@ -3638,10 +3638,10 @@ path-type@^2.0.0:
   dependencies:
     pify "^2.0.0"
 
-pdf-from-html@0.1.2-beta.3:
-  version "0.1.2-beta.3"
-  resolved "https://registry.yarnpkg.com/pdf-from-html/-/pdf-from-html-0.1.2-beta.3.tgz#c21e02d5e07d08d2e98429b3ef388922cee6dc2e"
-  integrity sha512-2bxBDhv2LNw1Tw0XVpPUEJNhLn5hP2hCLhhtchcv5RM3QNZIt2Npz0QRF1TKexwtRUtZB3wzmRHZ+eTci6B01A==
+pdf-from-html@0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/pdf-from-html/-/pdf-from-html-0.1.2.tgz#e51052d24d00bee402b68f8670bfce013286f22e"
+  integrity sha512-TsF9vN1WJK2vBLB6PmvQ/8UOpwq9COFlo9x8qmj1VFHWR2lVSpFuNDE0qD1DVlFKojECT08nIdQhP91zM01wAg==
 
 pdf-to-text@0.0.7:
   version "0.0.7"
