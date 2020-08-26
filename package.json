@@ -61,7 +61,7 @@
     },
     "dependencies": {
         "@hq20/solidity-parser-antlr": "0.4.12-alpha.0",
-        "@typescript-eslint/typescript-estree": "3.5.0"
+        "@typescript-eslint/typescript-estree": "3.10.1"
     },
     "devDependencies": {
         "@types/highlight.js": "9.12.4",
