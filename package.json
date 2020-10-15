@@ -81,7 +81,7 @@
         "highlight.js": "10.2.1",
         "jest": "26.5.3",
         "markdown-it": "12.0.0",
-        "markdown-it-emoji": "1.4.0",
+        "markdown-it-emoji": "2.0.0",
         "meow": "7.1.1",
         "mustache": "4.0.1",
         "node-emoji": "1.10.0",
