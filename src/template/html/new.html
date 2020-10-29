@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+
+    <!-- Material Design for Bootstrap fonts and icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+
+    <!-- Material Design for Bootstrap CSS -->
+    <link rel="stylesheet"
+        href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
+        integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="directory.css">
+    <style>
+        .soldoc-box {
+            margin-bottom: 50px;
+        }
+
+        .box-info {
+            color: #858585;
+        }
+
+        .method-name-title {
+            border: 1px solid rgba(0, 0, 0, .125);
+            border-radius: 5px 5px 0px 0px;
+        }
+    </style>
+    <title>soldoc | soldoc</title>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">soldoc</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">README</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">LICENSE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">SECURITY</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">CONTRIBUTIONS</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div id="contracts-treeview" class="box"></div>
+                </div>
+                <div class="col-6">
+                    <div id="main-content"></div>
+                </div>
+                <div class="col">
+                    <div id="contract-content-treeview"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/babel">
+        function DirectoryTree() {
+            let renderTreeView;
+
+            const cDirectory = (c) => (
+                <li key={c.name} className="folder">
+                    {c.name}
+                    <ul>
+                        {renderTreeView(c.children)}
+                    </ul>
+                </li>
+            );
+            const cFile = (c) => (
+                <li key={c.name}>
+                    <a href={c.name.replace('.sol', '.html')}>
+                        {c.name.replace('.sol', '')}
+                    </a>
+                </li>
+            );
+
+            renderTreeView = (inputContent) => inputContent.map((content) => content.type === 'directory' ? cDirectory(content) : cFile(content));
+
+            const paths = [{ "path": "test/contracts", "name": "contracts", "children": [{ "path": "test/contracts/ERC20.sol", "name": "ERC20.sol", "size": 7617, "extension": ".sol", "type": "file" }, { "path": "test/contracts/Plane.sol", "name": "Plane.sol", "size": 695, "extension": ".sol", "type": "file" }, { "path": "test/contracts/SimpleStorage.sol", "name": "SimpleStorage.sol", "size": 798, "extension": ".sol", "type": "file" }, { "path": "test/contracts/Tree.sol", "name": "Tree.sol", "size": 858, "extension": ".sol", "type": "file" }, { "path": "test/contracts/ignore", "name": "ignore", "children": [], "size": 0, "type": "directory" }, { "path": "test/contracts/inheritance", "name": "inheritance", "children": [{ "path": "test/contracts/inheritance/Animal.sol", "name": "Animal.sol", "size": 89, "extension": ".sol", "type": "file" }, { "path": "test/contracts/inheritance/BarbaryLion.sol", "name": "BarbaryLion.sol", "size": 262, "extension": ".sol", "type": "file" }, { "path": "test/contracts/inheritance/IMammal.sol", "name": "IMammal.sol", "size": 99, "extension": ".sol", "type": "file" }, { "path": "test/contracts/inheritance/Lion.sol", "name": "Lion.sol", "size": 162, "extension": ".sol", "type": "file" }, { "path": "test/contracts/inheritance/Mammal.sol", "name": "Mammal.sol", "size": 156, "extension": ".sol", "type": "file" }, { "path": "test/contracts/inheritance/Quadruped.sol", "name": "Quadruped.sol", "size": 126, "extension": ".sol", "type": "file" }, { "path": "test/contracts/inheritance/WildLife.sol", "name": "WildLife.sol", "size": 92, "extension": ".sol", "type": "file" }], "size": 986, "type": "directory" }, { "path": "test/contracts/testTree", "name": "testTree", "children": [{ "path": "test/contracts/testTree/Example.sol", "name": "Example.sol", "size": 200, "extension": ".sol", "type": "file" }], "size": 200, "type": "directory" }], "size": 11154, "type": "directory" }];
+
+            return (
+                <ul className="directory-list">
+                    {renderTreeView(paths)}
+                </ul>
+            );
+        }
+        ReactDOM.render(
+            <DirectoryTree />,
+            document.getElementById('contracts-treeview')
+        );
+    </script>
+    <script type="text/babel">
+        function ContractContentTree() {
+            const renderInheritance = (item) => (
+                <li key={item.namePath} className="list-group-item">
+                    <a href={`${item.namePath}.html`}>
+                        {item.namePath}
+                    </a>
+                </li>
+            );
+            const renderItem = (item) => (
+                <li key={item.ast.name} className="list-group-item">
+                    <a href={`${item.filename}.html#${item.ast.name}`}>
+                        {item.ast.name}
+                    </a>
+                </li>
+            );
+
+            const inheritance = [{ namePath: 'IERC20' }];
+            const events = [];
+            const functions = [
+                { filename: 'ERC20', ast: { name: 'totalSupply' } },
+                { filename: 'ERC20', ast: { name: 'balanceOf' } },
+                { filename: 'ERC20', ast: { name: 'allowance' } },
+                { filename: 'ERC20', ast: { name: 'transfer' } },
+                { filename: 'ERC20', ast: { name: 'approve' } },
+                { filename: 'ERC20', ast: { name: 'transferFrom' } },
+                { filename: 'ERC20', ast: { name: 'increaseAllowance' } },
+            ];
+
+            return (
+                <div>
+                    {inheritance.length > 0 && (
+                        <div>
+                            <span style={{ color: '#777777' }}>INHERITANCE</span>
+                            <ul id="inheritance" style={{ paddingLeft: '25px' }} className="list-group side-list">
+                                {inheritance.map((i) => renderInheritance(i))}
+                            </ul>
+                            <br />
+                            <br />
+                        </div>
+                    )}
+                    {events.length > 0 && (
+                        <div>
+                            <span style={{ color: '#777777' }}>EVENTS</span>
+                            <ul id="events" style={{ paddingLeft: '25px' }} className="list-group side-list">
+                                {events.map((i) => renderItem(i))}
+                            </ul>
+                            <br />
+                            <br />
+                        </div>
+                    )}
+                    {functions.length > 0 && (
+                        <div>
+                            <span style={{ color: '#777777' }}>FUNCTIONS</span>
+                            <ul id="functions" style={{ paddingLeft: '25px' }} className="list-group side-list">
+                                {functions.map((i) => renderItem(i))}
+                            </ul>
+                            <br />
+                            <br />
+                        </div>
+                    )}
+                </div>
+            )
+        }
+        ReactDOM.render(
+            <ContractContentTree />,
+            document.getElementById('contract-content-treeview')
+        );
+    </script>
+    <script type="text/babel">
+        class ContentDetails extends React.Component {
+            chooseBadge = (visibility) => {
+                switch (visibility) {
+                    case 'public':
+                        return <span className="badge badge-primary">public</span>;
+                    case 'private':
+                        return <span className="badge badge-secondary">private</span>;
+                    case 'internal':
+                        return <span className="badge badge-success">internal</span>;
+                }
+            }
+            render() {
+                return (
+                    <div className="soldoc-box" >
+                        <a name={this.props.f.ast.name}>
+                            <div className="method-name-title">
+                                <div className="d-flex bd-highlight">
+                                    <div className="p-2 flex-grow-1 bd-highlight">
+                                        {this.props.f.ast.name} (
+                                        {this.props.f.parameters.map((p) => (
+                                            <span key={p.name}>
+                                                <b data-toggle="tooltip" data-placement="top"
+                                                    title={p.natspec}>{p.name}</b> {p.typeName.name},
+                                            </span>
+                                        ))}
+                                        ) ->
+                                        {this.props.f.returnParameters !== undefined && this.props.f.returnParameters.map((p) => <span>{typeName.name},</span>)}
+                                    </div>
+                                    <div className="p-2 bd-highlight">
+                                        {this.chooseBadge(this.props.f.ast.visibility)}
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                        <div id="test-links">
+                        </div>
+                        <div className="box-info">
+                            <p><i>{this.props.f.ast.natspec.dev}</i></p>
+                        </div>
+                    </div>
+                );
+            }
+        }
+        function MainContent() {
+            const functions = [
+                {
+                    ast: {
+                        name: 'approve',
+                        visibility: 'public',
+                        natspec: {
+                            dev: 'Approve the passed address to spend the specified amount of tokens on behalf of msg.sender.\
+Beware that changing an allowance with this method brings the risk that someone may use both the old\
+and the new allowance by unfortunate transaction ordering. One possible solution to mitigate this\
+race condition is to first reduce the spender&#39;s allowance to 0 and set the desired value afterwards:\
+<a href="https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729">https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729</a>',
+                        }
+                    },
+                    parameters: [
+                        {
+                            natspec: 'The address which will spend the funds.',
+                            name: 'spender',
+                            typeName: {
+                                name: 'address'
+                            }
+                        },
+                        {
+                            natspec: 'The amount of tokens to be spent.',
+                            name: 'value',
+                            typeName: {
+                                name: 'uint256'
+                            }
+                        },
+                    ]
+                }
+            ]
+            return (
+                <div>
+                    <div>
+                        <h1 className="title is-1" id="contractName">ERC20</h1>
+                        <h2 className="subtitle">Standard ERC20 token <i alt="😉" className="twa twa-wink"></i></h2>
+                        <nav aria-label="breadcrumb">
+                            <ol className="breadcrumb">
+                                <li className="breadcrumb-item active" aria-current="page">test&#x2F;contracts&#x2F;ERC20.sol</li>
+                            </ol>
+                        </nav>
+                        <p style={{ wordBreak: 'break-word' }}>Implementation of the basic standard token.
+                            <a href="https://eips.ethereum.org/EIPS/eip-20">https://eips.ethereum.org/EIPS/eip-20</a>
+                            Originally based on code by FirstBlood:
+                            <a href="https://github.com/Firstbloodio/token/blob/master/smart_contract/FirstBloodToken.sol">https://github.com/Firstbloodio/token/blob/master/smart_contract/FirstBloodToken.sol</a>
+                            * This implementation emits additional Approval events, allowing applications to reconstruct the allowance status for
+                            all accounts just by listening to said events. Note that this isn&#39;t required by the specification, and other
+                            compliant implementations may not do it.
+                        </p>
+                        <br />
+                        <small className="generated">Generated {moment(1589362428218).fromNow()}</small>
+                    </div>
+
+                    <h3>Variables</h3>
+                    <p>
+                        <strong className="variable">_balances</strong>
+                    </p>
+                    <p>
+                        <strong className="variable">_allowed</strong>
+                    </p>
+                    <p>
+                        <strong className="variable">_totalSupply</strong>
+                    </p>
+                    {functions.map((f) => <ContentDetails key={f.ast.name} f={f} />)}
+                </div>
+            )
+        }
+        ReactDOM.render(
+            <MainContent />,
+            document.getElementById('main-content')
+        );
+    </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
+        integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
+        integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
+        crossorigin="anonymous"></script>
+    <script>$(document).ready(function () { $('body').bootstrapMaterialDesign(); });</script>
+    <script>$(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })</script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.25.3/moment.min.js"
+        integrity="sha256-C66CaAImteEKZPYvgng9j10J/45e9sAuZyfPYCwp4gE=" crossorigin="anonymous"></script>
+    <!--
+      Note: this page is a great way to try React but it's not suitable for production.
+      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+      Read this section for a production-ready setup with JSX:
+      https://reactjs.org/docs/add-react-to-a-website.html#add-jsx-to-a-project
+
+      In a larger project, you can use an integrated toolchain that includes JSX instead:
+      https://reactjs.org/docs/create-a-new-react-app.html
+
+      You can also use React without JSX, in which case you can remove Babel:
+      https://reactjs.org/docs/react-without-jsx.html
+    -->
+</body>
+
+</html>
